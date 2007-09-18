@@ -1,0 +1,79 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # Contributor(s): Fr茅d茅ric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com
+  #%]
+
+[%# INTERFACE:
+  # none
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% title = BLOCK %]欢迎使用 [% terms.Bugzilla %][% END %]
+
+[% PROCESS global/header.html.tmpl
+   title = title
+   h3 = "版本 $constants.BUGZILLA_VERSION"
+   style_urls = [ 'skins/standard/index.css' ]
+%]
+
+<div id="welcome-admin">
+  <p>欢迎您， [% user.identity FILTER html %]。</p>
+
+  <p>您现在看到这个页面是因为一些核心参数还没有被设置。
+  此页面的目的是通知您正确安装此系统所需的最后一步。</p>
+
+  <p>作为一名管理员，几个与管理相关的链接放在此页面底部。
+  这些链接在所有页面都是可见的。在这此链接中，您必须至少访问 
+  <a href="editparams.cgi">系统设置</a> 页面，
+  就是您设置所有与本次安装有关的重要参数的页面。
+  通过点击此链接，您还可以设置其它：</p>
+
+  <ul>
+    <li><a href="editparams.cgi?section=core#maintainer">maintainer</a>，如果本系统运行出错，需要联系的人。</li>
+
+    <li><a href="editparams.cgi?section=core#urlbase">urlbase</a>，指向安装到的Web虚拟目录的URL，
+    同时将会用在电子邮件中
+    （这也是您为什么会看到此页面的原因：一旦此参数没有被正确设置，您将会再次看到此页面。</li>
+
+    <li><a href="editparams.cgi?section=core#cookiepath">cookiepath</a>，是一个为您的浏览器正确管理您的cookies的重要参数。</li>
+
+    <li><a href="editparams.cgi?section=core#utf8">utf8</a>，将会让您把所有文本编码成UTF-8格式，
+    （强烈建议您设置此参数为“开”）。</li>
+  </ul>
+
+  <p>同样重要的参数有：</p>
+
+  <ul>
+    <li><a href="editparams.cgi?section=auth#requirelogin">requirelogin</a>， 
+    如果此参数设备为“开”，将会阻止本次设置后没有帐号的用户的访问。 
+    换句话说，没有通过有效帐号认证的用户不能看到任何数据。</li>
+
+    <li><a href="editparams.cgi?section=auth#createemailregexp">createemailregexp</a>，
+    定义哪个用户本次设置后被允许创建帐号。如果设置成 ".*" (默认)，则任何人都可以自由地创建帐号。
+    如果设置为"@mycompany.com$"， 则仅有帐号 @mycompany.com 的用户被允许创建帐号。
+    如果留空，用户将不能够自己创建帐号；仅管理员能够为他们创建帐号。
+    如果本次安装作为个人用途，您必须改变此默认设置。</li>
+
+    <li><a href="editparams.cgi?section=mta#mail_delivery_method">mail_delivery_method</a>
+    定义了发送邮件的方法，如sendmail或SMTP。您必须正确地设置此参数以保证能够发送电子邮件。</li>
+  </ul>
+
+  <p>
+    在设置好所有这此参数后，我们建议您看看[% terms.Bugzilla %]的其它参数，
+    如果您知道它们是作什么用并且您想在本次安装中想修改它们的话。
+  </p>
+</div>
+
+[% PROCESS global/footer.html.tmpl %]
