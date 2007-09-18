@@ -18,7 +18,7 @@
 # Rights Reserved.
 #
 # Contributor(s): Gervase Markham <gerv@gerv.net>
-# Localiztion: jiangyanfeng <jiangyanfeng@gmail.com
+# Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
 
 # Important! The following classes of directives are excluded in the test,
 # and so do not need to be added here. Doing so will cause warnings.

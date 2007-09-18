@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -24,34 +25,33 @@
 [% expiration_ts = token_ts + (constants.MAX_TOKEN_AGE * 86400) %]
 From: [% Param('mailfrom') %]
 To: [% email %]
-Subject: [% terms.Bugzilla %]: confirm account creation
+Subject: [% terms.Bugzilla %]: 确认创建帐号
 X-Bugzilla-Type: admin
 
-[%+ terms.Bugzilla %] has received a request to create a user account
-using your email address ([% email %]).
+[%+ terms.Bugzilla %] 已经收到使用 Email 地址([% email %])创建您的帐号的请求。
 
-To continue creating an account using this email address, visit the 
-following link by [%+ time2str("%B %o, %Y at %H:%M %Z", expiration_ts) %]:
+要继续使用此 Email 地址完成帐号创建，请在
+[%+ time2str("%B %o, %Y at %H:%M %Z", expiration_ts) %]
+前访问以下链接：
 
 [%+ urlbase %]token.cgi?t=[% token FILTER url_quote %]&a=request_new_account
 
-If you did not receive this email before [%+ time2str("%B %o, %Y at %H:%M %Z", expiration_ts) %] or
-you wish to create an account using a different email address you can begin
-again by going to:
+如果您在 [%+ time2str("%B %o, %Y at %H:%M %Z", expiration_ts) %] 之前还没有收到此邮件，
+或您希望用其它 Email 地址创建帐号，您可以转到：
 
 [%+ urlbase %]createaccount.cgi
 
 [% IF Param('createemailregexp') == '.*' && Param('emailsuffix') == '' %]
-PRIVACY NOTICE: [% terms.Bugzilla %] is an open [% terms.bug %] tracking system. Activity on most
-[%+ terms.bugs %], including email addresses, will be visible to the public. We recommend
-using a secondary account or free web email service (such as Gmail, Yahoo,
-Hotmail, or similar) to avoid receiving spam at your primary email address.
+  <b>隐私说明：</b> [% terms.Bugzilla %] 是一个开放的 [% terms.bug %]
+  跟踪系统，大部分 [% terms.bugs %] 的内容（包含邮件地址），
+  对所有人都是公开的。<b>强烈建议</b>您使用备用帐号或免费的邮件服务
+  (如 Gmail, Yahoo,  Hotmail, 等) 以避免接收到垃圾邮件。
 [% END %]
 
-If you do not wish to create an account, or if this request was made in
-error you can do nothing or visit the following link:
+如果您不想创建帐号，或此请求是错误发出的，
+您可以不作处理或访问以下链接：
 
 [%+ urlbase %]token.cgi?t=[% token FILTER url_quote %]&a=cancel_new_account
 
-If the above links do not work, or you have any other issues regarding
-your account, please contact administration at [% Param('maintainer') %].
+如果上述链接不起作用，或您还有其它有关您帐号的问题，
+请联系管理员 [% Param('maintainer') %]。

@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): André Batosti <batosti@async.com.br>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS "global/variables.none.tmpl" %]
@@ -43,34 +44,34 @@ X-Bugzilla-Changed-Fields: [% changedfields %]
 
 -- 
 Configure [% terms.bug %]mail: [% urlbase %]userprefs.cgi?tab=email
-------- You are receiving this mail because: -------
+------- 您收到此邮件是因为： -------
 [% FOREACH relationship = reasons %]
   [% SWITCH relationship %]
     [% CASE constants.REL_ASSIGNEE %]
-You are the assignee for the [% terms.bug %].
+您是此[% terms.bug %]的责任人。
     [% CASE constants.REL_REPORTER %]
-You reported the [% terms.bug %].
+您报告了这个[% terms.bug %]。
     [% CASE constants.REL_QA %]
-You are the QA contact for the [% terms.bug %].
+您是此[% terms.bug %]的QA联系人。
     [% CASE constants.REL_CC %]
-You are on the CC list for the [% terms.bug %].
+您在此[% terms.bug %]的抄送列表中。
     [% CASE constants.REL_VOTER %]
-You are a voter for the [% terms.bug %].
+您是此[% terms.bug %]的投票者。
     [% CASE constants.REL_GLOBAL_WATCHER %]
-You are watching all [% terms.bug %] changes.
+您在观察所有[% terms.bug %]改变。
   [% END %]
 [% END %]
 [% FOREACH relationship = reasons_watch %]
   [% SWITCH relationship %]
     [% CASE constants.REL_ASSIGNEE %]
-You are watching the assignee of the [% terms.bug %].
+您在观察此[% terms.bug %]的责任人。
     [% CASE constants.REL_REPORTER %]
-You are watching the reporter.
+您在观察报告者。
     [% CASE constants.REL_QA %]
-You are watching the QA contact of the [% terms.bug %].
+您在观察此[% terms.bug %]的QA联系人。
     [% CASE constants.REL_CC %]
-You are watching someone on the CC list of the [% terms.bug %].
+您在观察此[% terms.bug %]抄送列表中的某人。
     [% CASE constants.REL_VOTER %]
-You are watching a voter for the [% terms.bug %].
+您在观察此[% terms.bug %]中投票者。
   [% END %]
 [% END %]
