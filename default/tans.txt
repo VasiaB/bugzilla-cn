@@ -11,6 +11,11 @@
 \list
 \search
 \account
+\list
+\setup
+\email
+\request
+\whine
 
 columns 显示列 （列）
 quip 标语

@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -26,47 +27,45 @@
 [% PROCESS global/variables.none.tmpl %]
 
 [% PROCESS global/header.html.tmpl
-  title = "Reporting and Charting Kitchen"
+  title = "创建报表"
 %]
 
 <p>
-  [% terms.Bugzilla %] allows you to view and track the state of the [% terms.bug %] database in
-  all manner of exciting ways.
+  [% terms.Bugzilla %] 可以支持各种方式查看和追踪[% terms.bug %]数据库的状态。
 </p>
 
-<h2>Current State</h2>
+<h2>当前状态</h2>
 
 <ul>
   <li>
-    <strong><a href="query.cgi">Search</a></strong> -
-    list sets of [% terms.bugs %].
+    <strong><a href="query.cgi">搜索</a></strong> -
+    显示[% terms.bugs %]列表集。
   </li>
   <li>
     <strong>
-      <a href="query.cgi?format=report-table">Tabular reports</a>
+      <a href="query.cgi?format=report-table">表格状报告</a>
     </strong> -
-    tables of [% terms.bug %] counts in 1, 2 or 3 dimensions, as HTML or CSV.
+    以HTML或CSV形式，可以选择3个维度显示[% terms.bug %]数目。
   </li>
   <li>
     <strong>
-      <a href="query.cgi?format=report-graph">Graphical reports</a>
+      <a href="query.cgi?format=report-graph">图形状报告</a>
     </strong> -
-    line graphs, bar and pie charts.
+    折线图、条杆图或饼状图。
   </li>
 </ul>
 
-<h2>Change Over Time</h2>
+<h2>变更历史</h2>
 
 <ul>
   <li>
-    <strong><a href="reports.cgi">Old Charts</a></strong> - 
-    plot the status and/or resolution of [% terms.bugs %] against
-    time, for each product in your database.
+    <strong><a href="reports.cgi">老图表</a></strong> - 
+    将[% terms.bugs %]状态及解决途径 与时间的对比关系以图形化的方式显示(针对每个产品)。
   </li>
   [% IF user.in_group(Param("chartgroup")) %]
     <li>
-      <strong><a href="chart.cgi">New Charts</a></strong> - 
-      plot any arbitrary search against time. Far more powerful.
+      <strong><a href="chart.cgi">新图表</a></strong> - 
+      更高级应用，可以将任何搜索结果与时间的对比关系用图形方式显示。
     </li>
   [% END %]
 </ul>
