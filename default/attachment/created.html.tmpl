@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -27,29 +28,30 @@
 [% PROCESS global/variables.none.tmpl %]
 
 [% PROCESS global/header.html.tmpl
-  title = "Changes Submitted"
+  title = "更改已提交"
 %]
 
 <dl>
   <dt>
+    [% "$terms.bug $attachment.bug_id" FILTER bug_link(attachment.bug_id) FILTER none %]
+    的
     <a title="[% attachment.description FILTER html %]"
-       href="attachment.cgi?id=[% attachment.id %]&amp;action=edit">Attachment #[% attachment.id %]</a>
-    to [% "$terms.bug $attachment.bug_id" FILTER bug_link(attachment.bug_id) FILTER none %] created
+       href="attachment.cgi?id=[% attachment.id %]&amp;action=edit">附件 #[% attachment.id %]</a>
+    已创建。
   </dt>
   <dd>
     [% PROCESS "bug/process/bugmail.html.tmpl" mailing_bugid = attachment.bug_id %]
     [% IF convertedbmp %]
       <p>
-        <b>Note:</b> [% terms.Bugzilla %] automatically converted your BMP image file to a
-        compressed PNG format.
+        <b>注意：</b> [% terms.Bugzilla %] 会自动地将您上传的 BMP 图片文件转换成压缩的 PNG 格式。
       </p>
     [% END %]
     [% IF contenttypemethod == 'autodetect' %]
       <p>
-        <b>Note:</b> [% terms.Bugzilla %] automatically detected the content type
-        <em>[% attachment.contenttype FILTER html %]</em> for this attachment.  If this is
-        incorrect, correct the value by editing the attachment's
-        <a href="attachment.cgi?id=[% attachment.id %]&amp;action=edit">details</a>.
+        <b>注意：</b> [% terms.Bugzilla %] 自动地检测到您的附件类型为
+        <em>[% attachment.contenttype FILTER html %]</em> 
+        如果自动检测结果不对，请编辑附件
+        <a href="attachment.cgi?id=[% attachment.id %]&amp;action=edit">详细信息</a>中的对应值。
       </p>
     [% END %]
 
@@ -59,8 +61,7 @@
 </dl>
 
 <p>
-<a href="attachment.cgi?bugid=[% attachment.bug_id %]&amp;action=enter">Create
- Another Attachment to [% terms.Bug %] #[% attachment.bug_id %]</a>
+<a href="attachment.cgi?bugid=[% attachment.bug_id %]&amp;action=enter">为[% terms.Bug %] #[% attachment.bug_id %]再创建一个附件</a>
 </p>
 
 [% PROCESS global/footer.html.tmpl %]

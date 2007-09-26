@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): John Keiser <jkeiser@netscape.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# This line is really long for a reason: to get rid of any possible textnodes
@@ -55,22 +56,22 @@ incremental_restore()
     <table cellpadding="0" cellspacing="0">
     <tr><th width="95%" align="left">
   [% IF file.is_add %]
-    Added
+    增加
   [% ELSIF file.is_remove %]
     [% IF bonsai_prefix %]
-      <a href="[% bonsai_prefix %]">Removed</a>
+      <a href="[% bonsai_prefix %]">删除</a>
     [% ELSE %]
-      Removed
+      删除
     [% END %]
   [% ELSE %]
     [% IF bonsai_prefix %]
       <a href="[% bonsai_prefix %]#[% section.old_start %]">
     [% END %]
     [% IF section.old_lines > 1 %]
-      &nbsp;Lines&nbsp;[% section.old_start %]-[% section.old_start + 
+      &nbsp;行&nbsp;[% section.old_start %]-[% section.old_start + 
                                              section.old_lines - 1 %]
     [% ELSE %]
-      Line&nbsp;[% section.old_start %]
+      行&nbsp;[% section.old_start %]
     [% END %]
     [% IF bonsai_prefix %]
       </a>
@@ -78,7 +79,7 @@ incremental_restore()
     &nbsp;&nbsp;[% section.func_info FILTER html IF section.func_info %]
   [% END %] 
     </th><th>
-  <a name="[% file.filename FILTER html %]_sec[% section_num %]" href="#[% file.filename FILTER html %]_sec[% section_num %]">Link&nbsp;Here</a>&nbsp;
+  <a name="[% file.filename FILTER html %]_sec[% section_num %]" href="#[% file.filename FILTER html %]_sec[% section_num %]">此处链接</a>&nbsp;
     </th></tr></table>
   </th></tr>
   [% current_line_old = section.old_start %]

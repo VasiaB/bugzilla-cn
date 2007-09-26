@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
@@ -24,7 +25,7 @@
   [%+ "$terms.Bug $bug.bug_id" FILTER bug_link(bug.bug_id) FILTER none %][% END %]
 
 [% title = BLOCK %]
-  View All Attachments for [% terms.Bug %] [%+ bug.bug_id FILTER html %]
+  查看[% terms.Bug %] [%+ bug.bug_id FILTER html %]的所有附件
 [% END %]
 
 [% PROCESS global/header.html.tmpl
@@ -45,7 +46,7 @@
   <table class="attachment_info" cellspacing="0" cellpadding="4" border="1" width="75%">
     <tr>
       <td valign="top" bgcolor="#cccccc" colspan="6">
-        <big><b>Attachment #[% a.id %]</b></big>
+        <big><b>附件 #[% a.id %]</b></big>
       </td>
     </tr>
     <tr>
@@ -55,7 +56,7 @@
 
       <td valign="top">
         [% IF a.ispatch %]
-          <i>patch</i>
+          <i>补丁</i>
         [% ELSE %]
           [% a.contenttype FILTER html %]
         [% END %]
@@ -66,7 +67,7 @@
 
       <td valign="top">
         [% IF a.flags.size == 0 %]
-          <i>no flags</i>
+          <i>无标记</i>
         [% ELSE %]
           [% FOREACH flag = a.flags %]
             [% flag.setter.nick FILTER html %]:
@@ -80,20 +81,20 @@
       </td>
 
       <td valign="top">
-        <a href="attachment.cgi?id=[% a.id %]&amp;action=edit">Details</a>
+        <a href="attachment.cgi?id=[% a.id %]&amp;action=edit">详细信息</a>
       </td>
     </tr>
   </table>
 
   [% IF a.is_viewable %]
     <iframe src="attachment.cgi?id=[% a.id %]" width="75%" height="350">
-      <b>You cannot view the attachment on this page because your browser does not support IFRAMEs.
-      <a href="attachment.cgi?id=[% a.id %]">View the attachment on a separate page</a>.</b>
+      <b>由于您的浏览器不支持框架，所以在此页面您不能查看此附件。
+      <a href="attachment.cgi?id=[% a.id %]">在单独的页面查看此附件</a>。</b>
     </iframe>
   [% ELSE %]
     <p><b>
-      Attachment cannot be viewed because its MIME type is not text/*, image/*, or application/vnd.mozilla.*.
-      <a href="attachment.cgi?id=[% a.id %]">Download the attachment instead</a>.
+      无法查看附件是因为附件的 MIME 类型不是 text/*, image/*, 或 application/vnd.mozilla.*。
+      <a href="attachment.cgi?id=[% a.id %]">下载附件并查看</a>。
     </b></p>
   [% END %]
   </div>

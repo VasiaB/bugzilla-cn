@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -19,12 +19,13 @@
   #                 Joel Peshkin <bugreport@peshkin.net>
   #                 Erik Stambaugh <erik@dasbistro.com>
   #                 Marc Schumann <wurblzap@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 <tr>
-  <th><label for="data">File</label>:</th>
+  <th><label for="data">文件</label>：</th>
   <td>
-    <em>Enter the path to the file on your computer.</em><br>
+    <em>选择您电脑上要上传附件的文件名</em><br>
     <input type="file" id="data" name="data" size="50"
       [% IF Param("allow_attach_url") %]
         onchange="DataFieldHandler()" 
@@ -34,21 +35,21 @@
 </tr>
 [% IF Param("maxlocalattachment") %]
 <tr>
-  <th>BigFile:</th>
+  <th>在文件：</th>
   <td>
     <input type="checkbox" id="bigfile"
            name="bigfile" value="bigfile">
     <label for="bigfile">
-      Big File - Stored locally and may be purged
+      大文件 - 保存在本地并可能会被删除
     </label>
   </td>
 </tr>
 [% END %]
 [% IF Param("allow_attach_url") %]
 <tr>
-  <th><label for="attachurl">AttachURL</label>:</th>
+  <th><label for="attachurl">附件链接</label>：</th>
   <td>
-    <em>URL to be attached instead.</em><br>
+    <em>仅提交附件的链接(URL)</em><br>
     <input type="text" id="attachurl" name="attachurl" size="60" 
            maxlength="2000"
            onkeyup="URLFieldHandler()" onblur="URLFieldHandler()">
@@ -56,34 +57,34 @@
 </tr>
 [% END %]
 <tr>
-  <th><label for="description">Description</label>:</th>
+  <th><label for="description">描述</label>：</th>
   <td>
-    <em>Describe the attachment briefly.</em><br>
+    <em>简要地描述一下附件</em><br>
     <input type="text" id="description" name="description" size="60" maxlength="200">
   </td>
 </tr>
 <tr>
-  <th>Content Type:</th>
+  <th>附件类型：</th>
   <td>
-    <em>If the attachment is a patch, check the box below.</em><br>
+    <em>如果附件是补丁，选中以下多选框。</em><br>
     <input type="checkbox" id="ispatch" name="ispatch" value="1"
            onchange="setContentTypeDisabledState(this.form);">
-    <label for="ispatch">patch</label><br><br>
+    <label for="ispatch">补丁</label><br><br>
 
-    <em>Otherwise, choose a method for determining the content type.</em><br>
+    <em>否则，选择决定附件类型的方法</em><br>
     <input type="radio" id="autodetect"
            name="contenttypemethod" value="autodetect" checked="checked">
-      <label for="autodetect">auto-detect</label><br>
+      <label for="autodetect">自动检测</label><br>
     <input type="radio" id="list"
            name="contenttypemethod" value="list">
-      <label for="list">select from list</label>:
+      <label for="list">从列表中选择</label>:
       <select name="contenttypeselection" id="contenttypeselection"
               onchange="this.form.contenttypemethod[1].checked = true;">
         [% PROCESS "attachment/content-types.html.tmpl" %]
       </select><br>
     <input type="radio" id="manual"
                  name="contenttypemethod" value="manual">
-      <label for="manual">enter manually</label>:
+      <label for="manual">手动输入</label>：
       <input type="text" name="contenttypeentry" id="contenttypeentry"
              size="30" maxlength="200"
              onchange="if (this.value) this.form.contenttypemethod[2].checked = true;">

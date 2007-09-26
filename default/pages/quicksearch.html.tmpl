@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -12,12 +12,13 @@
   #
   # Contributor(s): N.N.
   #                 Marc Schumann <wurblzap@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
 
 [% INCLUDE global/header.html.tmpl
-   title  = "$terms.Bugzilla QuickSearch",
+   title  = "$terms.Bugzilla 快速搜索",
    style  = 'ul {margin-bottom: 2ex}
              ul li {margin-top: 2ex}
              ul li ul li {margin-top: 0}'
@@ -25,13 +26,13 @@
  %]
 
 <p style="font-size: 80%">
-  If you are already familiar with the original
-  <a href="query.cgi">[% terms.Bugzilla %] Search Form</a>,
-  you may prefer <a href="page.cgi?id=quicksearchhack.html">this form</a>.
+  如果您已熟悉原来的
+  <a href="query.cgi">[% terms.Bugzilla %] 搜索表单</a>，
+  您可以更喜欢<a href="page.cgi?id=quicksearchhack.html">此表单</a>。
 </p>
 
 <p>
-  Type in one or more words (or word fragments) to search for:
+  输入一个或多个词语(或语句)来搜索：
 </p>
 
 <form name="f" action="buglist.cgi" method="get"
@@ -39,16 +40,16 @@
                 { alert('Please enter one or more search terms first.');
                   return false; } return true;">
   <input type="text" size="40" name="quicksearch">
-  <input type="submit" value="Find" id="find">
+  <input type="submit" value="查找" id="find">
 </form>
 
-<h2>Getting Started</h2>
+<h2>现在开始</h2>
 
 <ul>
   <li>
-    This is <strong>case-insensitive</strong> search:<br />
+    这是<strong>不区分大小写</strong>的搜索：<br />
     <ul>
-      <li><tt>table</tt>, <tt>Table</tt> and <tt>TABLE</tt> are all the same.</li>
+      <li>如<tt>table</tt>, <tt>Table</tt> 和 <tt>TABLE</tt> 都是一样的效果。</li>
     </ul>
   </li>
   <li>

@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,9 +16,10 @@
   # Rights Reserved.
   #
   # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
-[% title = "Edit Series" %]
+[% title = "编辑系列" %]
 [% subheader = BLOCK %]
   [% default.category FILTER html %] / 
   [%+ default.subcategory FILTER html %] /
@@ -30,7 +31,7 @@
 [% IF changes_saved %]
   <p>
     <font color="red">
-      Series updated.
+      系列更新完毕。
     </font>
   </p>
 [% END %]
@@ -38,7 +39,7 @@
 <form method="get" action="chart.cgi" name="chartform">
   
   [% PROCESS reports/series.html.tmpl 
-     button_name = "Change Data Set" %]
+     button_name = "改变数据集" %]
   <input type="hidden" name="action" value="alter">
   
   [% IF default.series_id %]
@@ -47,27 +48,25 @@
 </form>
 
 <p>
-  <b>Creator</b>: 
+  <b>创建人</b>: 
   [% IF creator.email %]
     <a href="mailto:[% creator.email FILTER html %]">
     [% creator.email FILTER html %]</a>
   [% ELSE %]
-    (automatically created by [% terms.Bugzilla %])
+    (由[% terms.Bugzilla %]系统自动创建)
   [% END %]
 </p>
 
-<p>Note: it is not yet possible to edit the search associated with this data
-set.
+<p>注意: 现在尚不能编辑与此数据集关联的搜索。
 </p>
 
 <p>
-  <a href="query.cgi?[% default.query FILTER html %]">View 
-    series search parameters</a> |
+  <a href="query.cgi?[% default.query FILTER html %]">查看系列搜索参数</a> |
   <a href="buglist.cgi?cmdtype=dorem&amp;namedcmd=
     [% default.category FILTER url_quote %]-
     [% default.subcategory FILTER url_quote %]-
     [% default.name FILTER url_quote %]&amp;remaction=runseries&amp;series_id=
-    [% default.series_id %]">Run series search</a>
+    [% default.series_id %]">执行序列搜索</a>
 </p>
 
 [% PROCESS global/footer.html.tmpl %]

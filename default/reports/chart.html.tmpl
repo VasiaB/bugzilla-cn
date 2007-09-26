@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
   
 [%# INTERFACE:
@@ -26,7 +27,7 @@
 %]
 
 [% PROCESS global/header.html.tmpl 
-  title = "Chart"
+  title = "图表"
   header_addl_info = time2str("%Y-%m-%d %H:%M:%S", time)
 %]
 
@@ -37,27 +38,26 @@
     [% width %]&amp;height=[% height -%]
   [% END %]
 
-  <img alt="Graphical report results" src="[% imageurl %]"
+  <img alt="图形报告结果" src="[% imageurl %]"
     width="[% width %]" height="[% height %]">
   <p>
     [% sizeurl = BLOCK %]chart.cgi?
       [% imagebase FILTER html %]&amp;action=wrap
     [% END %]
     <a href="[% sizeurl %]&amp;width=[% width %]&amp;height=
-             [% height + 100 %]">Taller</a><br>
+             [% height + 100 %]">纵向加长</a><br>
     <a href="[% sizeurl %]&amp;width=[% width - 100 %]&amp;height=
-             [% height %]">Thinner</a> * 
+             [% height %]">横向缩短</a> * 
     <a href="[% sizeurl %]&amp;width=[% width + 100 %]&amp;height=
-             [% height %]">Fatter</a>&nbsp;&nbsp;&nbsp;&nbsp;<br>
+             [% height %]">横向加长</a>&nbsp;&nbsp;&nbsp;&nbsp;<br>
     <a href="[% sizeurl %]&amp;width=[% width %]&amp;height=
-             [% height - 100 %]">Shorter</a><br>
+             [% height - 100 %]">纵向缩短</a><br>
   </p>
   
   <p>
     <a href="chart.cgi?
       [% imagebase FILTER html %]&amp;ctype=csv&amp;action=plot">CSV</a> |
-    <a href="chart.cgi?[% imagebase FILTER html %]&amp;action=assemble">Edit 
-    this chart</a>
+    <a href="chart.cgi?[% imagebase FILTER html %]&amp;action=assemble">编辑此图表</a>
   </p>
  
 </div>

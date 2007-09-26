@@ -4,6 +4,7 @@
 \global\code-error.html.tmpl
 \global\user-error.html.tmpl
 \search\search-help.html.tmpl
+\attachment\diff-header.html.tmpl
 
 已汉化目录:
 \global
@@ -11,11 +12,13 @@
 \list
 \search
 \account
-\list
 \setup
 \email
 \request
 \whine
+\attachment
+\flag
+\reports
 
 columns 显示列 （列）
 quip 标语

@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 <script type="text/javascript">
@@ -29,11 +30,11 @@
     var toggle;
     if (link.innerHTML == "Show Obsolete") {
       toggle = ""; // This should be 'table-row', but IE 6 doesn't understand it.
-      link.innerHTML = "Hide Obsolete";
+      link.innerHTML = "隐藏废弃附件";
     }
     else {
       toggle = "none";
-      link.innerHTML = "Show Obsolete";
+      link.innerHTML = "显示废弃附件";
     }
 
     for (var i = 0; i < rows.length; i++) {
@@ -53,7 +54,7 @@
 <table id="attachment_table" cellspacing="0" cellpadding="4">
   <tr>
     <th colspan="[% show_attachment_flags ? 3 : 2 %]" align="left">
-      <a name="a0" id="a0">Attachments</a>
+      <a name="a0" id="a0">附件</a>
     </th>
   </tr>
 
@@ -71,7 +72,7 @@
         <td valign="top">
           [% IF attachment.datasize %]
             <a name="a[% count %]" href="attachment.cgi?id=[% attachment.id %]"
-               title="View the content of the attachment">
+               title="查看附件内容">
           [% END %]
           <b>[% attachment.description FILTER html FILTER obsolete(attachment.isobsolete) %]</b>
           [% "</a>" IF attachment.datasize %]
@@ -80,23 +81,23 @@
             [% IF attachment.datasize %]
               ([% attachment.datasize FILTER unitconvert %],
               [% IF attachment.ispatch %]
-                patch)
+                补丁)
               [% ELSIF attachment.isurl %]
-                url)
+                链接)
               [% ELSE %]
                 [%+ attachment.contenttype FILTER html %])
               [% END %]
             [% ELSE %]
-              (<em>deleted</em>)
+              (<em>已删除</em>)
             [% END %]
 
             <br>
             <a href="#attach_[% attachment.id %]"
-               title="Go to the comment associated with the attachment">
+               title="转到此附件的相关评论">
               [%- attachment.attached FILTER time %]</a>,
 
             <a href="mailto:[% attachment.attacher.email FILTER html %]"
-               title="Write an email to the creator of the attachment">
+               title="给此附件的创建者发邮件">
               [% attachment.attacher.name || attachment.attacher.login FILTER html %]
             </a>
           </span>
@@ -105,7 +106,7 @@
         [% IF show_attachment_flags %]
           <td class="bz_attach_flags" valign="top">
             [% IF attachment.flags.size == 0 %]
-              <i>no flags</i>
+              <i>没有标记</i>
             [% ELSE %]
               [% FOREACH flag = attachment.flags %]
                 [% flag.setter.nick FILTER html %]:
@@ -119,9 +120,9 @@
         [% END %]
 
         <td valign="top">
-          <a href="attachment.cgi?id=[% attachment.id %]&amp;action=edit">Details</a>
+          <a href="attachment.cgi?id=[% attachment.id %]&amp;action=edit">详细信息</a>
           [% IF attachment.ispatch && patchviewerinstalled %]
-            | <a href="attachment.cgi?id=[% attachment.id %]&amp;action=diff">Diff</a>
+            | <a href="attachment.cgi?id=[% attachment.id %]&amp;action=diff">不同之处</a>
           [% END %]
           [% Hook.process("action") %]
         </td>
@@ -134,13 +135,13 @@
       [% IF attachments.size %]
         <span class="bz_attach_view_hide">
           [% IF obsolete_attachments %]
-            <a href="#a0" onClick="return toggle_display(this);">Hide Obsolete</a> ([% obsolete_attachments %]) |
+            <a href="#a0" onClick="return toggle_display(this);">隐藏废弃附件</a> ([% obsolete_attachments %]) |
           [% END %]
-          <a href="attachment.cgi?bugid=[% bugid %]&amp;action=viewall">View All</a>
+          <a href="attachment.cgi?bugid=[% bugid %]&amp;action=viewall">查看全部附件</a>
         </span>
       [% END %]
-      <a href="attachment.cgi?bugid=[% bugid %]&amp;action=enter">Add an attachment</a>
-      (proposed patch, testcase, etc.)
+      <a href="attachment.cgi?bugid=[% bugid %]&amp;action=enter">添加附件</a>
+      (建议附件为补丁，测试用例等。）
     </td>
   </tr>
 </table>

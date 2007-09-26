@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -27,17 +28,17 @@
   #%]
 
 [% PROCESS "reports/series-common.html.tmpl"
-   newtext = "New (name below)" 
+   newtext = "新建 (名称见下)" 
  %]
   
 <table cellpadding="2" cellspacing="2" border="0"
        style="text-align: left; margin-left: 20px">
   <tbody>
     <tr>
-      <th>Category:</th>
+      <th>类别：</th>
       <th></th>
-      <th>Sub-category:</th>
-      <th>Name:</th>
+      <th>子类：</th>
+      <th>名称：</th>
       <td></td>
     </tr>
     <tr>
@@ -46,7 +47,7 @@
                                        onchange => "catSelected()" } %]
         <td>
           <noscript>
-            <input type="submit" name="action-edit" value="Update --&gt;"
+            <input type="submit" name="action-edit" value="更新--&gt;"
                    id="action-edit">
           </noscript>
         </td>
@@ -61,17 +62,17 @@
       </td>
 
       <td valign="top">
-        <span style="font-weight: bold;">Run every</span> &nbsp;
+        <span style="font-weight: bold;">每隔</span> &nbsp;
         <input type="text" size="2" name="frequency"
                value="[% (default.frequency.0 OR 7) FILTER html %]">
-        <span style="font-weight: bold;">&nbsp;day(s)</span><br>
+        <span style="font-weight: bold;">&nbsp;天运行</span><br>
         [%# Change 'admin' here and in Series.pm, or remove the check
             completely, if you want to change who can make series public. %]
         [% IF user.in_group('admin') %]      
           <input type="checkbox" name="public"
                  [% "checked='checked'" IF default.public.0 %]>
-          <span style="font-weight: bold;">Visible to all<br>
-          (within group restrictions)</span> 
+          <span style="font-weight: bold;">所有成员可见<br>
+          (受制于组的权限)</span> 
         [% END %]
       </td>
     </tr>
