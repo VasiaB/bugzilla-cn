@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -26,8 +27,8 @@
 
 [% PROCESS global/variables.none.tmpl %]
 
-[% title = BLOCK %]Select version of product
-                   '[% product.name FILTER html %]'[% END %]
+[% title = BLOCK %]选择产品
+                   '[% product.name FILTER html %]' 的版本[% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
@@ -43,7 +44,7 @@
 [% columns = [
      { 
        name => "name"
-       heading => "Edit version..."
+       heading => "编辑版本"
        contentlink => edit_contentlink
      }
    ]
@@ -53,7 +54,7 @@
 
   [% columns.push({
        name => "bug_count"
-       heading => "$terms.Bugs"
+       heading => "$terms.Bugs 数"
        align => "right"
        contentlink => bug_count_contentlink
      })
@@ -62,8 +63,8 @@
 [% END %]
 
 [% columns.push({
-       heading => "Action"
-       content => "Delete"
+       heading => "操作"
+       content => "删除"
        contentlink => delete_contentlink
      })
 %]
@@ -76,7 +77,7 @@
 [% IF ! showbugcounts %]
 
   <p><a href="editversions.cgi?product=[% product.name FILTER url_quote %]&amp;showbugcounts=1">
-      Redisplay table with [% terms.bug %] counts (slower)</a></p>
+      显示每个版本的[% terms.bug %]数(较慢)</a></p>
 
 [% END %]
 

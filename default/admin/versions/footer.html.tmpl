@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -36,30 +37,30 @@
 <p>
 
 [% UNLESS no_add_version_link %]
-  <a title="Add a version to product '[% product.name FILTER html %]'"
+  <a title="在产品 '[% product.name FILTER html %]' 中添加版本"
      href="editversions.cgi?action=add&amp;product=
-          [%- product.name FILTER url_quote %]">Add</a> a version. 
+          [%- product.name FILTER url_quote %]">添加</a>版本。
 [% END %]
 
 [% IF version.name && !no_edit_version_link %]
-  Edit version <a 
-  title="Edit Version '[% version.name FILTER html %]' of product '
-         [%- product.name FILTER html %]'"
+  编辑版本 <a 
+  title="编辑产品 '[%- product.name FILTER html %]' 的版本 '[% version.name FILTER html %]'
+         "
   href="editversions.cgi?action=edit&amp;product=
         [%- product.name FILTER url_quote %]&amp;version=
         [%- version.name FILTER url_quote %]">
-        '[% version.name FILTER html %]'</a>.
+        '[% version.name FILTER html %]'</a>。
 [% END %]
 
 [% UNLESS no_edit_other_versions_link %]
-  Edit other versions of product <a 
+  编辑产品的其它版本 <a 
   href="editversions.cgi?product=
-        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>.
+        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>。
 
 [% END %]
 
-  Edit product <a 
+  编辑产品 <a 
   href="editproducts.cgi?action=edit&amp;product=
-        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>.
+        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>。
 
 </p>

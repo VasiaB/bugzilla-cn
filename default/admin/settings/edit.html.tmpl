@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Shane H. W. Travis <travis@sedsystems.ca>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #
   #%]
 
@@ -25,25 +26,21 @@
   #%]
 
 [% PROCESS global/header.html.tmpl
-   title = "Default Preferences"
+   title = "默认属性"
  %]
 
 [% PROCESS "global/setting-descs.none.tmpl" %]
 
 <p>
-This lets you edit the default preferences values.
+此处可以编辑默认的属性值。
 </p>
 <p>
-The Default Value displayed for each preference will apply to all users who
-do not choose their own value, and to anyone who is not logged in.
+每个属性的默认值将会用于那些没有改变自己“个人设置”的用户和没有登陆的用户。
 </p>
 <p>
-The 'Enabled' checkbox controls whether or not this preference is available
-to users.<br>
-If it is checked, users will see this preference on their User Preferences page,
-and will be allowed to choose their own value if they desire.<br>
-If it is not checked, this preference will not appear on the User Preference
-page, and the Default Value will automatically apply to everyone.
+'启用' 复选框控制是否此属性对用户可用。<br>
+如果处于选中状态，用户就可以在“个人设置”页面看见它，并可以自定义它的值。<br>
+如果处于非选中状态，则“个人设置”页面看不到它，且此页面的默认值将会自动应用给所有人。
 </p>
 <hr>
 
@@ -51,9 +48,9 @@ page, and the Default Value will automatically apply to everyone.
     <form name="adminsettingform" method="post" action="editsettings.cgi">
       <table border="1" cellpadding="4">
       <tr>
-        <th>Preference Text</th>
-        <th>Default Value</th>
-        <th>Enabled</th>
+        <th>属性描述 Text</th>
+        <th>默认值</th>
+        <th>启用</th>
       </tr>
 
       [% FOREACH name = setting_names %]
@@ -89,14 +86,14 @@ page, and the Default Value will automatically apply to everyone.
       <tr>
         <td width="150"></td>
         <td>
-          <input type="submit" id="update" value="Submit Changes">
+          <input type="submit" id="update" value="提交更改">
         </td>
       </tr>
     </table>
   
   </form>
 [% ELSE %]
-  There are no preferences to edit.
+  没有可供编辑的属性。
 [% END %]
 
 [% PROCESS global/footer.html.tmpl %]

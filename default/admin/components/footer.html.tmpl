@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -27,28 +28,28 @@
 <hr>
 
 <p>
-Edit 
+编辑 
 
 [% IF comp && !no_edit_component_link %]
-  component <a 
-  title="Edit Component '[% comp.name FILTER html %]'"
+  模块 <a 
+  title="编辑模块 '[% comp.name FILTER html %]'"
   href="editcomponents.cgi?action=edit&amp;product=
   [%- product.name FILTER url_quote %]&amp;component=[% comp.name FILTER url_quote %]">
    '[% comp.name FILTER html %]'</a> 
-  or edit
+  或编辑
 [% END %]
 
 [% IF !no_edit_other_components_link %]
-other components of product <a 
-  title="Choose a component from product '[% product.name FILTER html %]' to edit"
+产品 <a 
+  title="从产品 '[% product.name FILTER html %]' 选择一个要编辑的模块"
   href="editcomponents.cgi?product=
-  [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>, 
-  or edit 
+  [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a> 的其它模块，
+  或编辑
 [% END %]
 
-product <a 
-  title="Edit Product '[% product.name FILTER html %]'"
+产品 <a 
+  title="编辑产品 '[% product.name FILTER html %]'"
   href="editproducts.cgi?action=edit&amp;product=
-  [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>.
+  [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>
 
 </p>

@@ -34,7 +34,7 @@
 
 [%# This is not necessary for English templates, but useful for localizers. %]
 [% ordersdesc = {
-   "Reuse same sort as last time" => "Reuse same sort as last time",
+   "Reuse same sort as last time" => "使用上次排序方法",
    "Bug Number"   => "$terms.Bug编号",
    "Importance"   => "重要性",
    "Assignee"     => "责任人",
@@ -70,13 +70,13 @@
   <input type="checkbox" id="remasdefault"
          name="remtype" value="asdefault">
   <label for="remasdefault">
-    将以上查询条件设置为我的默认查询条件
+    将以上搜索条件设置为我的默认搜索条件
   </label>
 </p>
         
 [% IF userdefaultquery %]
   <p>
     <a href="query.cgi?nukedefaultquery=1">
-      将我的查询条件重置为系统默认查询条件</a>。
+      将我的搜索条件重置为系统默认搜索条件</a>。
   </p>
 [% END %]

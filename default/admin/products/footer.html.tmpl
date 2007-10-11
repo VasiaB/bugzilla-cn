@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -36,7 +37,7 @@
      [%- classification.name FILTER url_quote %]
   [% END %]
   [% classification_text = BLOCK %] 
-    of classification '[% classification.name FILTER html %]'
+    分类 '[% classification.name FILTER html %]' 中的
   [% END %]
 [% END %]
 
@@ -44,21 +45,20 @@
 
 <p>
 [% UNLESS no_add_product_link || !user.in_group("editcomponents") %]
-  <a title="Add a product"
-     href="editproducts.cgi?action=add">Add</a> a product[% -%]
+  <a title="添加产品"
+     href="editproducts.cgi?action=add">添加</a> 产品[% -%]
 [%# Strictly speaking, we should not have to check for a
     classification if they are enabled, but I'm just being paranoid %]
   [% IF Param('useclassification') && classification %]
-    (<a title="Add a product to classification '
+    (<a title="添加产品到分类 '
                [%- classification.name FILTER html %]'"
          href="editproducts.cgi?action=add
-               [%- classification_url_part %]">to
-     classification '[% classification.name FILTER html %]'</a>)
+               [%- classification_url_part %]">到分类 '[% classification.name FILTER html %]'</a>)
   [% END %].
 [% END %]
 
 [% IF product && !no_edit_product_link %]
-  Edit product <a 
+  编辑产品 <a 
   title="Edit Product '[% product.name FILTER html %]' 
          [%- classification_text %]"
   href="editproducts.cgi?action=edit&amp;product=
@@ -70,15 +70,14 @@
 
 [%# Edit other products (in a classification if specified): %]
 [% UNLESS no_edit_other_products_link %]
-  Edit <a 
+  编辑 <a 
   href="editproducts.cgi?
-        [%- classification_url_part_start FILTER none %]">other products
-          [% classification_text %]</a>.
+        [%- classification_url_part_start FILTER none %]">[% classification_text %]其它产品</a>。
 
 [% END %]
 
 [% IF Param('useclassification') && classification %]
-  Edit classification <a href="editclassifications.cgi?action=edit
+  编辑分类 <a href="editclassifications.cgi?action=edit
     [%- classification_url_part %]">'
     [%- classification.name FILTER html %]'</a>.
 

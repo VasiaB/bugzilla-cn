@@ -62,7 +62,7 @@
         <button onclick="document.getElementById('keyword-chooser').chooserElement.chooser.unchoose(); return false;"><-</button>
       </td>
       <td valign="top">
-        Bug&nbsp;关键字：<br>
+        [% terms.bug %]关键字：<br>
         <select id="bug-keyword-list" size="5" multiple>
         [% FOREACH kwd = valid_keywords %]
           [% IF sel_keywords && lsearch(sel_keywords, kwd) != -1 %]

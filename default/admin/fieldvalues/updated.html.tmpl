@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -28,27 +29,26 @@
   #%]
   
 [% title = BLOCK %]
-  Updating Value '[% value FILTER html %]' of the '[% field.description FILTER html %]'
-  ([% field.name FILTER html %]) Field
+  更新字段 '[% field.description FILTER html %]'([% field.name FILTER html %]) 的值 '[% value FILTER html %]'
 [% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
 
 [% IF updated_value %]
-  <p>Updated field value to: '[% value FILTER html %]'.</p>
+  <p>字段值更新为：'[% value FILTER html %]'。</p>
   [% IF default_value_updated %]
-    <p>Note that this value is the default for this field.
-    All references to the default value will now point to this new value.</p>
+    <p>注意：此值是此字段的默认值，
+    所有字段默认值的引用将会指向此更新后的字段值。</p>
   [% END %]
 [% END %]
 
 [% IF updated_sortkey %]
-  <p>Updated field value sortkey to: '[% sortkey FILTER html %]'.</p>
+  <p>排序键更新为 '[% sortkey FILTER html %]'。</p>
 [% END %]
 
 [% UNLESS (updated_sortkey || updated_value) %]
-  <p>Nothing changed for field value '[% value FILTER html %]'.</p>
+  <p>字段值 '[% value FILTER html %]' 没有作任何修改。</p>
 [% END %]
 
 [% PROCESS admin/fieldvalues/footer.html.tmpl %]

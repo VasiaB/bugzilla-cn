@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -13,6 +13,7 @@
   # Contributor(s): Jack Nerad     <jnerad@bellsouth.net>
   #                 Tiago R. Mello <tiago@async.com.br>
   #                 Gabriel S. Oliveira <gabriel@async.com.br>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -25,19 +26,19 @@
 
 [% IF Param('useclassification') %]
   <tr>
-    <th align="right"><b>Classification:</b></th>
+    <th align="right"><b>分类：</b></th>
     <td><b>[% classification.name FILTER html %]</b></td>
   </tr>
 [% END %]
     
 <tr>
-  <th align="right">Product:</th>
+  <th align="right">产品：</th>
   <td><input size="64" maxlength="64" name="product" 
              value="[% product.name FILTER html %]">
   </td>
 </tr>
 <tr>
-  <th align="right">Description:</th>
+  <th align="right">描述：</th>
   <td><textarea rows="4" cols="64" wrap="virtual" name="description">
         [% product.description FILTER html %]</textarea>
   </td>
@@ -45,13 +46,13 @@
 
 [% IF Param('usetargetmilestone') -%]
   <tr>
-    <th align="right">URL describing milestones for this product:</th>
+    <th align="right">描述此产品里程碑的链接：</th>
     <td><input type="text" size="64" maxlength="255" name="milestoneurl"
                value="[% product.milestoneurl FILTER html %]">
     </td>
   </tr>
   <tr>
-    <th align="right">Default milestone:</th>
+    <th align="right">默认里程碑：</th>
     <td>
       [% IF product.milestones.size %]
         <select name="defaultmilestone">
@@ -70,7 +71,7 @@
 [% END %]
     
 <tr>
-  <th align="right">Closed for [% terms.bug %] entry:</th>
+  <th align="right">禁止提交新[% terms.bug %]：</th>
   <td><input type="checkbox" name="disallownew" value="1"
        [% IF product.disallownew == "1" %]
              checked="checked"[% END %]>
@@ -81,19 +82,18 @@
 <tr class="param_disabled">
   <td colspan="2"
       style="font-family: arial; font-style: italic; font-size: 0.7em; text-align: center;">
-    The 'usevotes' parameter is currently 'off'. These voting
-    settings will take effect when the parameter is next enabled.</td>
+    'usevotes'参数当前设置成了'关'。这些投票设置将会在此参数下次启用时起作用。</td>
 </tr>
 [% END %]
 <tr [% IF !Param('usevotes') %]class="param_disabled" [% END %]>
-  <th align="right">Maximum votes per person:</th>
+  <th align="right">每个用户的最大投票数：</th>
   <td><input size="5" maxlength="5" name="votesperuser" 
              value="[% product.votesperuser FILTER html %]">
   </td>
 </tr>
 <tr [% IF !Param('usevotes') %]class="param_disabled" [% END %]>
   <th align="right">
-    Maximum votes a person can put on a single [% terms.bug %]:
+    每个人在每个[% terms.bug %]上的最大投票数：
   </th>
   <td><input size="5" maxlength="5" name="maxvotesperbug" 
              value="[% product.maxvotesperbug FILTER html %]">
@@ -101,13 +101,12 @@
 </tr>
 <tr [% IF !Param('usevotes') %]class="param_disabled" [% END %]>
   <th align="right">
-    Confirmation threshold:
+    确认[% terms.abug %]所需最小投票数：
   </th>
   <td>
-    Enter the number of votes [% terms.abug %] in this product needs to
-    automatically get out of the
+    输入此产品中的[% terms.abug %]自动取消
     <a href="page.cgi?id=fields.html#status">[% get_status("UNCONFIRMED") FILTER html %]</a>
-    state.<br>
+    状态所需的最小票数。<br>
     <input size="5" maxlength="5" name="votestoconfirm" 
            value="[% product.votestoconfirm FILTER html %]">
   </td>

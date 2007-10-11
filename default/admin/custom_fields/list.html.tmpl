@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -19,37 +20,37 @@
 
 [% PROCESS "global/field-descs.none.tmpl" %]
 
-[% PROCESS global/header.html.tmpl title = "Custom Fields" %]
+[% PROCESS global/header.html.tmpl title = "自定义字段" %]
 
 [% columns = [
      {
        name => "name"
-       heading => "Edit custom field..."
+       heading => "自定义字段"
        contentlink => "editfields.cgi?action=edit&amp;name=%%name%%"
      },
      {
        name => "description"
-       heading => "Description"
+       heading => "描述"
      },
      {
        name => "sortkey"
-       heading => "Sortkey"
+       heading => "排序键"
      },
      {
        name => "type"
-       heading => "Type"
+       heading => "类型"
      },
      {
        name => "enter_bug"
-       heading => "Editable on $terms.Bug Creation"
+       heading => "${terms.Bug}创建时可编辑"
      },
      {
        name => "mailhead"
-       heading => "In ${terms.Bug}mail on $terms.Bug Creation"
+       heading => "${terms.Bug}创建时包含在${terms.Bug}邮件中"
      },
      {
        name => "obsolete"
-       heading => "Is Obsolete"
+       heading => "废弃不用"
      }
    ]
 %]
@@ -77,7 +78,7 @@
 %]
 
 <p>
-  <a href="editfields.cgi?action=add">Add a new custom field</a>
+  <a href="editfields.cgi?action=add">添加自定义字段</a>
 </p>
 
 [% PROCESS global/footer.html.tmpl %]

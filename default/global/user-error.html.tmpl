@@ -1053,8 +1053,7 @@
   [% ELSIF error == "no_dupe_stats" %]
     [% title = "Cannot Find Duplicate Statistics" %]
     [% admindocslinks = {'extraconfig.html' => 'Setting up the collecstats.pl job'} %]
-    There are no duplicate statistics for today ([% today FILTER html %]) 
-    or yesterday.
+    没有今天([% today FILTER html %]) 或昨天的重复[% terms.bug %]统计。
 
   [% ELSIF error == "no_dupe_stats_error_today" %]
     [% title = "Error Reading Today's Dupes File" %]
@@ -1563,7 +1562,7 @@
 </table>
 
 <p>
-  Please press <b>Back</b> and try again.
+  请 <b>返回</b> 并重试。
 </p>
 
 [%# If a saved search fails, people want the ability to edit or delete it. 

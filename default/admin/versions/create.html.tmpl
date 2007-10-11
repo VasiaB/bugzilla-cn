@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -23,9 +24,9 @@
   #               which the version is being created for
   #%]
   
-[% title = BLOCK %]Add Version to Product '[% product.name FILTER html %]'[% END %]
-[% subheader = BLOCK %]This page allows you to add a new version to product
-                '[% product.name FILTER html %]'.[% END %]
+[% title = BLOCK %]在产品 '[% product.name FILTER html %]' 中添加版本[% END %]
+[% subheader = BLOCK %]此页面可以向产品
+                '[% product.name FILTER html %]' 中添加新的版本。[% END %]
 [% PROCESS global/header.html.tmpl
   title = title
   subheader = subheader
@@ -34,12 +35,12 @@
 <form method="post" action="editversions.cgi">
   <table border="0" cellpadding="4" cellspacing="0">
     <tr>
-      <th align="right"><label for="version">Version:</label></th>
+      <th align="right"><label for="version">版本：</label></th>
       <td><input id="version" size="64" maxlength="64" name="version"
                  value=""></td>
     </tr>
   </table>
-  <input type="submit" id="create" value="Add">
+  <input type="submit" id="create" value="添加">
   <input type="hidden" name="action" value="new">
   <input type="hidden" name='product' value="[% product.name FILTER html %]">
   <input type="hidden" name="token" value="[% token FILTER html %]">

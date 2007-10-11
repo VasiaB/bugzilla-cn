@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,25 +16,26 @@
   # Rights Reserved.
   #
   # Contributor(s): Albert Ting <alt@sonic.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/header.html.tmpl
-  title = "Update classification"
+  title = "分类已更新"
 %]
 
 [% IF updated_sortkey %] 
-  Updated sortkey.<br>
+  已更新排序键。<br>
 [% END %]
 
 [% IF updated_description %] 
-  Updated description.<br>
+  已更新描述。<br>
 [% END %]
 
 [% IF updated_classification %] 
-  Updated classification name.<br>
+  已更新分类名。<br>
 [% END %]
 
-<p>Back to the <a href="./">main [% terms.bugs %] page</a>
-or <a href="editclassifications.cgi"> edit</a> more classifications.
+<p>返回到 <a href="./">首页</a>
+或 <a href="editclassifications.cgi">编辑</a> 其它分类。
 
 [% PROCESS global/footer.html.tmpl %] 

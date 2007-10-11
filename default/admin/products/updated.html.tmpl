@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -62,10 +62,10 @@
 
 [% IF product.name != old_product.name %]
   <p>
-  Updated product name from '[% old_product.name FILTER html %]' to 
+  产品名称由 '[% old_product.name FILTER html %]' 更新为 
   <a href="editproducts.cgi?action=edit&amp;product=
   [%- product.name FILTER url_quote %]
-  [%- classification_url_part FILTER none %]">[% product.name FILTER html %]</a>.
+  [%- classification_url_part FILTER none %]">[% product.name FILTER html %]</a>。
   </p>
   [% updated = 1 %]
 [% END %]
@@ -73,7 +73,7 @@
 
 [% IF product.description != old_product.description %]
   <p>
-    Updated description to:
+    产品描述更新为
   </p>
   <p style="margin: 1em 3em 1em 3em">[% product.description FILTER html_light %]</p>
   [% updated = 1 %]
@@ -81,13 +81,13 @@
 
 [% IF product.disallow_new != old_product.disallow_new %]
   <p>
-  Product is now
+  产品现在
   [% IF product.disallow_new %]
-    closed to
+    不允许
   [% ELSE %]
-    open for 
+    允许 
   [% END %]
-  new [% terms.bugs %].
+  提交新[% terms.bugs %]。
   </p>
   [% updated = 1 %]
 [% END %]

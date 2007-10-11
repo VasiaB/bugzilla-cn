@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -30,24 +31,23 @@
 <p>
 
 [% UNLESS no_add_link %]
-  <a title="Add a value for the '[% field.description FILTER html %]' field."
+  <a title="添加字段值到字段 '[% field.description FILTER html %]'"
      href="editvalues.cgi?action=add&amp;field=
-          [%- field.name FILTER url_quote %]">Add</a> a value.
+          [%- field.name FILTER url_quote %]">添加</a> 字段值。
 [% END %]
 
 [% IF value && !no_edit_link %]
-  Edit value <a 
-  title="Edit value '[% value FILTER html %]' for the '
-         [%- field.name FILTER html %]' field"
+  编辑字段值 <a 
+  title="编辑字段 '[%- field.name FILTER html %]' 的值 '[% value FILTER html %]'"
   href="editvalues.cgi?action=edit&amp;field=
         [%- field.name FILTER url_quote %]&amp;value=[% value FILTER url_quote %]">
-        '[% value FILTER html %]'</a>.
+        '[% value FILTER html %]'</a>。
 [% END %]
 
 [% UNLESS no_edit_other_link %]
-  Edit other values for the <a 
+  编辑字段 <a 
   href="editvalues.cgi?field=
-        [%- field.name FILTER url_quote %]">'[% field.description FILTER html %]'</a> field.
+        [%- field.name FILTER url_quote %]">'[% field.description FILTER html %]'</a> 的其它字段值
 
 [% END %]
 

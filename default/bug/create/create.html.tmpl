@@ -436,7 +436,7 @@ function handleWantsAttachment(wants_attachment) {
         <input type="checkbox" id="commentprivacy" name="commentprivacy"
           [% " checked=\"checked\"" IF commentprivacy %]>
         <label for="commentprivacy">
-          初始描述是非公开的
+          不公开创建此[% terms.Bug %]时的初始描述
         </label>
       </td>
     </tr>
@@ -482,11 +482,11 @@ function handleWantsAttachment(wants_attachment) {
       <tr>
         <td align="right" valign="top">
           <strong>
-            <a href="describekeywords.cgi">Keywords</a>:
+            <a href="describekeywords.cgi">关键字</a>：
           </strong>
         </td>
         <td colspan="3">
-          <input id="keywords" name="keywords" size="60" value="[% keywords FILTER html %]" onfocus="this.chooser.open();"> (optional)
+          <input id="keywords" name="keywords" size="60" value="[% keywords FILTER html %]" onfocus="this.chooser.open();"> (可选)
         </td>
       </tr>
     [% END %]
@@ -607,6 +607,8 @@ function handleWantsAttachment(wants_attachment) {
         [% " selected=\"selected\"" IF x == default.${sel.name} %]>
         [% IF sel.name == "bug_status" %]
           [% get_status(x) FILTER html %]
+        [% ELSIF sel.name == "bug_severity" %]
+          [% get_severity(x) FILTER html %]
         [% ELSE %]
           [% x FILTER html %]
         [% END %]</option>

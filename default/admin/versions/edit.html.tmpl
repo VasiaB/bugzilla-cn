@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -27,8 +28,8 @@
 
 [% PROCESS global/variables.none.tmpl %]
 
-[% title = BLOCK %]Edit Version '[% version.name FILTER html %]' of product '
-                   [%- product.name FILTER html %]'[% END %]
+[% title = BLOCK %]编辑产品 '[%- product.name FILTER html %]' 的版本 '[% version.name FILTER html %]'
+                   [% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
@@ -37,7 +38,7 @@
   <table border="0" cellpadding="4" cellspacing="0">
 
     <tr>
-      <th valign="top"><label for="version">Version:</label></th>
+      <th valign="top"><label for="version">版本：</label></th>
       <td><input id="version" size="64" maxlength="64" name="version" value="
       [%- version.name FILTER html %]"></td>
     </tr>
@@ -48,7 +49,7 @@
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="product" value="[% product.name FILTER html %]">
   <input type="hidden" name="token" value="[% token FILTER html %]">
-  <input type="submit" id="update" value="Save Changes">
+  <input type="submit" id="update" value="保存修改">
 </form>
 
 [% PROCESS admin/versions/footer.html.tmpl

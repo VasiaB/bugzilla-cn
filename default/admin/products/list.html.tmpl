@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -29,12 +30,12 @@
     [%- classification.name FILTER url_quote %]
   [%- END %]
   [% classification_title = BLOCK %] 
-    in classification '[% classification.name FILTER html %]'
+    '[% classification.name FILTER html %]'
   [% END %]
 [% END %]
 
 [% PROCESS global/header.html.tmpl
-  title = "Select product $classification_title"
+  title = "选择分类 $classification_title 中的产品"
 %]
 
 [% edit_contentlink = BLOCK %]
@@ -52,31 +53,31 @@
 [% columns = [
      { 
        name => "name"
-       heading => "Edit product..."
+       heading => "编辑产品"
        contentlink => edit_contentlink
      },
      { 
        name => "description"
-       heading => "Description"
+       heading => "描述"
        allow_html_content => 1
      },
      { 
        name => "disallow_new"
-       heading => "Open For New $terms.Bugs"
+       heading => "可添加新$terms.Bugs"
      },
      { 
        name => "votesperuser"
-       heading => "Votes Per User"
+       heading => "每用户投票数"
        align => 'right'
      },
      { 
        name => "maxvotesperbug"
-       heading => "Maximum Votes Per $terms.Bug"
+       heading => "每个 $terms.Bug 最大投票数"
        align => 'right'
      },
      { 
        name => "votestoconfirm"
-       heading => "Votes To Confirm"
+       heading => "确认所需票数"
        align => 'right'
      } ]
 %]
@@ -85,7 +86,7 @@
 
   [% columns.push({
        name => "bug_count"
-       heading => "$terms.Bug Count"
+       heading => "$terms.Bug 数"
        align => 'right'
        contentlink => bug_count_contentlink
      })
@@ -94,8 +95,8 @@
 [% END %]
 
 [% columns.push({
-       heading => "Action"
-       content => "Delete"
+       heading => "操作"
+       content => "删除"
        contentlink => delete_contentlink
      })
 %]
@@ -104,13 +105,13 @@
      match_value => "1"
      match_field => 'disallow_new'
      override_content => 1
-     content => "No"
+     content => "否"
    },
    {
      match_value => 0
      match_field => 'disallow_new'
      override_content => 1
-     content => "Yes"
+     content => "是"
    }]
 %] 
 
@@ -122,7 +123,7 @@
 [% IF !showbugcounts %]
 
   <p><a href="editproducts.cgi?showbugcounts=1[% classification_url_part %]">
-      Redisplay table with [% terms.bug %] counts (slower)</a></p>
+      显示每个产品中的[% terms.bug %]数(较慢)</a></p>
 
 [% END %]
 

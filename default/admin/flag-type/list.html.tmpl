@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
@@ -23,7 +24,7 @@
 [% PROCESS "global/js-products.html.tmpl" %]
 
 [% PROCESS global/header.html.tmpl
-  title = 'Administer Flag Types'
+  title = '管理标记类型'
   style = "
     table#flag_types_bugs tr th,
     table#flag_types_attachments tr th { text-align: left; }
@@ -37,11 +38,11 @@
 <p>
   Flags are markers that identify whether [% terms.abug %] or attachment has been granted
   or denied some status.  Flags appear in the UI as a name and a status symbol
-  ("+" for granted, "-" for denied, and "?" for statuses requested by users).
+  ("+" 代表授权，"-" 代表拒绝，"?" 用户状态请求)
 </p>
 
 <p>
-  For example, you might define a "review" status for users to request review
+  例如，you might define a "review" status for users to request review
   for their patches.  When a patch writer requests review, the string "review?"
   will appear in the attachment.  When a patch reviewer reviews the patch,
   either the string "review+" or the string "review-" will appear in the patch,
@@ -57,10 +58,10 @@
 <form action="editflagtypes.cgi" method="get">
   <table>
     <tr>
-      <th><label for="product">Product:</label></th>
+      <th><label for="product">产品：</label></th>
       <td>
-        <select name="product" onchange="selectProduct(this, this.form.component, null, null, '__Any__');">
-          <option value="">__Any__</option>
+        <select name="product" onchange="selectProduct(this, this.form.component, null, null, '__任意__');">
+          <option value="">__任意__</option>
           [% FOREACH prod = products %]
             <option value="[% prod.name FILTER html %]"
                     [% " selected" IF selected_product == prod.name %]>
@@ -68,10 +69,10 @@
           [% END %]
         </select>
       </td>
-      <th><label for="component">Component:</label></th>
+      <th><label for="component">模块：</label></th>
       <td>
         <select name="component">
-          <option value="">__Any__</option>
+          <option value="">__任意__</option>
           [% FOREACH comp = components %]
             <option value="[% comp FILTER html %]"
                     [% " selected" IF selected_component == comp %]>
@@ -79,25 +80,25 @@
           [% END %]
         </select>
       </td>
-      <td><input type="submit" id="submit" value="Filter"></td>
+      <td><input type="submit" id="submit" value="过滤"></td>
     </tr>
   </table>
 </form>
 
-<h3>Flag Types for [% terms.Bugs %]</h3>
+<h3>[% terms.Bugs %]的标记类型</h3>
 
 [% PROCESS display_flag_types types=bug_types types_id='bugs' %]
 
 <p>
-  <a href="editflagtypes.cgi?action=enter&amp;target_type=bug">Create Flag Type for [% terms.Bugs %]</a>
+  <a href="editflagtypes.cgi?action=enter&amp;target_type=bug">创建[% terms.Bugs %]标记类型</a>
 </p>
 
-<h3>Flag Types for Attachments</h3>
+<h3>附件的标记类型</h3>
 
 [% PROCESS display_flag_types types=attachment_types types_id='attachments' %]
 
 <p>
-  <a href="editflagtypes.cgi?action=enter&amp;target_type=attachment">Create Flag Type For Attachments</a>
+  <a href="editflagtypes.cgi?action=enter&amp;target_type=attachment">创建附件标记类型</a>
 </p>
 
 [% PROCESS global/footer.html.tmpl %]
@@ -107,13 +108,13 @@
   <table id="flag_types_[% types_id FILTER html %]" cellspacing="0" cellpadding="4" border="1">
 
     <tr>
-      <th>Edit name ...</th>
-      <th>Description</th>
-      <th>Sortkey</th>
-      <th>Properties</th>
+      <th>编辑标记名称</th>
+      <th>标记描述</th>
+      <th>排序键</th>
+      <th>属性</th>
       <th>Grant group</th>
       <th>Request group</th>
-      <th>Actions</th>
+      <th>操作</th>
     </tr>
 
     [% FOREACH type = types %]
@@ -136,8 +137,8 @@
         <td>[% IF type.grant_group %][% type.grant_group.name FILTER html %][% END %]</td>
         <td>[% IF type.request_group %][% type.request_group.name FILTER html %][% END %]</td>
         <td>
-          <a href="editflagtypes.cgi?action=copy&amp;id=[% type.id %]">Copy</a>
-          | <a href="editflagtypes.cgi?action=confirmdelete&amp;id=[% type.id %]">Delete</a>
+          <a href="editflagtypes.cgi?action=copy&amp;id=[% type.id %]">复制</a>
+          | <a href="editflagtypes.cgi?action=confirmdelete&amp;id=[% type.id %]">删除</a>
         </td>
       </tr>
 

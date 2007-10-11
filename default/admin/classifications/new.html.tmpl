@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,16 +16,17 @@
   # Rights Reserved.
   #
   # Contributor(s): Albert Ting <alt@sonic.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/header.html.tmpl
-  title = "Adding new classification"
+  title = "添加新分类"
 %]
 
-OK, done.
+已完成
 
-<p>Back to the <a href="./">main [% terms.bugs %] page</a>,
-<a href="editproducts.cgi?action=add&amp;classification=[% classification FILTER url_quote %]">add</a> products to this new classification, 
-or <a href="editclassifications.cgi"> edit</a> more classifications.
+<p>返回到 <a href="./">首页</a>，
+<a href="editproducts.cgi?action=add&amp;classification=[% classification FILTER url_quote %]">添加</a> 产品到此新建的分类，
+或 <a href="editclassifications.cgi">编辑</a> 其它分类。
 
 [% PROCESS global/footer.html.tmpl %] 

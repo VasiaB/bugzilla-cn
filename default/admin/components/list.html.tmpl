@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -44,17 +45,17 @@
 [% columns = [
      { 
        name => "name"
-       heading => "Edit component..."
+       heading => "编辑模块"
        contentlink => edit_contentlink
      },
      { 
        name => "description"
-       heading => "Description" 
+       heading => "模块描述" 
        allow_html_content => 1
      },
      { 
        name => "initialowner"
-       heading => "Default Assignee"
+       heading => "默认责任人"
      },
    ]
 %]
@@ -63,7 +64,7 @@
 
   [% columns.push({
        name => 'initialqacontact'
-       heading => 'QA Contact'
+       heading => 'QA联系人'
      }) %]
 
 [% END %]
@@ -80,8 +81,8 @@
 [% END %]
 
 [% columns.push({
-     heading => "Action"
-     content => "Delete"
+     heading => "操作"
+     content => "删除"
      contentlink => delete_contentlink
    }) %]
 
@@ -112,13 +113,14 @@
      overrides = overrides
 %]
 
-<p><a href="editcomponents.cgi?action=add&amp;product=[% product.name FILTER url_quote %]">Add</a>
-    a new component to product '[% product.name FILTER html %]'</p>
+<p>向产品 '[% product.name FILTER html %]' 中
+<a href="editcomponents.cgi?action=add&amp;product=[% product.name FILTER url_quote %]">添加</a>
+    新模块。</p>
 
 [% IF ! showbugcounts %]
 
   <p><a href="editcomponents.cgi?product=[% product.name FILTER url_quote %]&amp;showbugcounts=1">
-      Redisplay table with [% terms.bug %] counts (slower)</a></p>
+      显示每个模块中的[% terms.bug %]数(较慢)</a></p>
 
 [% END %]
 

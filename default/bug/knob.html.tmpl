@@ -79,7 +79,7 @@
   </div>
 
   <div id="knob-buttons">
-    <input type="submit" value="Commit" id="commit">
+    <input type="submit" value="提交" id="commit">
     [% IF bug.user.canmove %]
       <input type="submit" name="action" id="action" value="[% Param("move-button-text") %]">
     [% END %]
@@ -93,7 +93,7 @@
   [% IF !initial_action_shown %]
     <input type="radio" id="knob-leave" name="knob" value="none" checked="checked">
     <label for="knob-leave">
-      Leave as <b>[% get_status(bug.bug_status) FILTER html %]&nbsp;
+      保持状态为<b>[% get_status(bug.bug_status) FILTER html %]&nbsp;
                   [% get_resolution(bug.resolution) FILTER html %]</b>
     </label>
     <br>
@@ -111,7 +111,7 @@
 [% END %]
 
 [% BLOCK duplicate %]
-  <input type="radio" id="knob_duplicate" name="knob" value="duplicate">
+  <input type="radio" id="knob_duplicate" name="knob" value="重复">
   <label for="knob_duplicate">
     标记[% terms.bug %]为另一[% terms.bug %]的重复
   </label>

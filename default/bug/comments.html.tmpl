@@ -152,11 +152,11 @@
       [% IF count == description %]
         [% class_name = "bz_first_comment_head" %]
         [% comment_label = "" %]
-        [% comment_link = "Description" %]
+        [% comment_link = "描述" %]
         [% decoration = "" %]
       [% ELSE %]
         [% class_name = "bz_comment_head" %]
-        [% comment_label = "Comment" %]
+        [% comment_label = "评论" %]
         [% comment_link = "#" _ count %]
         [% decoration = '<span class="comment_rule">-------</span>' %]
       [% END %]
@@ -199,7 +199,7 @@
                  onClick="updateCommentPrivacy(this, [% count %])"
                  id="isprivate-[% count %]"
                  [% " checked=\"checked\"" IF comment.isprivate %]>
-          <label for="isprivate-[% count %]">Private</label>
+          <label for="isprivate-[% count %]">隐藏评论</label>
         </i>
       [% END %]
       [% IF user.in_group(Param('timetrackinggroup')) &&

@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -13,6 +13,7 @@
   # Contributor(s): Jack Nerad     <jnerad@bellsouth.net>
   #                 Tiago R. Mello <tiago@async.com.br>
   #                 Gabriel S. Oliveira <gabriel@async.com.br>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -26,7 +27,7 @@
   # groups_controls: a hash of group controls related to the product.
   #%]
 
-[% title = BLOCK %]Edit Product '[% product.name FILTER html %]'[% END %]
+[% title = BLOCK %]编辑产品 '[% product.name FILTER html %]'[% END %]
 
 [% PROCESS global/header.html.tmpl
   title = title
@@ -41,7 +42,7 @@
     <tr>
       <th align="right" valign="top">
         <a href="editcomponents.cgi?product=[% product.name FILTER url_quote %]">
-        Edit components:
+        编辑模块：
         </a>
       </th>
       <td>
@@ -51,19 +52,18 @@
             [% IF component.description %]
               [% component.description FILTER html_light %]
             [% ELSE %]
-              <font color="red">description missing</font>
+              <font color="red">无相关描述</font>
             [% END %]
             <br>
           [% END %]
         [% ELSE %]
-          <font color="red">missing</font>
+          <font color="red">无</font>
         [% END %]
       </td>
     </tr>
     <tr>
       <th align="right" valign="top">
-        <a href="editversions.cgi?product=[% product.name FILTER url_quote %]">Edit
-versions:</a>
+        <a href="editversions.cgi?product=[% product.name FILTER url_quote %]">编辑版本：</a>
       </th>
       <td>
         [%- IF product.versions.size -%]
@@ -72,7 +72,7 @@ versions:</a>
             <br>
           [% END %]
         [% ELSE %]
-          <font color="red">missing</font>
+          <font color="red">无</font>
         [% END %]
       </td>
     </tr>
@@ -80,7 +80,7 @@ versions:</a>
       <tr>
         <th align="right" valign="top">
           <a href="editmilestones.cgi?product=[% product.name FILTER url_quote %]">
-          Edit milestones:</a>
+          编辑里程碑：</a>
         </th>
         <td>
           [%- IF product.milestones.size -%]
@@ -89,7 +89,7 @@ versions:</a>
             <br>
             [% END %]
           [% ELSE %]
-            <font color="red">missing</font>
+            <font color="red">无</font>
           [% END %]
         </td>
       </tr>
@@ -99,7 +99,7 @@ versions:</a>
         <a href="editproducts.cgi?action=editgroupcontrols&product=
           [%- product.name FILTER url_quote %]&classification=
           [%- classification.name FILTER url_quote %]">
-          Edit Group Access Controls:
+          编辑组访问控制：
         </a>
       </th>
       <td>
@@ -120,12 +120,12 @@ versions:</a>
             <br>
           [% END %]
         [% ELSE %]
-          no groups
+          无相关分组
         [% END %]
       </td>
     </tr>
     <tr>
-      <th align="right">[% terms.Bugs %]:</th>
+      <th align="right">[% terms.Bugs %]数：</th>
       <td><a href="buglist.cgi?product=[% product.name FILTER url_quote %]">
             [% product.bug_count FILTER html %]</a></td>
     </tr>
@@ -137,7 +137,7 @@ versions:</a>
   <input type="hidden" name="token" value="[% token FILTER html %]">
   <input type="hidden" name="classification"
          value="[% classification.name FILTER html %]">
-  <input type="submit" name="submit" value="Save Changes">
+  <input type="submit" name="submit" value="保存修改">
 </form>
   
 [% PROCESS "admin/products/footer.html.tmpl"

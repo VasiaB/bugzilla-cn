@@ -23,14 +23,14 @@
 
 [% PROCESS global/variables.none.tmpl %]
 
-[% field_descs = { "[Bug creation]"       => "[$terms.Bug 创建]",
+[% field_descs = { "[Bug creation]"       => "[${terms.Bug} 创建]",
                    "actual_time"          => "实际小时数"
-                   "alias"                => "另名",
+                   "alias"                => "别名",
                    "assigned_to"          => "责任人",
                    "blocked"              => "阻塞",
                    "bug_file_loc"         => "URL",
-                   "bug_id"               => "$terms.Bug ID",
-                   "bug_severity"         => "严重程序",
+                   "bug_id"               => "${terms.Bug} ID",
+                   "bug_severity"         => "严重程度",
                    "bug_status"           => "状态",
                    "changeddate"          => "上次修改日期",
                    "cc"                   => "抄送",
@@ -38,9 +38,9 @@
                    "cclist_accessible"    => "抄送人可用",
                    "component_id"         => "模块ID",
                    "component"            => "模块",
-                   "creation_ts"          => "$terms.Bug创建时间",
+                   "creation_ts"          => "${terms.Bug}创建时间",
                    "deadline"             => "最后期限",
-                   "delta_ts"             => "Changed",
+                   "delta_ts"             => "已改变",
                    "dependson"            => "依赖于",
                    "dup_id"               => "重复",
                    "estimated_time"       => "初始估计时间",
@@ -58,7 +58,7 @@
                    "rep_platform"         => "硬件平台",
                    "reporter"             => "提交者",
                    "reporter_accessible"  => "提交者可用",
-                   "resolution"           => "处理方法",
+                   "resolution"           => "解决途径",
                    "setting"              => "设置",
                    "settings"             => "设置",
                    "short_desc"           => "摘要",
@@ -103,5 +103,15 @@
                         " "          => " " } %]
 
 [% MACRO get_resolution(res) GET resolution_descs.$res || res %]
+
+[% severity_descs = {	"blocker"	=> "阻塞",
+			"critical"	=> "严重",
+			"major"		=> "主要",
+			"normal"	=> "一般",
+			"minor"		=> "次要",
+			"trivial"	=> "轻微",
+			"enhancement"	=> "建议" } %]
+											
+[% MACRO get_severity(res) GET severity_descs.$res || res %]
 
 [% Hook.process("end") %]

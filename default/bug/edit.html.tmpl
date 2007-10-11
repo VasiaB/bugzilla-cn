@@ -155,7 +155,7 @@
             [%# *** Summary *** %]
             <tr>
               <td align="right">
-                <label for="short_desc" accesskey="s">摘要(<b><u>S</u>)</b></label>:
+                <label for="short_desc" accesskey="s"><b>摘要</b></label>:
               </td>
               [% PROCESS input inputname => "short_desc" size => "60" colspan => 2
                                maxlength => 255 %]
@@ -198,7 +198,7 @@
             [% IF Param('usestatuswhiteboard') %]
               <tr>
                 <td align="right">
-                  <label for="status_whiteboard" accesskey="w"><b>白板(<u>W</u>)</b></label>:
+                  <label for="status_whiteboard" accesskey="w"><b>白板</b></label>:
                 </td>
                 [% PROCESS input inputname => "status_whiteboard" size => "60" colspan => 2 %]
               </tr>
@@ -208,7 +208,7 @@
               <tr>
                 <td align="right">
                   <label for="keywords" accesskey="k">
-                    <b><a href="describekeywords.cgi">关键字(<u>K</u>)</a></b></label>:
+                    <b><a href="describekeywords.cgi">关键字</a></b></label>:
                 </td>
                 [% PROCESS input inputname => "keywords" size => 60 colspan => 2
                                  value => bug.keywords.join(', ')
@@ -582,7 +582,7 @@
     [% IF Param("usebugaliases") %]
       <tr>
         <td align="right">
-          <label for="alias" title="[% terms.bug %]名称可以取代它的 ID 编号，例如添加到依赖列表中"><b>别名</b></label>：
+          <label for="alias" title="[% terms.bug %]名称可以取代它的 ID 编号，例如添加到依赖列表中"><b>别名</b></label>:
         </td>
         [% PROCESS input inputname => "alias" size => "20" maxlength => "20" %]
       </tr>
@@ -590,14 +590,14 @@
 
     <tr>
       <td align="right">
-        <label for="product" accesskey="p"><b>产品(<u>P</u>)</b></label>:
+        <label for="product" accesskey="p"><b>产品</b></label>:
       </td>
       [% PROCESS select selname => "product" %]
     </tr>
 
     <tr>
       <td align="right">
-        <label for="component" accesskey="m"><b><a href="describecomponents.cgi?product=[% bug.product FILTER url_quote %]">模块(<u>m</u>)</a></b></label>:
+        <label for="component" accesskey="m"><b><a href="describecomponents.cgi?product=[% bug.product FILTER url_quote %]">模块</a></b></label>:
       </td>
       [% PROCESS select selname => "component" %]
     </tr>
@@ -631,14 +631,14 @@
   <table cellspacing="1" cellpadding="1">
     <tr>
       <td align="right">
-        <label for="rep_platform" accesskey="h"><b>硬件平台(<u>H</u>)</b></label>:
+        <label for="rep_platform" accesskey="h"><b>硬件平台</b></label>:
       </td>
       [% PROCESS select selname => "rep_platform" %]
     </tr>
 
     <tr>
       <td align="right">
-        <label for="op_sys" accesskey="o">操作系统(<b><u>O</u>)</b></label>:
+        <label for="op_sys" accesskey="o"><b>操作系统</b></label>:
       </td>
       [% PROCESS select selname => "op_sys" %]
     </tr>
@@ -688,7 +688,7 @@
   <table cellpadding="3" cellspacing="1">
     <tr>
       <td align="right">
-        <b>报告者</b>：
+        <b>报告者</b>:
       </td>
       <td>
         [% INCLUDE user_identity user => bug.reporter %]
@@ -697,7 +697,7 @@
 
     <tr>
       <td align="right" valign="top">
-        <b><a href="page.cgi?id=fields.html#assigned_to">责任人</a></b>：
+        <b><a href="page.cgi?id=fields.html#assigned_to">责任人</a></b>:
       </td>
       <td>
         [% IF bug.check_can_change_field("assigned_to", 0, 1) %]
@@ -747,7 +747,7 @@
     [% IF user.id %]
       <tr>
         <td align="right" valign="top">
-          <label for="newcc" accesskey="a"><b>添加到抄送(<u>A</u>)</b></label>:
+          <label for="newcc" accesskey="a"><b>添加抄送</b></label>:
         </td>
         <td>
            [% INCLUDE global/userselect.html.tmpl
@@ -764,7 +764,7 @@
     <tr>
       [% IF bug.cc %]
         <td align="right" valign="top">
-          <label for="cc"><b>抄送</b></label>:
+          <label for="cc"><b>抄送列表</b></label>:
         </td>
         <td valign="top">
           <select id="cc" name="cc" multiple="multiple" size="5">
@@ -823,7 +823,12 @@
       <select id="[% selname %]" name="[% selname %]">
         [% FOREACH x = bug.choices.${selname} %]
           <option value="[% x FILTER html %]"
-            [% " selected" IF x == bug.${selname} %]>[% x FILTER html %]
+            [% " selected" IF x == bug.${selname} %]>
+            [% IF selname == "bug_severity" %]
+              [% get_severity(x) FILTER html %]
+            [% ELSE %]
+	      [% x FILTER html %]
+	    [% END %]
           </option>
         [% END %]
       </select>

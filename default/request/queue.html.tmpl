@@ -32,7 +32,7 @@
     table.requests th { text-align: left; }
     table#filtering th { text-align: right; }
   "
-  onload="var f = document.forms[0]; selectProduct(f.product, f.component, null, null, 'Any');"
+  onload="var f = document.forms[0]; selectProduct(f.product, f.component, null, null, '任意');"
   javascript_urls=["js/productform.js"]
 %]
 
@@ -52,7 +52,7 @@
            title="请求者的email地址"></td>
       <th>产品：</th>
       <td>
-        <select name="product" onchange="selectProduct(this, this.form.component, null, null, 'Any');">
+        <select name="product" onchange="selectProduct(this, this.form.component, null, null, '任意');">
           <option value="">任意</option>
           [% FOREACH prod = products %]
             <option value="[% prod.name FILTER html %]"
@@ -84,7 +84,7 @@
     <tr>
       <th>请求者：</th>
       <td><input type="text" name="requestee" value="[% cgi.param('requestee') FILTER html %]" size="20" 
-           title="Requestee's email address or &quot;-&quot; (hyphen) for requests with no requestee"></td>
+           title="请求者的 email 地址或 &quot;-&quot; (连字号)标示没有请求者的请求"></td>
       <th>模块：</th>
       <td>
         <select name="component">

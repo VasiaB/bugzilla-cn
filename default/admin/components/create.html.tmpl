@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
   #                 Akamai Technologies <bugzilla-dev@akamai.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -24,7 +25,7 @@
   #               which the component belongs.
   #%]
   
-[% title = BLOCK %]Add component to the [% product.name FILTER html %] product[% END %]
+[% title = BLOCK %]向产品 [% product.name FILTER html %] 中添加模块[% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
@@ -32,11 +33,11 @@
 <form method="post" action="editcomponents.cgi">
   <table border="0" cellpadding="4" cellspacing="0">
     <tr>
-      <th align="right">Component:</th>
+      <th align="right">模块：</th>
       <td><input size="64" maxlength="64" name="component" value=""></td>
     </tr>
     <tr>
-      <th align="right">Description:</th>
+      <th align="right">描述：</th>
       <td>
         [% INCLUDE global/textarea.html.tmpl
           name    = 'description'
@@ -47,7 +48,7 @@
       </td>
     </tr>
     <tr>
-      <th align="right"><label for="initialowner">Default Assignee:</label></th>
+      <th align="right"><label for="initialowner">默认责任人：</label></th>
       <td>
         [% INCLUDE global/userselect.html.tmpl
            name => "initialowner"
@@ -61,7 +62,7 @@
 [% IF Param('useqacontact') %]
     <tr>
       <th align="right">
-        <label for="initialqacontact">Default QA Contact:</label></th>
+        <label for="initialqacontact">默认QA联系人：</label></th>
       <td>
         [% INCLUDE global/userselect.html.tmpl
            name => "initialqacontact"
@@ -75,7 +76,7 @@
 [% END %]
     <tr>
       <th align="right">
-        <label for="initialcc">Default CC List:</label>
+        <label for="initialcc">默认抄送列表：</label>
       </th>
       <td>
         [% INCLUDE global/userselect.html.tmpl
@@ -87,13 +88,13 @@
         %]
         <br>
         [% IF !Param("usemenuforusers") %]
-          <em>Enter user names for the CC list as a comma-separated list.</em>
+          <em>输入要抄送用户的用户名(逗号分隔多个用户)</em>
         [% END %]
       </td>
     </tr>
   </table>
   <hr>
-  <input type="submit" id="create" value="Add">
+  <input type="submit" id="create" value="添加">
   <input type="hidden" name="action" value="new">
   <input type="hidden" name='open_name' value='All Open'>
   <input type="hidden" name='nonopen_name' value='All Closed'>

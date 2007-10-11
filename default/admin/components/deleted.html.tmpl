@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -25,8 +26,8 @@
   #               which the component belongs.
   #%]
   
-[% title = BLOCK %]Deleted Component '[% comp.name FILTER html %]' from Product
-                   '[% product.name FILTER html %]'[% END %]
+[% title = BLOCK %]从产品 '[% product.name FILTER html %]' 中删除模块 '[% comp.name FILTER html %]'
+                   [% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
@@ -39,17 +40,17 @@
   [% ELSE %]
     [%+ terms.bug %]
   [% END %]
-  deleted.
+  已删除。
   </p><p>
-  All references to those deleted [% terms.bugs %] have been removed.
+  所有涉及这此删除的[% terms.bugs %]的引用已经被移除。
 [% ELSE %]
-  No [% terms.bugs %] existed for the component.
+  此模块没有[% terms.bugs %]存在。
 [% END %]
 </p>
 
 <p>Flag inclusions and exclusions deleted.</p>
 
-<p>Component '[% comp.name FILTER html %]' deleted.</p>
+<p>模块 '[% comp.name FILTER html %]' 已经被删除。</p>
 
 [% PROCESS admin/components/footer.html.tmpl
   no_edit_component_link = 1

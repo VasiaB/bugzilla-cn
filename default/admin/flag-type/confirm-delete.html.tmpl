@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,39 +16,40 @@
   # Rights Reserved.
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
 
-[% title = BLOCK %]Confirm Deletion of Flag Type '[% flag_type.name FILTER html %]'[% END %]
+[% title = BLOCK %]确认删除标记类型 '[% flag_type.name FILTER html %]'[% END %]
 
 [% PROCESS global/header.html.tmpl title = title %]
 
 <p>
-   There are [% flag_type.flag_count %] flags of type [% flag_type.name FILTER html %].
-   If you delete this type, those flags will also be deleted.  Note that
-   instead of deleting the type you can
+   标记类型 ‘[% flag_type.name FILTER html %]’ 有 [% flag_type.flag_count %] 个标记。
+   如果您删除此类型，这些标记也将随之删除。
+   注意：您可以
    <a href="editflagtypes.cgi?action=deactivate&amp;id=[% flag_type.id %]&amp;token=
-           [%- token FILTER html %]">deactivate it</a>,
-   in which case the type and its flags will remain in the database
-   but will not appear in the [% terms.Bugzilla %] UI.
+           [%- token FILTER html %]">禁用此标记</a> 而不是删除它。
+   这将使标记类型和它的标记依然存在在数据库中，
+   但不会显示在 [% terms.Bugzilla %] 界面上。
 </p>
 
 <table>
    <tr>
       <td colspan="2">
-         Do you really want to delete this type?
+         您确实想删除这些标记吗?
       </td>
    </tr>
    <tr>
       <td>
          <a href="editflagtypes.cgi?action=delete&amp;id=[% flag_type.id %]&amp;token=
-                 [%- token FILTER html %]">Yes, delete
+                 [%- token FILTER html %]">删除
          </a>
       </td>
       <td align="right">
          <a href="editflagtypes.cgi">
-            No, don't delete
+            返回标记编辑页面。
          </a>
       </td>
    </tr>

@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -33,15 +34,15 @@
 %]
 
 [% IF updated_name %]
-  <p>Updated Milestone name to: '[% milestone.name FILTER html %]'.</p>
+  <p>里程碑名称更新为： '[% milestone.name FILTER html %]'</p>
 [% END %]
 
 [% IF updated_sortkey %]
-  <p>Updated Milestone sortkey to: '[% milestone.sortkey FILTER html %]'.</p>
+  <p>里程碑排序键已更新为：'[% milestone.sortkey FILTER html %]'</p>
 [% END %]
 
 [% UNLESS updated_sortkey || updated_name %]
-  <p>Nothing changed for milestone '[% milestone.name FILTER html %]'.</p>
+  <p>里程碑 '[% milestone.name FILTER html %]' 没有作任何修改。</p>
 
 [% END %]
 

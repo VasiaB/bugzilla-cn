@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -20,6 +20,7 @@
   #                 Jacob Steenhagen <jake@bugzilla.org>
   #                 Vlad Dascalu <jocuri@softhome.net>
   #                 Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -30,17 +31,17 @@
 
 
 [% PROCESS global/header.html.tmpl
-           title = "Removing Explicit Group Membership" %]
+           title = "删除直接成员关系" %]
 
-<p><b>Removing explicit memberships[% IF regexp %] of users matching
-  '[% regexp FILTER html %]'[% END %]...</b></p>
+<p><b>删除用户的[% IF regexp %] 正则表达式符合
+  '[% regexp FILTER html %]' 的[% END %]直接成员关系...</b></p>
     
 [% FOREACH user = users %]
-  [% user.login FILTER html %] removed<br>
+  [% user.login FILTER html %] 已移除<br>
 [% END %]
 
-<p><b>Done</b>.</p>
+<p><b>完成</b>。</p>
 
-<p>Back to the <a href="editgroups.cgi">group list</a>.</p>
+<p>返回到 <a href="editgroups.cgi">组列表</a></p>
 
 [% PROCESS global/footer.html.tmpl %] 

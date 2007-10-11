@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -19,23 +20,22 @@
   #%]
   
 [% title = BLOCK %]
-  New Value '[% value FILTER html %]' added to '[% field.description FILTER html %]'
+  字段值 '[% value FILTER html %]' 已添加到 '[% field.description FILTER html %]'
   ([% field.name FILTER html %]) field
 [% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
 
-<p>The value '<a title="Edit value '[% value FILTER html %]' of 
-   for the '[% field.description FILTER html %]' field"
+<p>字段值 '<a title="编辑 '[% field.description FILTER html %] 字段的值 '[% value FILTER html %]'"
    href="editvalues.cgi?action=edit&amp;field=
    [%- field.name FILTER url_quote %]&amp;value=[% value FILTER url_quote %]">
-   [%- value FILTER html %]</a>' has been added as a valid choice for
-   the '[% field.description FILTER html %]' field.</p>
+   [%- value FILTER html %]</a>' 已添加到
+   '[% field.description FILTER html %]' 字段。</p>
 
 [% IF field.name == "bug_status" %]
-  You should now visit the <a href="editworkflow.cgi">status workflow page</a>
-  to include your new [% terms.bug %] status.
+  您现在应该访问 <a href="editworkflow.cgi">状态工作流页面</a>
+  来包含新创建的[% terms.bug %]状态。
 [% END %]
 
 [% PROCESS admin/fieldvalues/footer.html.tmpl %]

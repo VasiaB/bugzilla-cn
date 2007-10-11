@@ -40,9 +40,9 @@
 
 [% abbrev = 
   {
-    "bug_severity"         => { maxlength => 3 , title => "严重级" } , 
-    "priority"             => { maxlength => 3 , title => "优先级" } , 
-    "rep_platform"         => { maxlength => 3 , title => "平台" } , 
+    "bug_severity"         => { maxlength => 6 , title => "严重级" } , 
+    "priority"             => { maxlength => 4 , title => "优先级" } , 
+    "rep_platform"         => { maxlength => 4 , title => "平台" } , 
     "bug_status"           => { maxlength => 4 } , 
     "assigned_to"          => { maxlength => 30 , ellipsis => "..." } , 
     "assigned_to_realname" => { maxlength => 20 , ellipsis => "..." } , 
@@ -57,7 +57,7 @@
     "component"         => { maxlength => 8 , title => "模块" } , 
     "product"           => { maxlength => 8 } , 
     "version"           => { maxlength => 5 , title => "版本" } , 
-    "op_sys"            => { maxlength => 4 } , 
+    "op_sys"            => { maxlength => 6 } , 
     "target_milestone"  => { title => "里程碑" } , 
     "percentage_complete" => { format_value => "%d %%" } , 
   }

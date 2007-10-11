@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,37 +17,33 @@
   #
   # Contributor(s): Dave Miller <justdave@bugzilla.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 [%
-   title = "Attachments"
-   desc = "Set up attachment options"
+   title = "附件管理"
+   desc = "设置附件选项"
 %]
 
 [% param_descs = {
-  allow_attachment_deletion => "If this option is on, administrators will be able to delete " _
-                               "the content of attachments.",
+  allow_attachment_deletion => "允许附件删除。<br/>" _
+  										"如果此参数设置为开，管理员将可以删除附件的内容。",
 
-  allow_attach_url => "If this option is on, it will be possible to " _
-                      "specify a URL when creating an attachment and " _
-                      "treat the URL itself as if it were an attachment.",
+  allow_attach_url => "允许附件链接。<br/>" _
+                      "如果此参数设置为开，创建附件时将可以指定一个链接，" _
+                      "并将链接本身作为附件",
 
-  maxpatchsize => "The maximum size (in kilobytes) of patches. $terms.Bugzilla will not " _
-                  "accept patches greater than this number of kilobytes in size. " _
-                  "To accept patches of any size (subject to the limitations of " _
-                  "your server software), set this value to zero.",
+  maxpatchsize => "最大补丁大小。<br/>" _
+                  "补丁的最大大小(KB)。$terms.Bugzilla 不会允许超过此大小的附件补丁" _
+                  "要取消此限制设置此项值为0",
 
-  maxattachmentsize => "The maximum size (in kilobytes) of non-patch attachments. " _
-                       "$terms.Bugzilla will not accept attachments greater than this number " _
-                       "of kilobytes in size. To accept attachments of any size " _
-                       "(subject to the limitations of your server software), set this " _
-                       "value to zero.",
+  maxattachmentsize => "最大附件大小。<br/>" _
+                       "非补丁附件的最大大小(KB)。$terms.Bugzilla 不会允许超过此大小的附件。" _
+                       "要取消此限制设置此项值为0",
 
-  maxlocalattachment => "The maximum size (in megabytes) of attachments identified by " _
-                        "the user as 'Big Files' to be stored locally on the webserver. " _
-                        "If set to zero, attachments will never be kept on the local " _
-                        "filesystem.",
+  maxlocalattachment => "最大本地附件大小<br/>The maximum size (in megabytes) of attachments identified by " _
+                        "要保存在服务器本地(不放入数据库中)的附件的最大大小(MB)。" _
+                        "如果设置为0，附件将不会保存在本地文件系统中。",
 
-  convert_uncompressed_images => "If this option is on, attachments with content type image/bmp " _
-                                 "will be converted to image/png and compressed before uploading to " _
-                                 "the database to conserve disk space." }
+  convert_uncompressed_images => "转换没有压缩的图像<br/>" _
+                                 "如果此项参数设置为开，bmp 格式的图像将会转换成 png 格式保存以节省磁盘空间。" }
 %]

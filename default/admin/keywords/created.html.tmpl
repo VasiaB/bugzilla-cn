@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Terry Weissman <terry@mozilla.org>
   #                 Vlad Dascalu <jocuri@softhome.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -24,12 +25,12 @@
   #%]
   
 [% PROCESS global/header.html.tmpl
-  title = "Adding new keyword"
+  title = "添加关键字"
 %]
 
-<p>The keyword [% name FILTER html %] has been added.</p>
+<p>关键字 [% name FILTER html %] 已添加。</p>
 
-<p><a href="editkeywords.cgi">Edit existing keywords</a> or
-<a href="editkeywords.cgi?action=add">add another keyword</a>.</p>
+<p><a href="editkeywords.cgi">编辑已存在关键字</a> 或
+<a href="editkeywords.cgi?action=add">添加其它关键字</a>。</p>
 
 [% PROCESS global/footer.html.tmpl %]

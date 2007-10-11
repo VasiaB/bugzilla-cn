@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -38,15 +39,14 @@
 <p>
 
 [% UNLESS no_add_milestone_link %]
-  <a title="Add a milestone to product '[% product.name FILTER html %]'"
+  <a title="在产品 '[% product.name FILTER html %]' 中添加里程碑"
      href="editmilestones.cgi?action=add&amp;product=
-          [%- product.name FILTER url_quote %]">Add</a> a milestone. 
+          [%- product.name FILTER url_quote %]">添加</a>里程碑。 
 [% END %]
 
 [% IF milestone.name && !no_edit_milestone_link %]
-  Edit milestone <a 
-  title="Edit Milestone '[% milestone.name FILTER html %]' of product '
-         [%- product.name FILTER html %]'"
+ 编辑里程碑 <a 
+  title="编辑产品 '[%- product.name FILTER html %]' 的里程碑 '[% milestone.name FILTER html %]'"
   href="editmilestones.cgi?action=edit&amp;product=
         [%- product.name FILTER url_quote %]&amp;milestone=
         [%- milestone.name FILTER url_quote %]">
@@ -54,14 +54,14 @@
 [% END %]
 
 [% UNLESS no_edit_other_milestones_link %]
-  Edit other milestones of product <a 
+  编辑产品的其它里程碑 <a 
   href="editmilestones.cgi?product=
-        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>.
+        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>。
 
 [% END %]
 
-  Edit product <a 
+  编辑产品 <a 
   href="editproducts.cgi?action=edit&amp;product=
-        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>.
+        [%- product.name FILTER url_quote %]">'[% product.name FILTER html %]'</a>。
 
 </p>

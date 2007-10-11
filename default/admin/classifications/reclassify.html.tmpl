@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,37 +16,38 @@
   # Rights Reserved.
   #
   # Contributor(s): Albert Ting <alt@sonic.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/header.html.tmpl
-  title = "Reclassify products"
+  title = "重新分类产品"
 %]
 
 <form method=post action="editclassifications.cgi">
   <table border=0 cellpadding=4 cellspacing=0>
     <tr>
-      <td valign="top">Classification:</td>
+      <td valign="top">分类：</td>
       <td valign="top" colspan=3>[% classification.name FILTER html %]</td>
 
     </tr><tr>
-      <td valign="top">Description:</td>
+      <td valign="top">描述：</td>
       <td valign="top" colspan=3>
         [% IF classification.description %]
           [% classification.description FILTER html_light %]
         [% ELSE %]
-          <font color="red">description missing</font>
+          <font color="red">无描述</font>
         [% END %]
       </td>
 
     </tr><tr>
-      <td valign="top">Sortkey:</td>
+      <td valign="top">排序键：</td>
       <td valign="top" colspan=3>[% classification.sortkey FILTER html %]</td>
 
     </tr><tr>
-      <td valign="top">Products:</td>
-      <td valign="top">Products</td>
+      <td valign="top">产品：</td>
+      <td valign="top">所有产品</td>
       <td></td>
-      <td valign="top">[% classification.name FILTER html %] Products</td>
+      <td valign="top">分类 [% classification.name FILTER html %] 中的产品</td>
 
     </tr><tr>
       <td></td>
@@ -64,8 +65,8 @@
       </select></td>
 
       <td align="center">
-        <input type=submit value="     Add &gt;&gt;  " name="add_products"><br><br>
-        <input type=submit value="&lt;&lt; Remove" name="remove_products">
+        <input type=submit value="添加－&gt;" name="add_products"><br><br>
+        <input type=submit value="&lt;－移除" name="remove_products">
       </td>
 
       <td valign="middle" rowspan=2>
@@ -84,8 +85,8 @@
   <input type="hidden" name="token" value="[% token FILTER html %]">
 </form>
 
-<p>Back to the <a href="./">main [% terms.bugs %] page</a>,
-or <a href="editclassifications.cgi"> edit</a> more classifications.
+<p>返回到 <a href="./">首页</a>，
+或 <a href="editclassifications.cgi">编辑</a> 其它分类。
 
 [% PROCESS global/footer.html.tmpl %]
 

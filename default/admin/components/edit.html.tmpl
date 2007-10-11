@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
   #                 Akamai Technologies <bugzilla-dev@akamai.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -29,7 +30,7 @@
 [% PROCESS global/variables.none.tmpl %]
 
 [% title = BLOCK %]
-  Edit component '[% comp.name FILTER html %]' of product '[% product.name FILTER html %]'
+  编辑产品 '[% product.name FILTER html %]' 的模块 '[% comp.name FILTER html %]'
 [% END %]
 [% PROCESS global/header.html.tmpl
   title = title
@@ -39,12 +40,12 @@
   <table border="0" cellpadding="4" cellspacing="0">
 
     <tr>
-      <td valign="top">Component:</td>
+      <td valign="top">模块：</td>
       <td><input size="64" maxlength="64" name="component" value="
       [%- comp.name FILTER html %]"></td>
     </tr>
     <tr>
-      <td valign="top">Component Description:</td>
+      <td valign="top">模块描述：</td>
       <td>
         [% INCLUDE global/textarea.html.tmpl
           name           = 'description'
@@ -56,7 +57,7 @@
       </td>
     </tr>
     <tr>
-      <td valign="top"><label for="initialowner">Default Assignee:</label></td>
+      <td valign="top"><label for="initialowner">默认责任人：</label></td>
       <td>
         [% INCLUDE global/userselect.html.tmpl
            name => "initialowner"
@@ -70,7 +71,7 @@
 [% IF Param('useqacontact') %]
     </tr>
     <tr>
-      <td valign="top"><label for="initialqacontact">Default QA contact:</label></td>
+      <td valign="top"><label for="initialqacontact">默认QA联系人：</label></td>
       <td>
         [% INCLUDE global/userselect.html.tmpl
            name => "initialqacontact"
@@ -85,7 +86,7 @@
     </tr>
     <tr>
       <td valign="top">
-        <label for="initialcc">Default CC List:</label>
+        <label for="initialcc">默认抄送列表：</label>
       </td>
       <td>
         [% INCLUDE global/userselect.html.tmpl
@@ -97,20 +98,20 @@
         %]
         <br>
         [% IF !Param("usemenuforusers") %]
-          <em>Enter user names for the CC list as a comma-separated list.</em>
+          <em>输入要抄送的用户名(逗号分隔多个用户)</em>
         [% END %]
       </td>
     </tr>
     <tr>
-      <td>[% terms.Bugs %]:</td>
+      <td>[% terms.Bugs %]数：</td>
       <td>
 [% IF comp.bug_count > 0 %]
-        <a title="[% terms.Bugs %] in component '[% comp.name FILTER html %]'"
+        <a title="[% terms.Bugs %] 在模块 '[% comp.name FILTER html %]' 中"
            href="buglist.cgi?component=
                 [%- comp.name FILTER url_quote %]&amp;product=
                 [%- product.name FILTER url_quote %]">[% comp.bug_count %]</a>
 [% ELSE %]
-        None
+        无
 [% END %]
       </td>
     </tr>
@@ -121,10 +122,10 @@
    <input type="hidden" name="componentold" value="[% comp.name FILTER html %]">
    <input type="hidden" name="product" value="[% product.name FILTER html %]">
    <input type="hidden" name="token" value="[% token FILTER html %]">
-   <input type="submit" value="Save Changes" id="update"> or <a 
+   <input type="submit" value="保存修改" id="update"> 或 <a 
         href="editcomponents.cgi?action=del&amp;product=
         [%- product.name FILTER url_quote %]&amp;component=
-        [%- comp.name FILTER url_quote %]">Delete</a> this component.
+        [%- comp.name FILTER url_quote %]">删除</a> 此模块。
 
 </form>
 

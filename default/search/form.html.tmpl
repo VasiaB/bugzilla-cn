@@ -363,7 +363,7 @@ function doOnSelectProduct(selectmode) {
       <table>
         <tr>
           <th align="left">
-            <label for="resolution" accesskey="r">处理方法(<u>R</u>)</label>：
+            <label for="resolution" accesskey="r">解决途径</label>：
           </th>
         </tr>
         <tr valign="top">
@@ -634,6 +634,8 @@ function doOnSelectProduct(selectmode) {
             [% get_status(name) FILTER html %]
           [% ELSIF sel.name == "resolution" %]
             [% get_resolution(name) FILTER html %]
+          [% ELSIF sel.name == "bug_severity" %]
+            [% get_severity(name) FILTER html %]
           [% ELSE %]
             [% name FILTER html %]
           [% END %]

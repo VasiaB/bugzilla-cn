@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -24,7 +25,7 @@
 [% PROCESS global/variables.none.tmpl %]
 
 [% PROCESS global/header.html.tmpl
-  title = "Select Classification"
+  title = "选择分类"
 %]
 
 [% edit_contentlink = BLOCK %]
@@ -37,22 +38,22 @@
 [% columns = [
      { 
        name => "name"
-       heading => "Edit products of..."
+       heading => "编辑以下分类的产品"
        contentlink => edit_contentlink
      },
      { 
        name => "description"
-       heading => "Description"
+       heading => "分类描述"
        allow_html_content => 1
      },
      { 
        name => "product_count"
        align => "right"
-       heading => "Product Count"
+       heading => "产品数"
      },
      { 
-       heading => "Action..."
-       content => "Add product"
+       heading => "操作"
+       content => "添加产品"
        contentlink => add_contentlink
      },
    ]

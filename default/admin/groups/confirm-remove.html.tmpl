@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -20,6 +20,7 @@
   #                 Jacob Steenhagen <jake@bugzilla.org>
   #                 Vlad Dascalu <jocuri@softhome.net>
   #                 Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -28,26 +29,23 @@
   #%]
 
 [% IF regexp %]
-  [% title = "Confirm: Remove Explicit Members in the Regular Expression?" %]
+  [% title = "请确认: 删除匹配正则表达式的用户的直接成员关系？" %]
 [% ELSE %]
-  [% title = "Confirm: Remove All Explicit Members?" %]
+  [% title = "请确认: 删除所有直接成员关系？" %]
 [% END %]
 
 [% PROCESS global/header.html.tmpl %]
 
 [% IF regexp %]
-  <p>This option will remove all users from '[% group.name FILTER html %]'
-    whose login names match the regular expression:
-    '[% regexp FILTER html %]'</p>
+  <p>此选项将会移除 '[% group.name FILTER html %]'
+    组中登陆名匹配正则表达式：
+    '[% regexp FILTER html %]' 的所有成员关系。</p>
 [% ELSE %]
-  <p>This option will remove all explicitly defined users
-    from '[% group.name FILTER html %].'</p>
+  <p>此选项将会移除 '[% group.name FILTER html %]' 组中明确定义的用户。</p>
 [% END %]
   
-<p>Generally, you will only need to do this when upgrading groups
-  created with [% terms.Bugzilla %] versions 2.16 and prior. Use
-  this option with <b>extreme care</b> and consult the documentation
-  for further information.
+<p>一般地，仅当您从[% terms.Bugzilla %] 2.16 或更早版本升级而来的话，您才需要这样做。
+  使用此选项要 <b>特别小心</b> 参考文档以获取更多信息。
 </p>
     
 <form method="post" action="editgroups.cgi">
@@ -56,10 +54,10 @@
   <input type="hidden" name="action" value="remove_regexp">
   
   <input name="token" type="hidden" value="[% token FILTER html %]">
-  <input name="confirm" type="submit" value="Confirm">
-  <p>Or <a href="editgroups.cgi">return to the Edit Groups page</a>.</p>
+  <input name="confirm" type="submit" value="确认">
+  <p>或 <a href="editgroups.cgi">返回到编辑组页面</a></p>
 </form>
     
-<p>Back to the <a href="editgroups.cgi">group list</a>.</p>
+<p>返回到 <a href="editgroups.cgi">组列表</a></p>
 
 [% PROCESS global/footer.html.tmpl %] 

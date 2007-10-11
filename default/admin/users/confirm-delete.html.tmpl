@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Marc Schumann <wurblzap@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -42,7 +43,7 @@
   #                           created
   #%]
 
-[% title = BLOCK %]Confirm deletion of user [% otheruser.login FILTER html %][% END %]
+[% title = BLOCK %]确认删除用户 [% otheruser.login FILTER html %][% END %]
 
 [% PROCESS global/header.html.tmpl
   title = title
@@ -56,15 +57,15 @@
 
 <table class="main">
   <tr>
-    <th>Login name:</th>
+    <th>登陆名：</th>
     <td>[% otheruser.login FILTER html %]</td>
   </tr>
   <tr>
-    <th>Real name:</th>
+    <th>真实姓名：</th>
     <td>[% otheruser.name FILTER html %]</td>
   </tr>
   <tr>
-    <th>Group set:</th>
+    <th>所在的组：</th>
     <td>
       [% IF otheruser.groups.size %]
         <ul>
@@ -73,13 +74,13 @@
           [% END %]
         </ul>
       [% ELSE %]
-        None
+        无
       [% END %]
     </td>
   </tr>
   [% IF otheruser.product_responsibilities.size %]
     <tr>
-      <th>Product responsibilities:</th>
+      <th>产品职责：</th>
       <td>
         [% PROCESS admin/users/responsibilities.html.tmpl otheruser = otheruser %]
       </td>
@@ -89,117 +90,109 @@
 
 [% IF otheruser.product_responsibilities.size %]
   <p>
-    You can't delete this user at this time because
-    [%+ otheruser.login FILTER html %] has got responsibilities for at least
-    one product.
+    您现在不能删除此用户，是因为
+    [%+ otheruser.login FILTER html %] 到少有一种产品的职责。
   </p>
   <p>
     [% IF user.in_group("editcomponents", component.product_id) %]
-      Change this by clicking the product editing links above,
+      可以通过以上编辑产品的链接修改其产品职责。
     [% ELSE %]
-      For now, you can
+      现在您可以
     [% END %]
 [% ELSE %]
 
-  <h2>Confirmation</h2>
+  <h2>请确认</h2>
 
   [% display_warning = 0 %]
 
   [% IF reporter || bugs_activity || flags.setter || longdescs || profiles_activity %]
     <div class="criticalmessages">
-      <p>The following deletions are <b>highly not recommended</b> and
-      will generate referential integrity inconsistencies!</p>
+      <p><b>强烈建议</b>不要作以下的删除，将会产生系统不一致的问题。</p>
 
       <ul>
         [% IF reporter %]
           <li>
             [% otheruser.login FILTER html %]
             <a href="buglist.cgi?emailreporter1=1&amp;emailtype1=exact&amp;email1=
-               [%- otheruser.login FILTER url_quote %]">has reported
+               [%- otheruser.login FILTER url_quote %]">已经报告过
             [% IF reporter == 1 %]
-              one [% terms.bug %]
+              一个[% terms.bug %]。
             [% ELSE %]
-              [%+ reporter %] [%+ terms.bugs %]
-            [% END %]</a>.
-            If you delete the user account, the database records will be
-            inconsistent, resulting in
+              [%+ reporter %] [%+ terms.bugs %]。
+            [% END %]</a>
+            如果您删除此用户帐号，数据库记录将会不一致，从而导致
             [% IF reporter == 1 %]
-              this [% terms.bug %]
+              此[% terms.bug %]
             [% ELSE %]
-              these [% terms.bugs %]
+              这些[% terms.bugs %]
             [% END %]
-            not appearing in [% terms.bug %] lists any more.
+            不再显示在[% terms.bug %]列表中。
           </li>
         [% END %]
         [% IF bugs_activity %]
           <li>
-            [% otheruser.login FILTER html %] has made
+            [% otheruser.login FILTER html %] 已经作出了
             [% IF bugs_activity == 1 %]
-              a change on [% terms.abug %]
+              [% terms.abug %]的修改。
             [% ELSE %]
-              changes on [% terms.bugs %]
-            [% END %].
-            If you delete the user account, the [% terms.bugs %] activity table in
-            the database will be inconsistent, resulting in
-            [% IF bugs_activity == 1 %]
-              this change
-            [% ELSE %]
-              these changes
+              [% terms.bugs %]的修改。
             [% END %]
-            not showing up in [% terms.bug %] activity logs any more.
+            如果您删除此用户帐号，数据库中记录的[% terms.bugs %]操作记录将会不一致，从而导致
+            [% IF bugs_activity == 1 %]
+              此修改
+            [% ELSE %]
+              这些修改
+            [% END %]
+            不再显示在[% terms.bug %]操作记录列表中。
           </li>
         [% END %]
         [% IF flags.setter %]
           <li>
             [% otheruser.login FILTER html %] has
             <a href="buglist.cgi?field0-0-0=setters.login_name&amp;type0-0-0=equals&amp;value0-0-0=
-               [%- otheruser.login FILTER url_quote %]">set
-            or requested
+               [%- otheruser.login FILTER url_quote %]">已经设置或请求
             [% IF flags.setter == 1 %]
-              a flag
+              一个标记。
             [% ELSE %]
-              [%+ flags.setter %] flags
-            [% END %]</a>.
-            If you delete the user account, the flags table in the database
-            will be inconsistent, resulting in
+              [%+ flags.setter %] 标记。
+            [% END %]</a>
+            如果您删除此用户帐号，数据库中的标记(flags)表会不一致，从而导致
             [% IF flags.setter == 1 %]
-              this flag
+              此标记
             [% ELSE %]
-              these flags
+              这些标记
             [% END %]
-            not displaying correctly any more.
+            不再正常显示。
           </li>
         [% END %]
         [% IF longdescs %]
           <li>
             [% otheruser.login FILTER html %] has
             <a href="buglist.cgi?emaillongdesc1=1&amp;emailtype1=exact&amp;email1=
-               [%- otheruser.login FILTER url_quote %]">commented
+               [%- otheruser.login FILTER url_quote %]">已经评论过
             [% IF longdescs == 1 %]
-              once on [% terms.abug %]
+              [% terms.abug %]一次。
             [% ELSE %]
-              [%+ longdescs %] times on [% terms.bugs %]
-            [% END %]</a>.
-            If you delete the user account, the comments table in the database
-            will be inconsistent, resulting in
+              [% terms.bugs %][%+ longdescs %]次。
+            [% END %]</a>
+            如果您删除此用户帐号，数据库中的评论(comments)表将会不一致，从而导致
             [% IF longdescs == 1 %]
-              this comment
+              此评论
             [% ELSE %]
-              these comments
+              这些评论
             [% END %]
-            not being visible any more.
+            不再可见。
           </li>
         [% END %]
         [% IF profiles_activity %]
           <li>
-            [% otheruser.login FILTER html %] has made
+            [% otheruser.login FILTER html %] 已经修改过
             [% IF bugs_activity == 1 %]
-              a change on a other user's profile
+              其它用户的配置。
             [% ELSE %]
-              changes on other users' profiles
-            [% END %].
-            If you delete the user account, the user profiles activity table in
-            the database will be inconsistent.
+              其它用户的配置。
+            [% END %]
+            如果您删除此用户帐号，数据库中的用户配置记录表将会不一致。
           </li>
         [% END %]
       </ul>
@@ -211,192 +204,184 @@
         namedqueries || profile_setting || series || votes || watch.watched ||
         watch.watcher || whine_events || whine_schedules %]
     <div class="warningmessages">
-      <p>The following deletions are <b>safe</b> and will not generate
-      referential integrity inconsistencies.</p>
+      <p>以下的删除是<b>安全的</b>，不会产生系统不一致的问题。</p>
 
       <ul>
         [% IF assignee_or_qa %]
           <li>
             [% otheruser.login FILTER html %]
             <a href="buglist.cgi?emailassigned_to1=1&amp;emailqa_contact1=1&amp;emailtype1=exact&amp;email1=
-               [%- otheruser.login FILTER url_quote %]">is
-            the assignee or the QA contact of
+               [%- otheruser.login FILTER url_quote %]">是
             [% IF assignee_or_qa == 1 %]
-              one [% terms.bug %]
+              一个[% terms.bug %]
             [% ELSE %]
               [%+ assignee_or_qa %] [%+ terms.bugs %]
-            [% END %]</a>.
-            If you delete the user account, these roles will fall back to
-            the default assignee or default QA contact.
+            [% END %]</a>的责任人或QA联系人。
+            如果您删除此用户帐号，这些角色将会返回到默认的责任人或QA联系人。 
           </li>
         [% END %]
         [% IF cc %]
           <li>
             [% otheruser.login FILTER html %]
             <a href="buglist.cgi?emailcc1=1&amp;emailtype1=exact&amp;email1=
-               [%- otheruser.login FILTER url_quote %]">is
-            on the CC list of
+               [%- otheruser.login FILTER url_quote %]">在
             [% IF cc == 1 %]
               [%+ terms.abug %]
             [% ELSE %]
               [%+ cc %] [%+ terms.bugs %]
-            [% END %]</a>.
-            If you delete the user account, it will be removed from these CC lists.
+            [% END %]</a>抄送列表中。
+            如果您删除此用户帐号，它将会从抄送列表中移去。
           </li>
         [% END %]
         [% IF email_setting %]
           <li>
-            The user's e-mail settings will be deleted along with the user
-            account.
+            此用户的邮件设置将会随着此用户的帐号的删除而删除。
           </li>
         [% END %]
         [% IF flags.requestee %]
           <li>
             [% otheruser.login FILTER html %] has been
             <a href="buglist.cgi?field0-0-0=requestees.login_name&amp;type0-0-0=equals&amp;value0-0-0=
-               [%- otheruser.login FILTER url_quote %]">asked
-            to set
+               [%- otheruser.login FILTER url_quote %]">已请求设置
             [% IF flags.requestee == 1 %]
-              a flag
+              一个标记。
             [% ELSE %]
-              [% flags.requestee %] flags
-            [% END %]</a>.
-            If you delete the user account,
+              [% flags.requestee %] 标记。
+            [% END %]</a>
+            如果您删除此用户帐号，
             [% IF flags.requestee == 1 %]
-              this flag
+              此标记
             [% ELSE %]
-              these flags
+              这些标记
             [% END %]
-            will change to be unspecifically requested.
+            将没有明确的请求。
           </li>
         [% END %]
         [% IF namedqueries %]
           <li>
-            [% otheruser.login FILTER html %] has
+            [% otheruser.login FILTER html %] 有
             [% IF namedqueries == 1 %]
-              a [% 'shared' IF namedquery_group_map %] named search
+              一个 [% 'shared' IF namedquery_group_map %] 已存搜索。
             [% ELSE %]
-              [%+ namedqueries FILTER html %] named searches
-            [% END %].
-            [% IF namedqueries == 1 %]
-              This named search
-            [% ELSE %]
-              These named searches
+              [%+ namedqueries FILTER html %] 已存搜索。
             [% END %]
-            will be deleted along with the user account.
+            [% IF namedqueries == 1 %]
+              此已存搜索
+            [% ELSE %]
+              这些已存搜索
+            [% END %]
+            将会随着此用户帐号的删除而删除。
             [% IF namedquery_group_map %]
               [% IF namedqueries > 1 %]
-                Of these,
+                相对这些，
                 [% IF namedquery_group_map > 1 %]
-                  [%+ namedquery_group_map FILTER html %] are
+                  [%+ namedquery_group_map FILTER html %] 被
                 [% ELSE %]
-                  one is
+                  被
                 [% END %]
-                shared.
+                共享。
               [% END %]
-              Other users will not be able to use
+              其它用户不再可以使用
               [% IF namedquery_group_map > 1 %]
-                these shared named searches
+                这些共享的已存搜索
               [% ELSE %]
-                this shared named search
+                此共享的已存搜索
               [% END %]
-              any more.
             [% END %]
           </li>
         [% END %]
         [% IF profile_setting %]
           <li>
-            The user's preference settings will be deleted along with the user
-            account.
+            此用户的个人设置将会随着此用户帐号的删除而删除。
           </li>
         [% END %]
         [% IF series %]
           <li>
-            [% otheruser.login FILTER html %] has created
+            [% otheruser.login FILTER html %] 已经创建了
             [% IF series == 1 %]
-              a series
+              一个序列
             [% ELSE %]
-              [%+ series %] series
+              [%+ series %] 序列
             [% END %].
             [% IF series == 1 %]
-              This series
+              此序列
             [% ELSE %]
-              These series
+              这些序列
             [% END %]
-            will be deleted along with the user account.
+            将会随着此用户帐号的删除而删除。
           </li>
         [% END %]
         [% IF votes %]
           <li>
-            [% otheruser.login FILTER html %] has voted on
+            [% otheruser.login FILTER html %] 已经投票给了
             [% IF votes == 1 %]
-              [%+ terms.abug %]
+              [%+ terms.abug %]。
             [% ELSE %]
-              [%+ votes %] [%+ terms.bugs %]
-            [% END %].
-            If you delete the user account,
-            [% IF votes == 1 %]
-              this vote
-            [% ELSE %]
-              these votes
+              [%+ votes %] [%+ terms.bugs %]。
             [% END %]
-            will be deleted along with the user account.
+            如果您删除此用户帐号，
+            [% IF votes == 1 %]
+              此投票
+            [% ELSE %]
+              这些投票
+            [% END %]
+            将会随着此用户帐号的删除而删除。
           </li>
         [% END %]
         [% IF watch.watched || watch.watcher %]
           <li>
             [% otheruser.login FILTER html %]
             [% IF watch.watched %]
-              is being watched by
+              正在被
               [% IF watch.watched == 1 %]
-                a user
+                一个用户
               [% ELSE %]
-                [%+ watch.watched %] users
-              [% END %]
+                [%+ watch.watched %] 用户
+              [% END %]观察。
             [% END %]
             [% IF watch.watcher %]
               [%+ 'and' IF watch.watched %]
-              watches
+              正在观察
               [% IF watch.watcher == 1 %]
-                a user
+                一个用户。
               [% ELSE %]
-                [%+ watch.watcher %] users
+                [%+ watch.watcher %] 用户。
               [% END %]
-            [% END %].
-            [% IF watch.watched + watch.watcher == 1 %]
-              This watching
-            [% ELSE %]
-              These watchings
             [% END %]
-            will cease along with the deletion of the user account.
+            [% IF watch.watched + watch.watcher == 1 %]
+              此观察
+            [% ELSE %]
+              这些观察
+            [% END %]
+            将会随着此用户帐号的删除而删除。
           </li>
         [% END %]
         [% IF whine_events || whine_schedules %]
           <li>
             [% otheruser.login FILTER html %]
             [% IF whine_events %]
-              has scheduled
+              已经计划了
               [% IF whine_events == 1 %]
-                a whine
+                一个订阅。
               [% ELSE %]
-                [%+ whine_events %] whines
+                [%+ whine_events %] 订阅。
               [% END %]
             [% END %]
             [% IF whine_schedules %]
               [%+ 'and' IF whine_events %]
-              is on the receiving end of
+              在
               [% IF whine_schedules == 1 %]
-                a whine
+                一个订阅
               [% ELSE %]
-                [%+ whine_schedules %] whines
-              [% END %]
-            [% END %].
-            [% IF whine_events + whine_schedules == 1 %]
-              This whine
-            [% ELSE %]
-              These whines
+                [%+ whine_schedules %] 订阅
+              [% END %]的接收列表中。
             [% END %]
-            will be deleted along with the user account.
+            [% IF whine_events + whine_schedules == 1 %]
+              订阅
+            [% ELSE %]
+              订阅
+            [% END %]
+            将会随着此用户的删除而被删除。
           </li>
         [% END %]
       </ul>
@@ -406,15 +391,15 @@
 
   [% IF display_warning %]
     <p class="areyoureallyreallysure">
-      Please be aware of the consequences of this before continuing.
+      请留意删除此用户帐号的后果。
     </p>
   [% END %]
 
-  <p>Do you really want to delete this user account?</p>
+  <p>您确实要删除此用户的帐号吗？</p>
 
   <form method="post" action="editusers.cgi">
     <p>
-      <input type="submit" id="delete" value="Yes, delete"/>
+      <input type="submit" id="delete" value="删除"/>
       <input type="hidden" name="action" value="delete" />
       <input type="hidden" name="userid" value="[% otheruser.id %]" />
       <input type="hidden" name="token" value="[% token FILTER html %]">
@@ -422,19 +407,16 @@
     </p>
   </form>
 
-  <p>If you do not want to delete the user account at this time,
+  <p>如果您此时不想删除此用户，您可以
 [% END %]
 
   <a href="editusers.cgi?action=edit&amp;userid=[% otheruser.id %]
-           [% INCLUDE listselectionurlparams %]">edit the user</a>,
-  go
- <a href="editusers.cgi?action=list[% INCLUDE listselectionurlparams %]">back
-  to the user list</a>,
+           [% INCLUDE listselectionurlparams %]">编辑此用户</a>，
+ <a href="editusers.cgi?action=list[% INCLUDE listselectionurlparams %]">返回用户列表</a>，
   [% IF editusers %]
-    <a href="editusers.cgi?action=add[% INCLUDE listselectionurlparams %]">add
-    a new user</a>,
+    <a href="editusers.cgi?action=add[% INCLUDE listselectionurlparams %]">添加新用户</a>，
   [% END %]
-  or <a href="editusers.cgi">find other users</a>.
+  或<a href="editusers.cgi">搜索其它用户</a>。
 </p>
 
 [% PROCESS global/footer.html.tmpl %]

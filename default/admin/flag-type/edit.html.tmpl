@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
   #                 Mark Bickford <markhb@maine.rr.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
@@ -24,11 +25,11 @@
 [% PROCESS "global/js-products.html.tmpl" %]
 
 [% IF type.target_type == "bug" %]
-  [% title = BLOCK %]Create Flag Type for [% terms.Bugs %][% END %]
+  [% title = BLOCK %]为[% terms.Bugs %]创建标记类型[% END %]
   [% typeLabelLowerPlural = BLOCK %][% terms.bugs %][% END %]
   [% typeLabelLowerSingular = BLOCK %][% terms.bug %][% END %]
 [% ELSE %]
-  [% title = "Create Flag Type for Attachments" %]
+  [% title = "为附件创建标记类型" %]
   [% typeLabelLowerPlural = BLOCK %]attachments[% END %]
   [% typeLabelLowerSingular = BLOCK %]attachment[% END %]
 [% END %]
@@ -36,7 +37,7 @@
 [% IF last_action == "copy" %]
   [% title = BLOCK %]Create Flag Type Based on [% type.name FILTER html %][% END %]
 [% ELSIF last_action == "edit" %]
-  [% title = BLOCK %]Edit Flag Type [% type.name FILTER html %][% END %]
+  [% title = BLOCK %]编辑标记类型 [% type.name FILTER html %][% END %]
 [% END %]
 
 [% PROCESS global/header.html.tmpl
@@ -63,22 +64,22 @@
 
   [%# Add a hidden button at the top of the form so that the user pressing "return"
     # really submit the form, as expected. %]
-  <input type="submit" id="commit" value="Submit" style="display: none;">
+  <input type="submit" id="commit" value="提交" style="display: none;">
 
   <table id="form" cellspacing="0" cellpadding="4" border="0">
     <tr>
-      <th>Name:</th>
+      <th>名称：</th>
       <td>
-        a short name identifying this type<br>
+        标识此类型的简短名称<br>
         <input type="text" name="name" value="[% type.name FILTER html %]"
                size="50" maxlength="50">
       </td>
     </tr>
 
     <tr>
-      <th>Description:</th>
+      <th>描述：</th>
       <td>
-        a comprehensive description of this type<br>
+        此类型的完整描述<br>
         [% INCLUDE global/textarea.html.tmpl
           name           = 'description'
           minrows        = 4
@@ -89,7 +90,7 @@
     </tr>
 
     <tr>
-      <th>Category:</th>
+      <th>分类：</th>
 
       <td>
         the products/components to which [% typeLabelLowerPlural %] must
@@ -98,9 +99,9 @@
         <table>
           <tr>
             <td style="vertical-align: top;">
-              <b>Product/Component:</b><br>
-              <select name="product" onchange="selectProduct(this, this.form.component, null, null, '__Any__');">
-                <option value="">__Any__</option>
+              <b>产品/模块：</b><br>
+              <select name="product" onchange="selectProduct(this, this.form.component, null, null, '__任意__');">
+                <option value="">__任意__</option>
                 [% FOREACH prod = products %]
                   <option value="[% prod.name FILTER html %]" 
                           [% "selected" IF type.product.name == prod.name %]>
@@ -108,25 +109,25 @@
                 [% END %]
               </select><br>
               <select name="component">
-                <option value="">__Any__</option>
+                <option value="">__任意__</option>
                 [% FOREACH comp = components %]
                   <option value="[% comp FILTER html %]" 
                           [% "selected" IF type.component.name == comp %]>
                           [% comp FILTER html %]</option>
                 [% END %]
               </select><br>
-              <input type="submit" name="categoryAction-include" value="Include">
-              <input type="submit" name="categoryAction-exclude" value="Exclude">
+              <input type="submit" name="categoryAction-include" value="包含">
+              <input type="submit" name="categoryAction-exclude" value="排除">
             </td>
             <td style="vertical-align: top;">
-              <b>Inclusions:</b><br>
+              <b>包含：</b><br>
               [% PROCESS "global/select-menu.html.tmpl" name="inclusion_to_remove" multiple="1" size="7" options=type.inclusions %]<br>
-              <input type="submit" name="categoryAction-removeInclusion" value="Remove Inclusion">
+              <input type="submit" name="categoryAction-removeInclusion" value="移除包含">
             </td>
             <td style="vertical-align: top;">
-              <b>Exclusions:</b><br>
+              <b>排除：</b><br>
               [% PROCESS "global/select-menu.html.tmpl" name="exclusion_to_remove" multiple="1" size="7" options=type.exclusions %]<br>
-              <input type="submit" name="categoryAction-removeExclusion" value="Remove Exclusion">
+              <input type="submit" name="categoryAction-removeExclusion" value="移除排除">
             </td>
           </tr>
         </table>
@@ -134,9 +135,9 @@
     </tr>
 
     <tr>
-      <th>Sort Key:</th>
+      <th>排序键：</th>
       <td>
-        a number between 1 and 32767 by which this type will be sorted
+        在 1 和 32767 之间的数字by which this type will be sorted
         when displayed to users in a list; ignore if you don't care
         what order the types appear in or if you want them to appear
         in alphabetical order<br>
@@ -149,7 +150,7 @@
       <td>
         <input type="checkbox" id="is_active" name="is_active"
                [% " checked" IF type.is_active || !type.is_active.defined %]>
-        <label for="is_active">active (flags of this type appear in the UI and can be set)</label>
+        <label for="is_active">启用 (此种类型的标记将出现在界面上并可设置)</label>
       </td>
     </tr>
 
@@ -158,12 +159,12 @@
       <td>
         <input type="checkbox" id="is_requestable" name="is_requestable"
                [% " checked" IF type.is_requestable || !type.is_requestable.defined %]>
-        <label for="is_requestable">requestable (users can ask for flags of this type to be set)</label>
+        <label for="is_requestable">可请求 (用户可以请求设置此种类型的标记)</label>
       </td>
     </tr>
 
     <tr>
-      <th>CC List:</th>
+      <th>抄送列表：</th>
       <td>
         if requestable, who should get carbon copied on email notification of requests.
         This is a comma-separated list of full e-mail addresses which do not
@@ -198,20 +199,20 @@
     </tr>
 
     <tr>
-      <th>Grant Group:</th>
+      <th>授权组：</th>
       <td>
-        the group allowed to grant/deny flags of this type
-        (to allow all users to grant/deny these flags, select no group)<br>
+        允许 授权/拒绝 此标记类型的组
+        (要允许所有用户可 授权/拒绝 这些标记类型，请选择“任意”)<br>
         [% PROCESS select selname = "grant_group" %]
       </td>
     </tr>
 
     <tr>
-      <th>Request Group:</th>
+      <th>请求组：</th>
       <td>
-        if flags of this type are requestable, the group allowed to request them
-        (to allow all users to request these flags, select no group)<br>
-        Note that the request group alone has no effect if the grant group is not defined!<br>
+        允许 请求 此标记类型的组
+        (要允许所有用户可 请求 这些标记类型，请选择“任意”)<br>
+        注意：如果没有设置授权组，单独设置请求组将不起作用。<br>
         [% PROCESS select selname = "request_group" %]
       </td>
     </tr>
@@ -220,8 +221,8 @@
       <th></th>
       <td>
         <input type="submit" id="save" value="
-          [%- IF (last_action == "enter" || last_action == "copy") %]Create
-          [%- ELSE %]Save Changes
+          [%- IF (last_action == "enter" || last_action == "copy") %]创建
+          [%- ELSE %]保存修改
           [%- END %]">
       </td>
     </tr>

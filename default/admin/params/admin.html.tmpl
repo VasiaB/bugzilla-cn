@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,29 +17,24 @@
   #
   # Contributor(s): Dave Miller <justdave@bugzilla.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 [%
-   title = "Administrative Policies"
-   desc = "Set up account policies"
+   title = "管理方针"
+   desc = "设置管理方针"
 %]
 
 [% param_descs = {
-  allowbugdeletion => "The pages to edit products and components can delete all " _
-                      "associated $terms.bugs when you delete a product (or component). " _
-                      "Since that is a pretty scary idea, you have to turn on " _
-                      "this option before any such deletions will ever happen.",
+  allowbugdeletion => "允许删除$terms.bug。<br/>如果将此选项设备为“开”，那么当您在编辑产品和模块的页面删除某个产品或组件时，" _
+                      "将删除所有与之相关的$terms.bugs。",
 
-  allowemailchange => "Users can change their own email address through the preferences. " _
-                      "Note that the change is validated by emailing both addresses, so " _
-                      "switching this option on will not let users use an invalid address.",
+  allowemailchange => "允许改变电子邮件。<br/>用户可以在“个人设置”页面改变自己的 email 地址。" _
+                      "注意：此将会给更改前和更改后的 email 地址发邮件来确认更改完成。" _
+                      "所以设置此参数为“开”不会造成用户使用无效的 email 地址。",
 
-  allowuserdeletion => "The user editing pages are capable of letting you delete user accounts. " _
-                       "$terms.Bugzilla will issue a warning in case you'd run into inconsistencies " _
-                       "when you're about to do so, but such deletions remain kinda scary. " _
-                       "So, you have to turn on this option before any such deletions " _
-                       "will ever happen.",
+  allowuserdeletion => "允许删除用户。<br/>如果将此选项设置为“开”，那么用户编辑页面允许您删除用户帐号。" _
+                       "$terms.Bugzilla 将会在您删除用户帐号时给出警告。",
 
-  supportwatchers => "Support one user watching (ie getting copies of all related " _
-                     "email about) another's ${terms.bugs}. Useful for people going on " _
-                     "vacation, and QA folks watching particular developers' ${terms.bugs}." }
+  supportwatchers => "允许用户观察。<br/>如果此选项设置为“开”，则用户可以观察其它用户的${terms.bugs}(如获取相关Email通知)。 " _
+                     "QA可以用来观察特定开发者的${terms.bugs}。" }
 %]

@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -20,6 +20,7 @@
   #                 Jacob Steenhagen <jake@bugzilla.org>
   #                 Vlad Dascalu <jocuri@softhome.net>
   #                 Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -30,7 +31,7 @@
   #               available values for each grant.
   #%]
 
-[% title = BLOCK %]Change Group: [% group.name FILTER html %][% END %]
+[% title = BLOCK %]修改组: [% group.name FILTER html %][% END %]
 
 [% PROCESS global/header.html.tmpl
   style = "
@@ -51,7 +52,7 @@
 
   <table border="1" cellpadding="4">
     <tr>
-      <th>Group:</th>
+      <th>组名：</th>
       <td>
         [% IF group.is_bug_group %]
           <input type="text" name="name" size="60" 
@@ -63,19 +64,15 @@
     </tr>
 
     <tr>
-      <th>Description:</th>
+      <th>描述：</th>
       <td>
-        [% IF group.is_bug_group %]
           <input type="text" name="desc" size="70" 
                  value="[% group.description FILTER html %]">
-        [% ELSE %]
-          [% group.description FILTER html %]
-        [% END %]
       </td>
     </tr>
 
     <tr>
-      <th>User Regexp:</th>
+      <th>用户正则表达式：</th>
       <td>
         <input type="text" name="regexp" size="40" 
                value="[% group.user_regexp FILTER html %]">
@@ -84,7 +81,7 @@
 
     <tr>
       <th>
-        Icon URL:
+        图标链接：
         [% IF group.icon_url %]
           <img src="[% group.icon_url FILTER html %]" alt="[% group.name FILTER html %]">
         [% END %]
@@ -97,7 +94,7 @@
 
     [% IF group.is_bug_group %]
       <tr>
-        <th>Use For [% terms.Bugs %]:</th>
+        <th>用于[% terms.Bugs %]：</th>
         <td>
           <input type="checkbox" name="isactive" 
                  value="1" [% 'checked="checked"' IF group.is_active %]>
@@ -106,16 +103,16 @@
     [% END %]
   </table>
 
-  <h4>Group Permissions</h4>
+  <h4>组权限：</h4>
 
   <table class="grant_table">
     <tr>
-      <th class="one">Groups That Are a Member of This Group<br>
-        (&quot;Users in <var>X</var> are automatically in  
-         [%+ group.name FILTER html %]&quot;)</th>
-      <th>Groups That This Group Is a Member Of<br>
-        (&quot;If you are in [% group.name FILTER html %], you are 
-         automatically also in...&quot;)</th>
+      <th class="one">成员自动属于 [% group.name FILTER html %] 组的组<br>
+        (&quot;<var>X</var> 组中的成员将同时自动属于  
+         [%+ group.name FILTER html %] 组&quot;)</th>
+      <th>[% group.name FILTER html %] 组成员自动所属的组<br>
+        (&quot;如果您在 [% group.name FILTER html %]，您同时也自动在的组
+         ...&quot;)</th>
     </tr>
     <tr>
       <td class="one">
@@ -133,13 +130,13 @@
   <table class="grant_table">
     <tr>
       <th class="one">
-        Groups That Can Grant Membership in This Group<br>
-        (&quot;Users in <var>X</var> can add other users to 
-         [%+ group.name FILTER html %]&quot;)
+        可授于成员关系到 [% group.name FILTER html %] 组的组<br>
+        (&quot;<var>X</var> 组中的用户可以添加用户到
+         [%+ group.name FILTER html %] 组&quot;)
 
       </th>
-     <th>Groups That This Group Can Grant Membership In<br>
-       (&quot;Users in [% group.name FILTER html %] can add users to...&quot;)
+     <th>[% group.name FILTER html %] 组可授于成员关系到的组<br>
+       (&quot;[% group.name FILTER html %] 组的用户可以添加其它用户到的组...&quot;)
      </th>
     </tr>
     <tr>
@@ -159,12 +156,12 @@
     <table class="grant_table">
       <tr>
         <th class="one">
-          Groups That Can See This Group<br>
-          (&quot;Users in <var>X</var> can see users in
-           [%+ group.name FILTER html %]&quot;)
+          可以看到 [% group.name FILTER html %] 组用户的组<br>
+          (&quot;<var>X</var> 组的用户可以看到
+           [%+ group.name FILTER html %] 组的用户&quot;)
         </th>
-       <th>Groups That This Group Can See<br>
-         (&quot;Users in [% group.name FILTER html %] can see users in...&quot;)
+       <th>[% group.name FILTER html %] 组可以看到的组<br>
+         (&quot;[% group.name FILTER html %] 组用户可以看到的用户所属的组...&quot;)
        </th>
       </tr>
       <tr>
@@ -181,26 +178,23 @@
     </table>
   [% END %]
 
-  <input type="submit" value="Update Group">
+  <input type="submit" value="更新组">
   <input type="hidden" name="token" value="[% token FILTER html %]">
 </form>
   
-<h4>Mass Remove</h4>
+<h4>批量移除</h4>
 
-<p>You can use this form to do mass-removal of users from groups.
-  This is often very useful if you upgraded from [% terms.Bugzilla %] 
-  2.16.</p>
+<p>您可以通过以下的表单中从组中移除多个用户，
+  如果您从[% terms.Bugzilla %] 2.16 升级而来的话，这将非常有用。</p>
 
 <table><tr><td>
 <form method="post" action="editgroups.cgi">
   <fieldset>
-    <legend>Remove all explict memberships from users whose login names
-      match the following regular expression:</legend>
+    <legend>删除用户登陆名符合以下正则表达式的用户的所有直接成员关系：</legend>
     <input type="text" size="20" name="regexp">
-    <input type="submit" value="Remove Memberships">
+    <input type="submit" value="移除成员关系">
 
-    <p>If you leave the field blank, all explicit memberships in 
-      this group will be removed.</p>
+    <p>如果您将此字段留空，此组中所有的直接成员关系将会被移除。</p>
 
     <input type="hidden" name="action" value="confirm_remove">
     <input type="hidden" name="group_id" value="[% group.id FILTER html %]">
@@ -208,17 +202,17 @@
 </form>
 </td></tr></table>
  
-<p>Back to the <a href="editgroups.cgi">group list</a>.</p>
+<p>返回到 <a href="editgroups.cgi">组列表</a></p>
 
 [% PROCESS global/footer.html.tmpl %] 
 
 [% BLOCK select_pair %]
   <table class="select_pair">
     <tr>
-      <th><label for="[% "${name}_add" FILTER html %]">Add<br>
-        (select to add)</label></th>
-      <th><label for="[% "${name}_remove" FILTER html %]">Current<br>
-        (select to remove)</label></th>
+      <th><label for="[% "${name}_add" FILTER html %]">添加<br>
+        (选择要添加的组)</label></th>
+      <th><label for="[% "${name}_remove" FILTER html %]">当前的组<br>
+        (选择要移除的组)</label></th>
     </tr>
     <tr>
       <td>

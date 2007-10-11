@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,6 +17,7 @@
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -30,8 +31,8 @@
 
 [% PROCESS global/variables.none.tmpl %]
 
-[% title = BLOCK %]Select milestone of product
-                   '[% product.name FILTER html %]'[% END %]
+[% title = BLOCK %]选择产品
+                   '[% product.name FILTER html %]' 的里程碑[% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
@@ -47,12 +48,12 @@
 [% columns = [
      { 
        name => "name"
-       heading => "Edit milestone..."
+       heading => "编辑里程碑"
        contentlink => edit_contentlink
      },
      { 
        name => "sortkey"
-       heading => "Sortkey"
+       heading => "排序键"
      }
    ]
 %]
@@ -61,7 +62,7 @@
 
   [% columns.push({
        name => "bug_count"
-       heading => "$terms.Bugs"
+       heading => "$terms.Bugs 数"
        align => "right"
        contentlink => bug_count_contentlink
      })
@@ -71,8 +72,8 @@
 
 [% columns.push({
        name => "action"
-       heading => "Action"
-       content => "Delete"
+       heading => "操作"
+       content => "删除"
        contentlink => delete_contentlink
      })
 %]
@@ -83,7 +84,7 @@
      match_value => product.default_milestone
      match_field => 'name'
      override_content => 1
-     content => "(Default milestone)"
+     content => "(默认里程碑)"
      override_contentlink => 1
      contentlink => undef
    } ]
@@ -98,7 +99,7 @@
 [% IF ! showbugcounts %]
 
   <p><a href="editmilestones.cgi?product=[% product.name FILTER url_quote %]&amp;showbugcounts=1">
-      Redisplay table with [% terms.bug %] counts (slower)</a></p>
+      显示[% terms.bug %]数(较慢)</a></p>
 
 [% END %]
 

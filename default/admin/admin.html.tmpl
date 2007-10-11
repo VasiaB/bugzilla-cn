@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,13 +11,13 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
 
 [% title = BLOCK %]
-  Administrate your installation ([% terms.Bugzilla %]
-  [%+ constants.BUGZILLA_VERSION FILTER html %])
+  管理[% terms.Bugzilla %]系统([%+ constants.BUGZILLA_VERSION FILTER html %])
 [% END %]
 
 [% PROCESS global/header.html.tmpl title = title
@@ -25,10 +25,8 @@
 %]
 
 <div>
-  This page is only accessible to empowered users. You can access administrive pages
-  from here (based on your privileges), letting you configure different aspects of
-  this installation. Note: some sections may not be accessible to you and are marked
-  using a lighter color.
+  此页面只有授权用户才可以访问。您可以从此处访问管理页面(取决于您的权限)，
+  并配置本系统的各项参数。<br/>注意：有些您不能访问的页面的项目已用浅色字标示。
 </div>
 
 <table>
@@ -36,92 +34,77 @@
     <td class="admin_links">
       <dl>
         [% class = user.groups.tweakparams ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editparams.cgi">Parameters</a></dt>
-        <dd class="[% class %]">Set core parameters of the installation. That's the
-        place where you specify the URL to access this installation, determine how
-        users authenticate, choose which [% terms.bug %] fields to display, select
-        the mail transfer agent to send email notifications, choose which group of
-        users can use charts and share queries, and much more.</dd>
+        <dt class="[% class %]"><a href="editparams.cgi">参数设置</a></dt>
+        <dd class="[% class %]">设置本系统的核心参数。如指定访问本系统的URL、决定用户的认证方式、
+        选择要显示的[% terms.bug %]字段、选择用来发送Email通知的邮件发送方法、决定哪些组的用户
+        可以使用图表的共享的搜索等。</dd>
 
-        <dt class="[% class %]"><a href="editsettings.cgi">Default Preferences</a></dt>
-        <dd class="[% class %]">Set the default user preferences. These are the values
-        which will be used by default for all users. Users will be able to edit their
-        own preferences from the <a href="userprefs.cgi?tab=settings">Preferences</a>.</dd>
+        <dt class="[% class %]"><a href="editsettings.cgi">默认属性</a></dt>
+        <dd class="[% class %]">设置默认的用户属性。这些值是所有用户的默认设置，用户可能通过
+        <a href="userprefs.cgi?tab=settings">个人设置</a>来设置自己帐号的属性。</dd>
 
         [% class = user.groups.editcomponents ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="sanitycheck.cgi">Sanity Check</a></dt>
-        <dd class="[% class %]">Run sanity checks to locate problems in your database.
-        This may take several tens of minutes depending on the size of your installation.
-        You can also automate this check by running <tt>sanitycheck.pl</tt> from a cron job.
-        A notification will be sent per email to the specified user if errors are detected.</dd>
+        <dt class="[% class %]"><a href="sanitycheck.cgi">系统检修</a></dt>
+        <dd class="[% class %]">运行系统检修来定位此系统数据库中的问题。可能要花十几分钟。
+        也可通过定时任务自动运行<tt>sanitycheck.pl</tt>来执行系统检修。如果发现错误，
+        系统将会以电子邮件的方式通知指定的用户。</dd>
 
         [% class = (user.groups.editusers || user.can_bless) ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editusers.cgi">Users</a></dt>
-        <dd class="[% class %]">Create new user accounts or edit existing ones. You can
-        also add and remove users from groups (also known as "user privileges").</dd>
+        <dt class="[% class %]"><a href="editusers.cgi">用户管理</a></dt>
+        <dd class="[% class %]">创建新用户或编辑已存在的用户。您也可以从组中添加或删除用户
+        (必须用相应的"用户权限")。</dd>
 
         [% class = (Param('useclassification') && user.groups.editclassifications) ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editclassifications.cgi">Classifications</a></dt>
-        <dd class="[% class %]">If your installation has to manage many products at once,
-        it's a good idea to group these products into distinct categories. This lets users
-        find information more easily when doing searches or when filing new [% terms.bugs %].</dd>
+        <dt class="[% class %]"><a href="editclassifications.cgi">分类管理</a></dt>
+        <dd class="[% class %]">如果此系统要同时管理很多产品，最好明确地将这些产品分类。
+        这将使用户在搜索或提交新[% terms.bugs %]时更容易找到相关信息。</dd>
 
         [% class = (user.groups.editcomponents
                     || user.get_products_by_permission("editcomponents").size) ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editproducts.cgi">Products</a></dt>
-        <dd class="[% class %]">Edit all aspects of products, including group restrictions
-        which let you define who can access [% terms.bugs %] being in these products. You
-        can also edit some specific attributes of products such as
-        <a href="editcomponents.cgi">components</a>, <a href="editversions.cgi">versions</a>
-        and <a href="editmilestones.cgi">milestones</a> directly.</dd>
+        <dt class="[% class %]"><a href="editproducts.cgi">产品管理</a></dt>
+        <dd class="[% class %]">编辑产品的各方面，包括定义访问此产品的[% terms.bugs %]的用户组限制。
+        您也可直接编辑产品特定的属性，如<a href="editcomponents.cgi">模块</a>，<a href="editversions.cgi">
+        版本</a>和<a href="editmilestones.cgi">目标里程碑</a>。</dd>
 
         [% class = user.groups.editcomponents ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editflagtypes.cgi">Flags</a></dt>
-        <dd class="[% class %]">A flag is a custom 4-states attribute of [% terms.bugs %]
-        and/or attachments. These states are: granted, denied, requested and undefined.
-        You can set as many flags as desired per [% terms.bug %], and define which users
-        are allowed to edit them.</dd>
+        <dt class="[% class %]"><a href="editflagtypes.cgi">标记管理</a></dt>
+        <dd class="[% class %]">标记是[% terms.bugs %]和附件的四种状态属性：
+        授于(+)，拒绝(-)，请求(?)和未定义。
+        您可按[% terms.bug %]的需要设置各种标记，并定义允许哪些用户编辑。</dd>
       </dl>
     </td>
 
     <td class="admin_links">
       <dl>
         [% class = user.groups.admin ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editfields.cgi">Custom Fields</a></dt>
-        <dd class="[% class %]">[% terms.Bugzilla %] lets you define fields which are
-        not implemented by default, based on your local and specific requirements.
-        These fields can then be used as any other field, meaning that you can set
-        them in [% terms.bugs %] and run any search involving them.<br>
-        Before creating new fields, keep in mind that too many fields may make the user
-        interface more complex and harder to use. Be sure you have investigated other ways
-        to satisfy your needs before doing this.</dd>
+        <dt class="[% class %]"><a href="editfields.cgi">自定义字段</a></dt>
+        <dd class="[% class %]">[% terms.Bugzilla %] 允许您通过定义系统默认安装没有的字段来解决您的
+        定制特定的需求。这些字段可以用于其它地方，这意味着您可以在[% terms.bugs %]中设置这些字段
+        并用于搜索。<br>
+        在创建新字段前请注意：太多的字段可能使界面更复杂且使用不便。在做这之前，请确保您已尝试其它方法
+        来满足您的需求。</dd>
 
-        <dt class="[% class %]"><a href="editvalues.cgi">Field Values</a></dt>
-        <dd class="[% class %]">Define legal values for fields whose values must belong
-        to some given list. This is also the place where you define legal values for some
-        types of custom fields.</dd>
+        <dt class="[% class %]"><a href="editvalues.cgi">字段值</a></dt>
+        <dd class="[% class %]">定义某些列表中合法的字段值。这也可以用于某些类型的自定义字段的字段值。</dd>
 
-        <dt class="[% class %]"><a href="editworkflow.cgi">[%terms.Bug %] Status Workflow</a></dt>
-        <dd class="[% class %]">Customize your workflow and choose initial [% terms.bug %]
-        statuses available on [% terms.bug %] creation and allowed [% terms.bug %] status
-        transitions when editing existing [% terms.bugs %].</dd>
+        <dt class="[% class %]"><a href="editworkflow.cgi">状态工作流</a></dt>
+        <dd class="[% class %]">自定义您的[%terms.Bug %]状态工作流程并选择[% terms.bug %]创建时的初始[% terms.bug %]状态。
+        同时允许编辑已存在的[% terms.bugs %]时的[% terms.bug %]状态转换。</dd>
 
         [% class = user.groups.creategroups ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editgroups.cgi">Groups</a></dt>
-        <dd class="[% class %]">Define groups which will be used in the installation.
-        They can either be used to define new user privileges or to restrict the access
-        to some [% terms.bugs %].</dd>
+        <dt class="[% class %]"><a href="editgroups.cgi">分组管理</a></dt>
+        <dd class="[% class %]">定义此系统中用到的用户组。它们可以用来定义新用户的权限或限制
+        访问某些[% terms.bugs %]。</dd>
 
         [% class = user.groups.editkeywords ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editkeywords.cgi">Keywords</a></dt>
-        <dd class="[% class %]">Set keywords to be used with [% terms.bugs %]. Keywords
-        are an easy way to "tag" [% terms.bugs %] to let you find them more easily later.</dd>
+        <dt class="[% class %]"><a href="editkeywords.cgi">关键字</a></dt>
+        <dd class="[% class %]">设置用于[% terms.bugs %]的关键字。关键字是[% terms.bugs %]的标签(tag)，
+        它让您以后很容易搜索到[% terms.bug %]。</dd>
 
         [% class = user.groups.bz_canusewhines ? "" : "forbidden" %]
-        <dt class="[% class %]"><a href="editwhines.cgi">Whining</a></dt>
-        <dd class="[% class %]">Set queries which will be run at some specified date
-        and time, and get the result of these queries directly per email. This is a
-        good way to create reminders and to keep track of the activity in your installation.</dd>
+        <dt class="[% class %]"><a href="editwhines.cgi">订阅</a></dt>
+        <dd class="[% class %]">设置指定日期和时间运行的搜索，并通过电子邮件的方式获取搜索结果。
+        这是一种在此系统中创建提醒并保持跟踪[% terms.bugs %]活动情况的很好的一种方式。</dd>
       </dl>
     </td>
   </tr>

@@ -104,7 +104,7 @@
     [% FOREACH flag = type.flags %]
       <tr>
         <td>
-          [% flag.setter.nick FILTER html %]:
+          [% flag.setter.realname FILTER html %]:
         </td>
         <td>
           <label title="[% type.description FILTER html %]"
@@ -222,7 +222,7 @@
     [% END %]
     <tr>
       <td colspan="2">
-        addl. <label title="[% type.description FILTER html %]"
+        添加标记-<label title="[% type.description FILTER html %]"
                      for="flag_type-[% type.id %]">
           [%- type.name FILTER html FILTER no_break %]</label>
       </td>

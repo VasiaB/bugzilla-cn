@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -12,6 +12,7 @@
   #
   # Contributor(s): Marc Schumann <wurblzap@gmail.com>
   #                 David Lawrence <dkl@redhat.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -24,7 +25,7 @@
  
 
 [% PROCESS global/header.html.tmpl
-  title = "Search users"
+  title = "搜索用户"
   style_urls = ['skins/standard/editusers.css']
   onload = "document.forms['f'].matchstr.focus()"
 %]
@@ -35,25 +36,24 @@
 
 <form name="f" method="get" action="editusers.cgi">
 <input type="hidden" name="action" value="list" />
-<p><label for="matchvalue">List users with</label>
+<p><label for="matchvalue">搜索用户</label>
 <select id="matchvalue" name="matchvalue">
-  <option value="login_name">login name</option>
-  <option value="realname">real name</option>
-  <option value="userid">user id</option>
+  <option value="login_name">登陆名</option>
+  <option value="realname">真实姓名</option>
+  <option value="userid">用户ID</option>
 </select>
-<label for="matchstr">matching</label>
-<input size="32" name="matchstr" id="matchstr" />
 <select name="matchtype">
-  <option value="substr" selected="selected">case-insensitive substring</option>
-  <option value="regexp">case-insensitive regexp</option>
-  <option value="notregexp">not (case-insensitive regexp)</option>
-  <option value="exact">exact (find this user)</option>
+  <option value="substr" selected="selected">匹配不区分大小写的字符串</option>
+  <option value="regexp">匹配不区分大小写的正则表达式</option>
+  <option value="notregexp">不匹配不区分大小写的正则表达式</option>
+  <option value="exact">精确匹配</option>
 </select>
-<input type="submit" id="search" value="Search" /></p>
+<input size="32" name="matchstr" id="matchstr" />
+<input type="submit" id="search" value="搜索" /></p>
 
 [% IF restrictablegroups.size %]
   <p><input type="checkbox" name="grouprestrict" value="1" id="grouprestrict" />
-  <label for="grouprestrict">Restrict to users belonging to group</label>
+  <label for="grouprestrict">仅限这些用户的所在的组是</label>
   <select name="groupid"
           onchange="document.forms['f'].grouprestrict.checked=true">
     [% FOREACH group = restrictablegroups %]
@@ -65,11 +65,10 @@
 
 [% IF editusers %]
   <p>
-    You can also <a href="editusers.cgi?action=add">add a new user</a>
+    您也可以<a href="editusers.cgi?action=add">添加新用户</a>
     [%- IF listselectionvalues %],
-      or
-      <a href="editusers.cgi?action=list[% INCLUDE listselectionurlparams %]">show
-      the user list again</a>
+      或
+      <a href="editusers.cgi?action=list[% INCLUDE listselectionurlparams %]">显示用户列表</a>
     [%- END %].
   </p>
 [% END %]

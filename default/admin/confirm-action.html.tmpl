@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -13,6 +13,7 @@
   # The Initial Developer of the Original Code is Frédéric Buclin.
   #
   # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -24,7 +25,7 @@
 
 [% PROCESS "global/field-descs.none.tmpl" %]
 
-[% PROCESS global/header.html.tmpl title = "Suspicious Action"
+[% PROCESS global/header.html.tmpl title = "可疑的操作"
                                    style_urls = ['skins/standard/global.css'] %]
 
 [% IF abuser %]
@@ -73,14 +74,12 @@
     the <em>[% expected_action FILTER html %]</em> action while processing the
     '[% script_name FILTER html%]' script). The reason could be one of:<br>
     <ul>
-      <li>You clicked the "Back" button of your web browser after having successfully
-      submitted changes, which is generally not a good idea (but harmless).</li>
-      <li>You entered the URL in the address bar of your web browser directly,
-      which should be safe.</li>
+      <li>您在成功提交修改后，点击了浏览器“后退”按钮。不建议您这样做（但没什么危害）。</li>
+      <li>您直接在浏览器的地址栏输入了此链接（应该是安全的）。</li>
       <li>You clicked on a URL which redirected you here <b>without your consent</b>,
       in which case this action is much more critical.</li>
     </ul>
-    Are you sure you want to commit these changes anyway? This may result in
+    您仍然要提交这些更改吗？This may result in
     unexpected and undesired results.
   </div>
 

@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -27,16 +28,16 @@
   # updated: boolean; defined if the 'name' field was updated
   #%]
   
-[% title = BLOCK %]Updating Version '[% version.name FILTER html %]' of Product
-                   '[% product.name FILTER html %]'[% END %]
+[% title = BLOCK %]更新产品 '[% product.name FILTER html %]' 的版本 '[% version.name FILTER html %]'
+                   [% END %]
 [% PROCESS global/header.html.tmpl
   title = title
 %]
 
 [% IF updated %]
-  <p>Updated Version name to: '[% version.name FILTER html %]'.</p>
+  <p>版本名已更新为 '[% version.name FILTER html %]'。</p>
 [% ELSE %]
-  <p>Nothing changed for version '[% version.name FILTER html %]'.</p>
+  <p>版本 '[% version.name FILTER html %]' 没有作任何修改。</p>
 [% END %]
 
 [% PROCESS admin/versions/footer.html.tmpl %]

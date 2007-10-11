@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -26,30 +26,27 @@
   #%]
   
 [% IF action == "update" %]
-  [% title = "Update keyword"%]
-  [% status = "updated" %]
+  [% title = "更新关键字"%]
+  [% status = "已更新" %]
 [% ELSIF action == "delete" %]
-  [% title = "Delete keyword" %]
-  [% status = "deleted" %]
+  [% title = "删除关键字" %]
+  [% status = "已删除" %]
 [% END %]
 
 [% PROCESS global/header.html.tmpl %]
 
-Keyword [% keyword.name FILTER html %] [%+ status FILTER html %].
+关键字 [% keyword.name FILTER html %] [%+ status FILTER html %].
 
 <p>
-  <b>After you have finished deleting or modifying keywords,
-  you need to rebuild the keyword cache.</b><br>
+  <b>在您删除或修改关键字后，您需要重建关键字缓存。</b><br>
   
-  Warning: on a very large installation of [% terms.Bugzilla %],
-  this can take several minutes.
+  警告：如果[% terms.Bugzilla %]系统很庞大，这可能需要较长时间。
 </p>
 
 <p>
-  <b><a href="sanitycheck.cgi?rebuildkeywordcache=1">Rebuild
-  keyword cache</a></b>
+  <b><a href="sanitycheck.cgi?rebuildkeywordcache=1">重建关键字缓存</a></b>
 </p>
 
-<p><a href="editkeywords.cgi">Edit more keywords</a>.</p>
+<p><a href="editkeywords.cgi">编辑其它关键字</a></p>
 
 [% PROCESS global/footer.html.tmpl %] 

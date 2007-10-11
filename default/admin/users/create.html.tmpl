@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -11,6 +11,7 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Marc Schumann <wurblzap@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -20,7 +21,7 @@
   #%]
 
 [% PROCESS global/header.html.tmpl
-  title = "Add user"
+  title = "添加用户"
   style_urls = ['skins/standard/editusers.css']
   onload = "document.forms['f'].login.focus()"
 %]
@@ -38,7 +39,7 @@
   %]
 </table>
 <p>
-  <input type="submit" id="add" value="Add"/>
+  <input type="submit" id="add" value="添加"/>
   <input type="hidden" name="action" value="new" />
   <input type="hidden" name="token" value="[% token FILTER html %]">
   [% INCLUDE listselectionhiddenfields %]
@@ -46,11 +47,10 @@
 </form>
 
 <p>
-  You can also <a href="editusers.cgi">find a user</a>
+  您也可以<a href="editusers.cgi">搜索用户</a>
   [% IF listselectionvalues %],
-    or
-    <a href="editusers.cgi?action=list[% INCLUDE listselectionurlparams %]">go
-    back to the user list</a>
+    或
+    <a href="editusers.cgi?action=list[% INCLUDE listselectionurlparams %]">返回用户列表</a>
   [% END %].
 </p>
 
