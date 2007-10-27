@@ -1,8 +1,9 @@
 #summary 如何避免 Bugzilla 乱码发生。
 
-= Introduction =
+= 简介 =
 
-Add your content here.
+Bugzilla 国际化所产生的乱码主要发生在使用双字节编码的东亚国家和地区的语言文字。
+乱码主要分为两种情况，页面本地化乱码和数据库输出乱码。本文主要介绍如何避免下一种情况的发生。
 
 
 = Details =
