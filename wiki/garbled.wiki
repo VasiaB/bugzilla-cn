@@ -29,16 +29,29 @@
 = 如何解决乱码问题 =
 
  为尽量避免修改多个文件，从而造成的修改管理上的麻烦，此处主要修改Bugzilla\Template.pm文件。
-== #加入"use Encode;"这样的引用 ==
+=== 加入"use Encode;"这样的引用 ===
  在Template.pm文件开头加入"use Encode;"这样的引用，以使用"decode_utf8"方法。
 
-== #修改FILTERS html过滤 ==
+=== 修改 FILTERS html 过滤 ===
  在Template.pm 621行附近，将“return $var;”改为：
 {{{
-				if (utf8::is_utf8($var)) {
-					return $var;
-				}
-				else {
-					return decode_utf8($var);
-				}
+if (utf8::is_utf8($var)) {
+	return $var;
+	}
+else {
+	return decode_utf8($var);
+}
+}}}
+
+=== 修改 FILTERS none 过滤 ===
+ 在Template.pm 677行附近，将“none => sub { return decode_utf8($_[0]); } ,”改为：
+{{{
+ none => sub { 
+	if (utf8::is_utf8($_[0])) {
+		return $_[0]; 
+	}
+	else {
+		return decode_utf8($_[0]);
+	}
+} ,
 }}}
