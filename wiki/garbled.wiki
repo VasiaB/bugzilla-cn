@@ -1,4 +1,5 @@
-#summary 如何避免 Bugzilla 乱码发生。
+#summary Bugzilla 数据库输出乱码的解决方法
+#labels Phase-Support
 
 = 简介 =
 
