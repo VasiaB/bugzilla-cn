@@ -27,3 +27,18 @@
  后来一次无意中，看到一个页面的链接上的文字是乱码的，但是当鼠标放在链接上时，浏览器状态栏显示的链接上带的汉字却没有乱码！仔细分析Bugzilla源代码后发现，链接中所有的变量多用 FILTER url_quote 过滤，而从数据库中查询得到的值多用 FILTER html 或 FILTER html_light 过滤。这就说明，在 FILTER url_quote 或 FILTER html_light 等地方进行decode去掉多余的一次UTF-8编码就应该没问题了！
 
 = 如何解决乱码问题 =
+
+ 为尽量避免修改多个文件，从而造成的修改管理上的麻烦，此处主要修改Bugzilla\Template.pm文件。
+== #加入"use Encode;"这样的引用 ==
+ 在Template.pm文件开头加入"use Encode;"这样的引用，以使用"decode_utf8"方法。
+
+== #修改FILTERS html过滤 ==
+ 在Template.pm 621行附近，将“return $var;”改为：
+{{{
+				if (utf8::is_utf8($var)) {
+					return $var;
+				}
+				else {
+					return decode_utf8($var);
+				}
+}}}
