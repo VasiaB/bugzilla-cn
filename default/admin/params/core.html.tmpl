@@ -26,78 +26,58 @@
 %]
 
 [% param_descs = {
-  maintainer => "维护者。<br/>" _
-                "维护此${terms.Bugzilla}系统的人的电子邮件地址。",
+  maintainer => "维护者，维护此${terms.Bugzilla}系统的人的电子邮件地址。",
 
-  urlbase => "The URL that is the common initial leading part of all $terms.Bugzilla " _
-             "URLs.",
+  urlbase => "所有${terms.Bugzilla}链接的共同初始开始链接",
 
-  docs_urlbase => "The URL that is the common initial leading part of all " _
-                  "$terms.Bugzilla documentation URLs. " _
-                  "It may be an absolute URL, or a URL relative to urlbase " _
-                  "above. " _
-                  "Leave this empty to suppress links to the documentation.",
+  docs_urlbase => "所有$terms.Bugzilla文档链接的共同初始开始链接 " _
+                  "它可以是绝对的链接，或相对于以上设置的链接" _
+                  "留空将隐藏文档链接。",
 
-  sslbase => "The URL that is the common initial leading part of all HTTPS " _
-             "(SSL) $terms.Bugzilla URLs.",
+  sslbase => "所有${terms.Bugzilla} HTTPS(SSL)安全链接的共同初始开始链接。",
 
-  ssl => "Controls when $terms.Bugzilla should enforce sessions to use HTTPS by " _
-         "using <tt>sslbase</tt>.",
+  ssl => "控制${terms.Bugzilla}什么时候强制会话使用<tt>sslbase</tt>指定的 HTTPS 安全链接。",
 
-  cookiedomain => "The domain for $terms.Bugzilla cookies. Normally blank. " _
-                  "If your website is at 'www.foo.com', setting this to " _
-                  "'.foo.com' will also allow 'bar.foo.com' to access " _
-                  "$terms.Bugzilla cookies. This is useful if you have more than " _
-                  "one hostname pointing at the same web server, and you " _
-                  "want them to share the $terms.Bugzilla cookie.",
+  cookiedomain => "此域用于 $terms.Bugzilla 的 cookie。一般设置为空。" _
+                  "如果您的Web站点位于 'www.foo.com'，设置此参数为 " _
+                  "'.foo.com' 将会允许 'bar.foo.com' 访问 " _
+                  "$terms.Bugzilla 的 cookie。这对有多个域名指向同一Web服务器的情况十分有用。" _
+                  "您可以通过此方法共享 $terms.Bugzilla cookie。",
 
-  cookiepath => "Path, relative to your web document root, to which to restrict " _
-                "$terms.Bugzilla cookies. Normally this is the URI portion of your URL " _
-                "base. Begin with a / (single slash mark). For instance, if " _
-                "$terms.Bugzilla serves from 'http://www.somedomain.com/bugzilla/', set " _
-                "this parameter to /bugzilla/. Setting it to / will allow " _
-                "all sites served by this web server or virtual host to read " _
-                "$terms.Bugzilla cookies.",
+  cookiepath => "Cookie 路径，相对于您的Web根目录，用来限制" _
+                "${terms.Bugzilla} 的cookie。一般地，这是URL base的一部分，以“/”开头。<br>" _
+                "例如，如果${terms.Bugzilla} 服务器访问地址为 'http://www.somedomain.com/bugzilla/'，设置" _
+                "此参数为 /bugzilla/。如果设置为“/”将会允许" _
+                "此 Web 服务器上的所有站点或虚拟主机读取 ${terms.Bugzilla} 的 cookie。",
 
-  timezone => "时区。<br/>" _
-              "数据库服务器所在的时区。如果设置为空，时区将不会显示此时间戳。",
+  timezone => "时区，数据库服务器所在的时区。如果设置为空，时区将不会显示此时间戳。",
 
-  utf8 => "Use UTF-8 (Unicode) encoding for all text in ${terms.Bugzilla}. New " _
-          "installations should set this to true to avoid character encoding " _
-          "problems. <strong>Existing databases should set this to true " _
-          " only after the data has been converted from existing legacy " _
-          " character encodings to UTF-8, using the " _
-          " <kbd>contrib/recode.pl</kbd> script</strong>. <br><br> Note " _
-          " that if you  turn this parameter from &quot;off&quot; to " _
-          " &quot;on&quot;, you must re-run checksetup.pl immediately " _
-          " afterward.",
+  utf8 => "${terms.Bugzilla}中所有文字使用 UTF-8 (Unicode) 编码。" _
+          "新安装的系统最好设置此值为“开”以避免字符编码问题(乱码)。<br>" _
+          "<strong>已存在的数据库仅当所有数据使用<kbd>contrib/recode.pl</kbd>脚本转换编码为 UTF-8 后" _
+          "设置此参数为“开”。</strong>. <br><br>" _
+          "注意：如果您把此参数从“关”设置为“开”，您必须马上重新运行 checksetup.pl 脚本。",
 
-  shutdownhtml => "If this field is non-empty, then $terms.Bugzilla will be completely " _
-                  "disabled and this text will be displayed instead of all the " _
-                  "$terms.Bugzilla pages.",
+  shutdownhtml => "如果此字段设置为非空，$terms.Bugzilla 将会完全禁用，" _
+                  "且此文字将会显示在 $terms.Bugzilla 页面上。",
 
-  announcehtml => "If this field is non-empty, then $terms.Bugzilla will " _
-                  "display whatever is in this field at the top of every " _
-                  "HTML page.  The HTML you put in this field is not " _
-                  "wrapped or enclosed in anything; you might want to " _
-                  "wrap it inside a <tt>&lt;div&gt;</tt>.  Give the div " _
-                  "<em>id=message</em> to get green text inside a " _
-                  "red box, or <em>class=bz_private</em> for dark " _
-                  "red on a red background.  Anything defined in " _
-                  "<tt>skins/standard/global.css</tt> or " _
-                  "<tt>skins/custom/global.css</tt> will work.  To get " _
-                  "centered text, use <em>style=\"text-align: " _
+  announcehtml => "如果此字段设置为非空，$terms.Bugzilla 将会" _
+                  "显示此字段的文字在每个HTML页面的顶部。" _
+                  "此处的HTML代码没有被包装或封闭，您可以使用 <tt>&lt;div&gt;</tt>。" _
+                  " div<em>id=message</em> 来显示为红色边框中的绿色文字。" _
+                  "或 <em>class=bz_private</em> 来显示深红色的背景。" _
+                  "任何定义在<tt>skins/standard/global.css</tt> 或" _
+                  "<tt>skins/custom/global.css</tt> 的样式层叠表都会起作用。" _
+                  "要使用居中文字，使用 <em>style=\"text-align: " _
                   "center;\"</em>.",
 
-  proxy_url => "$terms.Bugzilla may have to access the web to get notifications about new " _
-               "releases, see the <tt>upgrade_notification</tt> parameter. In case you are " _
-               "behind a proxy, it may be necessary to enter its URL if the web server " _
-               "group cannot access the HTTP_PROXY environment variable. If you have to " _
-               "authenticate, use the <code>http://user:pass@proxy_url/</code> syntax.",
+  proxy_url => "$terms.Bugzilla 可以需要访问 web 来获取最新版本信息。" _
+               "请参阅 <tt>upgrade_notification</tt> 参数。如果您使用代理服务器访问网络，" _
+               "且不能读取 HTTP_PROXY 环境变量，您必须设置代理，" _
+               "使用 <code>http://user:pass@proxy_url/</code> 这样的格式。",
 
-  upgrade_notification => "<p>$terms.Bugzilla can inform you when a new release is available. " _
-                          "The notification will appear on the $terms.Bugzilla homepage, " _
-                          "for administrators only.</p>" _
+  upgrade_notification => "<p>$terms.Bugzilla 可以在新版本可用时通知您。" _
+                          "此通知仅出现在管理员的 $terms.Bugzilla 首页。</p>" _
                           "<ul><li>'development_snapshot' notifies you about the latest " _
                           "release on the trunk, i.e. development snapshots.</li>" _
                           "<li>'latest_stable_release' notifies you about the most recent release " _
@@ -107,6 +87,6 @@
                           "corresponding to the branch your installation is based on. " _
                           "If you are running a release candidate, you will get " _
                           "a notification for newer release candidates too.</li>" _
-                          "<li>'disabled' will never notify you about new releases and no " _
-                          "connection will be established to a remote server.</li></ul>" }
+                          "<li>'disabled' 将会禁用更新通知，" _
+                          "且不会建立与远程服务器端的连接。</li></ul>" }
 %]

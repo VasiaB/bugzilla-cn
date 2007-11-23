@@ -24,6 +24,10 @@
 \flag
 \reports
 
+未汉化目录:
+\pages
+
+部分翻译对比:
 columns 显示列 （列）
 quip 标语
 fied 字段 （区域）

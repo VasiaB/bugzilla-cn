@@ -26,111 +26,89 @@
 %]
 
 [% param_descs = {
-  auth_env_id => "Environment variable used by external authentication system " _
-                 "to store a unique identifier for each user. Leave it blank " _
-                 "if there isn't one or if this method of authentication " _
-                 "is not being used.",
+  auth_env_id => "用于外部认证系统保存每个用户唯一标识的环境变量名<br>" _
+                 "留空如果外部认证系统不存在或没有启用。",
 
-  auth_env_email => "Environment variable used by external authentication system " _
-                    "to store each user's email address. This is a required " _
-                    "field for environmental authentication. Leave it blank " _
-                    "if you are not going to use this feature.",
+  auth_env_email => "用于外部认证系统保存用户 Email 地址的环境变量名<br>" _
+                    "此为环境认证必不可少的字段。如果不使用此特性，" _
+                    "请保持此字段为空。",
 
-  auth_env_realname => "Environment variable used by external authentication system " _
-                       "to store the user's real name. Leave it blank if there " _
-                       "isn't one or if this method of authentication is not being " _
-                       "used.",
+  auth_env_realname => "用于外部认证系统保存用户真实姓名的环境变量名<br>" _
+                       "留空如果外部认证系统不存在或没有启用。",
 
-  user_info_class => "Mechanism(s) to be used for gathering a user's login information.
-                      More than one may be selected. If the first one returns nothing,
-                      the second is tried, and so on.<br>
-                      The types are:
+  user_info_class => "搜集用户信息的方法。
+                      可以选择多种方法。如果第一种返回空，则尝试第二种，依此类推。
+                      可用的类型是：
                       <dl>
                         <dt>CGI</dt>
                         <dd>
-                          Asks for username and password via CGI form interface.
+                          通过 CGI 表单界面询问用户名和密码。
                         </dd>
                         <dt>Env</dt>
                         <dd>
-                          Info for a pre-authenticated user is passed in system
-                          environment variables.
+                          通过系统环境变量传递预认证用户信息。
                         </dd>
                       </dl>",
 
-  user_verify_class => "Mechanism(s) to be used for verifying (authenticating) information
-                        gathered by user_info_class.
-                        More than one may be selected. If the first one cannot find the
-                        user, the second is tried, and so on.<br>
-                        The types are:
+  user_verify_class => "用于验证(认证)通过 user_info_class 获取的用户信息的方法。
+                        可以选择多种方法。如果第一种返回空，则尝试第二种，依此类推。
+                        可用的类型是：
                         <dl>
                           <dt>DB</dt>
                           <dd>
-                            ${terms.Bugzilla}'s built-in authentication. This is the most common
-                            choice.
+                            ${terms.Bugzilla} 自带的认证方法，这是最普遍的选择。
                           </dd>
                           <dt>RADIUS</dt>
                           <dd>
-                            RADIUS authentication using a RADIUS server.
-                            This method is experimental; please see the
-                            $terms.Bugzilla documentation for more information.
-                            Using this method requires
-                            <a href=\"?section=radius\">additional
-                            parameters</a> to be set.
+                            RADIUS 认证使用 RADIUS 服务器。
+                            此方法还处理实验阶段; 请查阅
+                            $terms.Bugzilla 文档以了解更多信息。
+                            使用此方法需要设置
+                            <a href=\"?section=radius\">额外的参数</a>。
                           </dd>
                           <dt>LDAP</dt>
                           <dd>
-                            LDAP authentication using an LDAP server.
-                            This method is experimental; please see the
-                            $terms.Bugzilla documentation for more information.
-                            Using this method requires
-                            <a href=\"?section=ldap\">additional
-                            parameters</a> to be set.
+                            LDAP 认证使用 LDAP 服务器。
+                            此方法还处理实验阶段; 请查阅
+                            $terms.Bugzilla 文档以了解更多信息。
+                            使用此方法需要设置
+                            <a href=\"?section=ldap\">额外的参数</a>。
                           </dd>
                         </dl>",
 
-  rememberlogin => "Controls management of session cookies
+  rememberlogin => "会话 cookies 的控制管理
                     <ul>
                       <li>
-                        on - Session cookies never expire (the user has to login only
-                        once per browser).
+                        打开 - 会话 cookies 将不会过期(用户每个浏览器仅需登陆一次)。
                       </li>
                       <li>
-                        off - Session cookies last until the users session ends (the user
-                        will have to login in each new browser session).
+                        关闭 - 会话 cookies 将持续到浏览器关闭时。(用户的每个新的浏览器进程必须重新登陆)。
                       </li>
                       <li>
-                        defaulton/defaultoff - Default behavior as described
-                        above, but user can choose whether $terms.Bugzilla will remember his
-                        login or not.
+                        默认开/默认关 - 以下描述的默认行为，
+                        但用户可以自己决定是否记住本次会话。
                       </li>
                     </ul>",
 
-  loginnetmask => "The number of bits for the netmask used if a user chooses to " _
-                  "allow a login to be valid for more than a single IP. Setting " _
-                  "this to 32 disables this feature.<br> " _
-                  "Note that enabling this may decrease the security of your system.",
+  loginnetmask => "用户选择“允许多个 IP 使用同一会话”时的网络掩码的位数。" _
+                  "将此参数设备为 32 将禁用此功能。<br> " _
+                  "注意：启用此功能将降低您的系统安全性。",
 
-  requirelogin => "If this option is set, all access to the system beyond the " _
-                  "front page will require a login. No anonymous users will " _
-                  "be permitted.",
+  requirelogin => "如果此参数设备为“打开”，所有访问此系统前台页面都需要登陆。" _
+                  "匿名用户将被禁止访问。",
 
-  emailregexp => "This defines the regexp to use for legal email addresses. The " _
-                 "default tries to match fully qualified email addresses. Another " _
-                 "popular value to put here is <tt>^[^@]+$</tt>, which means " _
-                 "'local usernames, no @ allowed.'",
+  emailregexp => "合法 Email 地址的正则表达式。" _
+                 "这将默认尝试匹配全部合格的 Email 地址。" _
+                 "另一个常用值是 <tt>^[^@]+$</tt>，即意思为" _
+                 "'本地用户名，不允许 @ 符号'",
 
-  emailregexpdesc => "This describes in English words what kinds of legal addresses " _
-                     "are allowed by the <tt>emailregexp</tt> param.",
+  emailregexpdesc => "当 Email 地址不匹配<tt>emailregexp</tt>参数的正则表达式时的英语描述。",
 
-  emailsuffix => "This is a string to append to any email addresses when actually " _
-                 "sending mail to that address. It is useful if you have changed " _
-                 "the <tt>emailregexp</tt> param to only allow local usernames, " _
-                 "but you want the mail to be delivered to username@my.local.hostname.",
+  emailsuffix => "此处是附在任意 Email 地址后的字符串。当实际发送邮件时将使用此附加后的地址。" _
+                 "这在您改变<tt>emailregexp</tt>参数，允许本地用户注册，但要将邮件发往" _
+                 "username@my.local.hostname 之类的地址时十分有用。",
 
-  createemailregexp => "This defines the regexp to use for email addresses that are " _
-                       "permitted to self-register using a 'New Account' feature. The " _
-                       "default (.*) permits any account matching the emailregexp " _
-                       "to be created. If this parameter is left blank, no users " _
-                       "will be permitted to create their own accounts and all accounts " _
-                       "will have to be created by an administrator." }
+  createemailregexp => "此处定义用户自己创建用户时允许注册的 Email 地址" _
+                       "默认值 (.*) 允许任何 Email 地址注册。" _
+                       "如果此参数为空，则用户不允许自己创建帐号，必须由管理员创建。" }
 %]

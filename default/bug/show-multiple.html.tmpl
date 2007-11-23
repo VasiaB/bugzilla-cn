@@ -26,7 +26,7 @@
 [% PROCESS "global/field-descs.none.tmpl" %]
 
 [% PROCESS global/header.html.tmpl
-  title = "Full Text $terms.Bug Listing"
+  title = "全面描述${terms.Bug}列表"
   h1 = ""
   style_urls = ["skins/standard/show_multiple.css",
                 "skins/standard/buglist.css"]
@@ -142,10 +142,10 @@
       [% PROCESS rightcell %]
     </tr>
 
-    [% PROCESS row cell = "版本" %]
-    [% PROCESS row cell = "目标里程碑"  IF Param('usetargetmilestone') %]
-    [% PROCESS row cell = "硬件平台" %]
-    [% PROCESS row cell = "操作系统"  %]
+    [% PROCESS row cell = "version" %]
+    [% PROCESS row cell = "target_milestone"  IF Param('usetargetmilestone') %]
+    [% PROCESS row cell = "rep_platform" %]
+    [% PROCESS row cell = "op_sys"  %]
 
     [% IF bug.bug_file_loc %]
       <tr>
@@ -162,7 +162,7 @@
     [% END %]
 
     [% IF Param("usestatuswhiteboard") %]
-      [% PROCESS row cell = "状态白板" fullrow = 1 %]
+      [% PROCESS row cell = "status_whiteboard" fullrow = 1 %]
     [% END %]
 
     [% USE Bugzilla %]
@@ -221,7 +221,7 @@
           </table>
         </td>
       </tr>
-      [% PROCESS row cell="最后期限" %]
+      [% PROCESS row cell="deadline" %]
     [% END %]
 
     [% IF bug.attachments.size %]

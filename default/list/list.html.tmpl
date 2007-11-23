@@ -237,8 +237,8 @@
 
 [% IF cgi.param('product').size == 1 && cgi.param('product') != "" %]
   <p class="bz_query_single_product">
-    <a href="enter_bug.cgi?product=[% cgi.param('product') FILTER url_quote %]">File
-      a new [% terms.bug %] in the "[% cgi.param('product') FILTER html %]" product</a>
+    <a href="enter_bug.cgi?product=[% cgi.param('product') FILTER url_quote %]">
+    在产品 "[% cgi.param('product') FILTER html %]" 中录入新[% terms.bug %]</a>
   </p>
 [% END %]
 

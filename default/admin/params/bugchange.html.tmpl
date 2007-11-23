@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -17,41 +17,34 @@
   #
   # Contributor(s): Dave Miller <justdave@bugzilla.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 [%
-   title = "$terms.Bug Change Policies"
-   desc = "Set up $terms.bug change policies"
+   title = "${terms.Bug}改变方针"
+   desc = "设置${terms.bug}改变方针"
 %]
 
 [% param_descs = {
-  duplicate_or_move_bug_status => "When $terms.abug is marked as a duplicate of another one " _
-                                  "or is moved to another installation, use this $terms.bug status."
+  duplicate_or_move_bug_status => "当${terms.abug}标记为与其它重复或转移到其它系统时，" _
+                                  "使用此${terms.bug}状态。",
 
-  letsubmitterchoosepriority => "If this is on, then people submitting $terms.bugs can " _
-                                "choose an initial priority for that ${terms.bug}. " _
-                                "If off, then all $terms.bugs initially have the default " _
-                                "priority selected below.",
+  letsubmitterchoosepriority => "如果此选项设置为“开”，则用户可以在提交${terms.bugs}时" _
+                                "选择初始的${terms.bug}优先级。<br>" _
+                                "如果设置为“关”，则所有${terms.bugs}的初始化优先级为系统默认的优先级。",
 
-  letsubmitterchoosemilestone => "If this is on, then people submitting $terms.bugs can " _
-                                 "choose the Target Milestone for that ${terms.bug}. " _
-                                 "If off, then all $terms.bugs initially have the default " _
-                                 "milestone for the product being filed in.",
+  letsubmitterchoosemilestone => "如果此选项设置为“开”，则用户可以在提交${terms.bugs}时" _
+                                 "可以选择目标里程碑。<br>" _
+                                 "如果设置为“关”，则所有${terms.bugs}的初始化目标里程碑为系统默认的目标里程碑。",
 
-  musthavemilestoneonaccept => "If you are using Target Milestone, do you want to require that " _
-                               "the milestone be set in order for a user to ACCEPT a ${terms.bug}?",
+  musthavemilestoneonaccept => "如果此选项设置为“开”，则接受此${terms.bug}时必须设置目标里程碑。",
 
-  commentonclearresolution => "If this option is on, the user needs to enter a short comment if " _
-                              "the ${terms.bug}'s resolution is cleared.",
+  commentonclearresolution => "如果此选项设置为“开”，则清除此${terms.bug}解决途径时必须输入简短评论。",
 
-  commentonchange_resolution => "If this option is on, the user needs to enter a short " _
-                                "comment if the resolution of the $terms.bug changes.",
+  commentonchange_resolution => "如果此选项设置为“开”，则改变此${terms.bug}解决途径时必须输入简短评论。",
 
-  commentonreassignbycomponent => "If this option is on, the user needs to enter a short comment if " _
-                                  "the $terms.bug is reassigned by component.",
+  commentonreassignbycomponent => "如果此选项设置为“开”，则在将此${terms.bug}重新分配给其它模块时必须输入简短评论。",
 
-  commentonduplicate => "If this option is on, the user needs to enter a short comment " _
-                        "if the $terms.bug is marked as duplicate.",
+  commentonduplicate => "如果此选项设置为“开”，则用户在将${terms.bug}标记为重复时，必须输入简短评论。",
 
-  noresolveonopenblockers => "Don\'t allow $terms.bugs to be resolved as fixed " _
-                             "if they have unresolved dependencies." }
+  noresolveonopenblockers => "如果${terms.bugs}有未解决的依赖，则不允许其标记为“已解决”。" }
 %]
