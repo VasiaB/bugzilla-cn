@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -94,17 +95,17 @@
 
 [% IF product.milestone_url != old_product.milestone_url %]
   <p>
-  Updated milestone URL 
+  里程碑 URL 
   [% IF old_product.milestone_url != '' %]
-    from<br> <a href="[%- old_product.milestone_url FILTER html %]">
+    从<br> <a href="[%- old_product.milestone_url FILTER html %]">
     [%- old_product.milestone_url FILTER html %]</a>
   [% END %]
-  to
+  更新为
   [% IF product.milestone_url != '' %]
      <br><a href="[%- product.milestone_url FILTER html %]">
      [%- product.milestone_url FILTER html %]</a>.
   [% ELSE %]
-    be empty.
+    空.
   [% END %]
   </p>
   [% updated = 1 %]
@@ -112,7 +113,7 @@
 
 [% IF product.default_milestone != old_product.default_milestone %]
   <p>
-  Updated default milestone from '[% old_product.default_milestone FILTER html %]' to
+  默认里程碑从'[% old_product.default_milestone FILTER html %]' 更新为
   '[% product.default_milestone FILTER html %]'.
   </p>
   [% updated = 1 %]
@@ -120,8 +121,8 @@
   
 [% IF product.votes_per_user != old_product.votes_per_user %]
   <p>
-  Updated votes per user from
-  [%+ old_product.votes_per_user FILTER html %] to 
+  每用户投票数从
+  [%+ old_product.votes_per_user FILTER html %] 更新为 
   [%+ product.votes_per_user FILTER html %].
   </p>
   [% updated = 1 %]
@@ -129,8 +130,8 @@
 
 [% IF product.max_votes_per_bug != old_product.max_votes_per_bug %]
   <p>
-  Updated maximum votes per [% terms.bug %] from 
-  [%+ old_product.max_votes_per_bug FILTER html %] to 
+  每个[% terms.bug %]最大投票数从
+  [%+ old_product.max_votes_per_bug FILTER html %]更新为 
   [%+ product.max_votes_per_bug FILTER html %].
   </p>
   [% updated = 1 %]
@@ -138,15 +139,15 @@
 
 [% IF product.votes_to_confirm != old_product.votes_to_confirm %]
   <p>
-  Updated number of votes needed to confirm a [% terms.bug %] from
-  [%+ old_product.votes_to_confirm FILTER html %] to 
+  确认一个[% terms.bug %]所需要的投票从
+  [%+ old_product.votes_to_confirm FILTER html %]更新为 
   [%+ product.votes_to_confirm FILTER html %].
   </p>
   [% updated = 1 %]
 [% END %]
 
 [% UNLESS updated %]
-  <p>Nothing changed for product '[% product.name FILTER html %]'.</p>
+  <p>产品 '[% product.name FILTER html %]' 没有作任何修改.</p>
 [% END %]
 
 [%# Note that this display of changed votes and/or confirmed bugs is
@@ -157,8 +158,7 @@
 [% IF checkvotes %]
   <hr>
 
-  <p>Checking existing votes in this product for anybody who now
-  has too many votes for [% terms.abug %]...<br>
+  <p>正在检查在此产品中向一个[% terms.abug %]投票很多张的用户...<br>
   [% IF toomanyvotes.size > 0 %]
     [% FOREACH detail = toomanyvotes %]
       &rarr;removed votes for [% terms.bug %] <a href="show_bug.cgi?id=
@@ -170,8 +170,7 @@
   [% END %]
   </p>
 
-  <p>Checking existing votes in this product for anybody
-  who now has too many total votes...<br>
+  <p>正在检查在此产品中投票很多张的用户...<br>
   [% IF toomanytotalvotes.size > 0 %]
     [% FOREACH detail = toomanytotalvotes %]
       &rarr;removed votes for [% terms.bug %] <a href="show_bug.cgi?id=
@@ -183,8 +182,7 @@
   [% END %]
   </p>
 
-  <p>Checking unconfirmed [% terms.bugs %] in this product for any which now have
-  sufficient votes...<br>
+  <p>正在检查此产品中投过票但没有确认的[% terms.bugs %]...<br>
   [% IF confirmedbugs.size > 0 %]
     [% FOREACH id = confirmedbugs %]
 

@@ -69,7 +69,7 @@
       [% END %]
     </tr>
     <tr>
-      <td>My [% terms.Bugs %]</td>
+      <td>我的[% terms.Bugs %]</td>
       <td>
         [% filtered_username = user.login FILTER url_quote %]
         <a href="[% Param('mybugstemplate').replace('%userid%', filtered_username) %]">运行</a>
@@ -138,8 +138,8 @@
               <label for="force_[% q.id FILTER html %]">显示在页脚</label>
             [% END %]
             [% IF q.shared_with_users %]
-              (shared with [% q.shared_with_users FILTER html %]
-              [%+ q.shared_with_users > 1 ? "users" : "user" %])
+              (共享给[% q.shared_with_users FILTER html %]
+              [%+ q.shared_with_users > 1 ? "个用户" : "个用户" %])
             [% END %]
           </td>
         [% END %]

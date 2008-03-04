@@ -83,7 +83,7 @@
     正在检查 group_control_map 中的错误值。
 
   [% ELSIF san_tag == "bug_check_control_values_alert" %]
-    Found [% entries FILTER html %] bad group_control_map entries
+    找到 [% entries FILTER html %] 个错误的 group_control_map 入口
 
   [% ELSIF san_tag == "bug_check_control_values_violation" %]
     正在检查 违背产品组权限控制的[% terms.bugs %]。
@@ -99,16 +99,16 @@
     Are missing groups required for their products
 
   [% ELSIF san_tag == "bug_creation_date_start" %]
-    OK, now fixing missing [% terms.bug %] creation dates.
+    OK, 正在修复缺少的 [% terms.bug %] 创建日期.
 
   [% ELSIF san_tag == "bug_creation_date_fixed" %]
-    [% bug_count FILTER html %] [%+ terms.bugs %] have been fixed.
+    [% bug_count FILTER html %] [%+ terms.bugs %] 已经修复.
 
   [% ELSIF san_tag == "bug_reference_deletion_start" %]
-    OK, now removing all references to deleted [% terms.bugs %].
+    OK, 正在移除到已删除的[% terms.bugs %]的引用.
 
   [% ELSIF san_tag == "bug_reference_deletion_end" %]
-    All references to deleted [% terms.bugs %] have been removed.
+    所有到已删除的 [% terms.bugs %] 的引用已经被移除.
 
   [% ELSIF san_tag == "cross_check_to" %]
     正在检查 [% table FILTER html %].[% field FILTER html %] 的引用...
@@ -117,7 +117,7 @@
     ... 从 [% table FILTER html %].[% field FILTER html %].
 
   [% ELSIF san_tag == "cross_check_alert" %]
-    Bad value '[% value FILTER html %]' found in
+    在
     [%+ table FILTER html %].[% field FILTER html %]
     [% IF keyname %]
       [% IF keyname == "bug_id" %]
@@ -126,6 +126,7 @@
         ([% keyname FILTER html %] == '[% key FILTER html %]')
       [% END %]
     [% END %]
+    中找到错误的值'[% value FILTER html %]'
 
   [% ELSIF san_tag == "cross_check_attachment_has_references" %]
     <a href="sanitycheck.cgi?remove_invalid_attach_references=1">
@@ -144,8 +145,7 @@
     [%+ table FILTER html %].[% field2 FILTER html %].
 
   [% ELSIF san_tag == "double_cross_check_alert" %]
-    Bad values '[% value1 FILTER html %]', '[% value2 FILTER html %]' found
-    in [% table FILTER html %].[% field1 FILTER html %] /
+    在 [% table FILTER html %].[% field1 FILTER html %] /
     [%+ table FILTER html %].[% field2 FILTER html %].
     [% IF keyname %]
       [% IF keyname == "bug_id" %]
@@ -154,6 +154,7 @@
         ([% keyname FILTER html %] == '[% key FILTER html %]')
       [% END %]
     [% END %]
+    中找到错误的值'[% value1 FILTER html %]', '[% value2 FILTER html %]'
 
   [% ELSIF san_tag == "flag_check_start" %]
     正在检查 产品/模块中错误的标记。

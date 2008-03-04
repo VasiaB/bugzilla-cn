@@ -456,6 +456,9 @@
   [% ELSIF message_tag == "term" %]
     [% terms.$term FILTER html %]
 
+  [% ELSIF message_tag == "unexpected_flag_types" %]
+    部分标记设置失败,请检查您的改变.
+
   [% ELSIF message_tag == "user_match_failed" %]
     您输入的用户名不匹配任何 
     [% terms.Bugzilla %] 用户， 
@@ -467,6 +470,39 @@
 
   [% ELSIF message_tag == "workflow_updated" %]
     工作流程已更新。
+
+  [% ELSIF message_tag == "product_created" %]
+    [% title = "Product Created" %]
+    此产品 <em>[% product.name FILTER html %]</em> 已经创建. 在向此产品录入[% terms.bugs %]前您必须
+    <a href="editcomponents.cgi?action=add&product=[% product.name FILTER url_quote %]">
+    至少添加一个模块</a>.
+
+  [% ELSIF message_tag == "product_deleted" %]
+    [% title = "Product Deleted" %]
+    此产品 <em>[% product.name FILTER html %]</em> 和其所有版本,
+    模块,里程碑,组控制都被删除了.
+    [% IF product.bug_count %]
+      此产品中的所有[% terms.bugs %]及其引用都被删除了.
+    [% END %]
+
+  [% ELSIF message_tag == "product_invalid" %]
+    [% title = "$terms.Bugzilla Component Descriptions" %]
+    产品 <em>[% product FILTER html %]</em> 不存在或您没有权限删除.
+    以下是您可以选择的产品列表.
+
+  [% ELSIF message_tag == "version_created" %]
+    [% title = "Version Created" %]
+    产品<em>[% product.name FILTER html %]</em>的版本<em>[% version.name FILTER html %]</em>
+    已经创建.
+
+  [% ELSIF message_tag == "version_deleted" %]
+    [% title = "Version Deleted" %]
+    产品<em>[% product.name FILTER html %]</em>的版本<em>[% version.name FILTER html %]</em>
+    已经删除.
+
+  [% ELSIF message_tag == "version_updated" %]
+    [% title = "Version Updated" %]
+    版本号重命名为 <em>[% version.name FILTER html %]</em>.
 
   [% ELSE %]
     [%# Give sensible error if error functions are used incorrectly.
