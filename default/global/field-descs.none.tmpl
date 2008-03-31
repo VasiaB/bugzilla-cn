@@ -81,15 +81,19 @@
 
 [% field_types = { ${constants.FIELD_TYPE_UNKNOWN}       => "未知类型",
                    ${constants.FIELD_TYPE_FREETEXT}      => "文本框",
-                   ${constants.FIELD_TYPE_SINGLE_SELECT} => "下拉列表" } %]
+                   ${constants.FIELD_TYPE_SINGLE_SELECT} => "下拉列表",
+                   ${constants.FIELD_TYPE_MULTI_SELECT}  => "多选框",
+                   ${constants.FIELD_TYPE_TEXTAREA}      => "大文本框",
+                   ${constants.FIELD_TYPE_DATETIME}      => "时间/日期",
+                } %]
 
-[% status_descs = { "UNCONFIRMED" => "未确认",
-                    "NEW"         => "新建",
-                    "ASSIGNED"    => "已分配",
-                    "REOPENED"    => "重新打开",
-                    "RESOLVED"    => "已解决",
-                    "VERIFIED"    => "已验证",
-                    "CLOSED"      => "关闭" } %]
+[% status_descs = { "UNCONFIRMED" => "UNCONFIRMED",
+                    "NEW"         => "NEW",
+                    "ASSIGNED"    => "ASSIGNED",
+                    "REOPENED"    => "REOPENED",
+                    "RESOLVED"    => "RESOLVED",
+                    "VERIFIED"    => "VERIFIED",
+                    "CLOSED"      => "CLOSED" } %]
 
 [% MACRO get_status(status) GET status_descs.$status || status %]
 
@@ -103,15 +107,5 @@
                         " "          => " " } %]
 
 [% MACRO get_resolution(res) GET resolution_descs.$res || res %]
-
-[% severity_descs = {	"blocker"	=> "阻塞",
-			"critical"	=> "严重",
-			"major"		=> "主要",
-			"normal"	=> "一般",
-			"minor"		=> "次要",
-			"trivial"	=> "轻微",
-			"enhancement"	=> "建议" } %]
-											
-[% MACRO get_severity(res) GET severity_descs.$res || res %]
 
 [% Hook.process("end") %]

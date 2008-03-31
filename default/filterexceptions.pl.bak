@@ -276,7 +276,8 @@
 ],
 
 'bug/comments.html.tmpl' => [
-  'comment.id',
+  'comment.isprivate', 
+  'comment.time', 
   'bug.bug_id',
 ],
 
@@ -316,7 +317,6 @@
   '" maxlength=\"$maxlength\"" IF maxlength',
   '" onfocus=\"$onfocus\"" IF onfocus',
   'flag.status',
-  '" spellcheck=\"$spellcheck\"" IF spellcheck',
 ],
 
 'bug/navigate.html.tmpl' => [
@@ -390,6 +390,10 @@
   'productstring', 
 ],
 
+'bug/activity/show.html.tmpl' => [
+  'bug_id', 
+],
+
 'bug/activity/table.html.tmpl' => [
   'change.attachid', 
   'change.field', 
@@ -416,10 +420,6 @@
   'flag.status',
   'bugid',
   'obsolete_attachments',
-],
-
-'attachment/midair.html.tmpl' => [
-  'attachment.id',
 ],
 
 'attachment/show-multiple.html.tmpl' => [

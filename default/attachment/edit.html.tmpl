@@ -36,11 +36,7 @@
   title = title
   header = header
   subheader = subheader
-  style = "
-    table.attachment_info th { text-align: right; vertical-align: top; }
-    table.attachment_info td { text-align: left; vertical-align: top; }
-    #noview { text-align: left; vertical-align: middle; }
-  "
+  doc_section = "attachments.html"
 %]
 
 <script type="text/javascript">
@@ -202,6 +198,7 @@
   <input type="hidden" name="id" value="[% attachment.id %]">
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="contenttypemethod" value="manual">
+  <input type="hidden" name="delta_ts" value="[% attachment.modification_time FILTER html %]">
 
   <table class="attachment_info" width="100%">
 
@@ -252,6 +249,7 @@
             <label for="isprivate">私有</label><br>
           [% END %]
           <br>
+        </small>
 
         [% IF flag_types.size > 0 %]
           [% PROCESS "flag/list.html.tmpl" bug_id = attachment.bug_id

@@ -42,13 +42,14 @@
   <option value="realname">真实姓名</option>
   <option value="userid">用户ID</option>
 </select>
+<label for="matchstr">matching</label>
+<input size="32" name="matchstr" id="matchstr" />
 <select name="matchtype">
   <option value="substr" selected="selected">匹配不区分大小写的字符串</option>
   <option value="regexp">匹配不区分大小写的正则表达式</option>
   <option value="notregexp">不匹配不区分大小写的正则表达式</option>
   <option value="exact">精确匹配</option>
 </select>
-<input size="32" name="matchstr" id="matchstr" />
 <input type="submit" id="search" value="搜索" /></p>
 
 [% IF restrictablegroups.size %]

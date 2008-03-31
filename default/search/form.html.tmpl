@@ -514,6 +514,7 @@ function doOnSelectProduct(selectmode) {
       [% FOREACH qv = [
         { name => "substring", description => "包含" },
         { name => "exact", description => "严格匹配" },
+		{ name => "notequals", description => "不是" },
         { name => "regexp", description => "匹配正则表达式" },
         { name => "notregexp", description => "不匹配正则表达式" } ] %]
 
@@ -634,8 +635,6 @@ function doOnSelectProduct(selectmode) {
             [% get_status(name) FILTER html %]
           [% ELSIF sel.name == "resolution" %]
             [% get_resolution(name) FILTER html %]
-          [% ELSIF sel.name == "bug_severity" %]
-            [% get_severity(name) FILTER html %]
           [% ELSE %]
             [% name FILTER html %]
           [% END %]

@@ -33,7 +33,7 @@
   <!--
 
   /* Outputs a link to call replyToComment(); used to reduce HTML output */
-  function addReplyLink(id, real_id) {
+  function addReplyLink(id) {
       /* XXX this should really be updated to use the DOM Core's
        * createElement, but finding a container isn't trivial.
        */

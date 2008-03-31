@@ -26,15 +26,28 @@
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
+[% bug = bugs.0 %]
+[% bodyclasses = ['bz_bug',
+                 "bz_status_$bug.bug_status",
+                 "bz_component_$bug.component",
+                 "bz_bug_$bug.bug_id"
+                 ]
+%]
+[% FOREACH group = bug.groups_in %]
+  [% bodyclasses.push("bz_group_$group.name") %]
+[% END %]
 
 [% PROCESS global/header.html.tmpl
-  title = "更改已提交"
+  title = "附件 $attachment.id 已经添加到 $terms.Bug $attachment.bug_id"
+  bodyclasses = bodyclasses
+  javascript_urls = [ "js/util.js", "js/keyword-chooser.js", "js/field.js",
+                      "js/yui/yahoo-dom-event.js", "js/yui/calendar.js" ]
+  style_urls = [ "skins/standard/yui/calendar.css", "skins/standard/show_bug.css" ]
+  doc_section = "bug_page.html"
 %]
 
 <dl>
   <dt>
-    [% "$terms.bug $attachment.bug_id" FILTER bug_link(attachment.bug_id) FILTER none %]
-    的
     <a title="[% attachment.description FILTER html %]"
        href="attachment.cgi?id=[% attachment.id %]&amp;action=edit">附件 #[% attachment.id %]</a>
     已创建。
@@ -64,4 +77,4 @@
 <a href="attachment.cgi?bugid=[% attachment.bug_id %]&amp;action=enter">为[% terms.Bug %] #[% attachment.bug_id %]再创建一个附件</a>
 </p>
 
-[% PROCESS global/footer.html.tmpl %]
+[% PROCESS bug/show.html.tmpl %]

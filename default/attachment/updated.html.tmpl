@@ -25,9 +25,29 @@
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
+[% bug = bugs.0 %]
+[% filtered_desc = bug.short_desc FILTER html %]
+[% filtered_timestamp = bug.delta_ts FILTER time %]
+[% bodyclasses = ['bz_bug',
+                 "bz_status_$bug.bug_status",
+                 "bz_component_$bug.component",
+                 "bz_bug_$bug.bug_id"
+                 ]
+%]
+[% FOREACH group = bug.groups_in %]
+  [% bodyclasses.push("bz_group_$group.name") %]
+[% END %]
 
 [% PROCESS global/header.html.tmpl
-  title = "更改已提交"
+  title = "更改已经提交 $attachment.id 属于  $terms.Bug $attachment.bug_id"
+header = "$terms.Bug&nbsp;$attachment.bug_id"
+  subheader = filtered_desc
+  header_addl_info = "Last modified: $filtered_timestamp"
+  bodyclasses = bodyclasses
+  javascript_urls = [ "js/util.js", "js/keyword-chooser.js", "js/field.js",
+                      "js/yui/yahoo-dom-event.js", "js/yui/calendar.js" ]
+  style_urls = [ "skins/standard/yui/calendar.css", "skins/standard/show_bug.css" ]
+  doc_section = "bug_page.html"
 %]
 
 <dl>

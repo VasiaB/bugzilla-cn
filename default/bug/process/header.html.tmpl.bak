@@ -15,22 +15,33 @@
   # Copyright (C) 1998 Netscape Communications Corporation. All
   # Rights Reserved.
   #
-  # Contributor(s): Terry Weissman <terry@mozilla.org>
-  #                 Vlad Dascalu <jocuri@softhome.net>
-  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
-  # name: string; the name of the current keyword.
+  # As global/header.html.tmpl.
   #%]
-  
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% USE Bugzilla %]
+
+[% IF    title_tag == "bug_processed" %]
+  [% title = BLOCK %]
+    [% IF Bugzilla.cgi.param('id') %]
+      [% terms.Bug %] [%+ id FILTER html %]
+    [% ELSE %]
+      [% terms.Bugs %]
+    [% END %]
+    已处理
+  [% END %]
+[% ELSIF title_tag == "mid_air" %]
+  [% title = "处理中发生冲突！" %]
+[% ELSIF title_tag == "change_votes" %]
+  [% title = "修改投票" %]
+[% END %]
+
 [% PROCESS global/header.html.tmpl
-  title = "添加关键字"
-%]
-
-<p>关键字 [% name FILTER html %] 已添加。</p>
-
-<p><a href="editkeywords.cgi">编辑已存在关键字</a> 或
-<a href="editkeywords.cgi?action=add">添加其它关键字</a>。</p>
-
-[% PROCESS global/footer.html.tmpl %]
+  javascript_urls = [ "js/util.js", "js/keyword-chooser.js" ]
+ %]

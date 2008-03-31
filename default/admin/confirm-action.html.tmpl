@@ -79,8 +79,7 @@
       <li>You clicked on a URL which redirected you here <b>without your consent</b>,
       in which case this action is much more critical.</li>
     </ul>
-    您仍然要提交这些更改吗？This may result in
-    unexpected and undesired results.
+   您仍然要提交这些更改吗？ 也许结果可能能会与您的预期的相悖。
   </div>
 
   <form name="check" id="check" method="post" action="[% script_name FILTER html %]">
@@ -88,7 +87,7 @@
                exclude="^(Bugzilla_login|Bugzilla_password)$" %]
     <input type="submit" id="confirm" value="Confirm Changes">
   </form>
-  <p>Or throw away these changes and go back to <a href="[% script_name FILTER html %]">
+  <p>Or 放弃操作并返回 <a href="[% script_name FILTER html %]">
     [%- script_name FILTER html %]</a>.</p>
 [% END %]
 

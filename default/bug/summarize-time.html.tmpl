@@ -16,14 +16,14 @@
 
 [% USE date %]
 
-[% PROCESS global/variables.none.tmpl %]
+[% PROCESS "global/field-descs.none.tmpl" %]
 
 [% title = "处理时间总结" %]
 [% IF do_depends %]
     [% title = title _ "for " %]
-    [% header = title _ "$terms.Bug $ids.0" FILTER bug_link(ids.0) FILTER none %]
-    [% title = title _ "$terms.Bug $ids.0: " %]
-    [% header = (header _ " (and $terms.bugs blocking it)") IF do_depends %]
+    [% header = "$terms.Bug $ids.0" FILTER bug_link(ids.0) FILTER none %]
+    [% header = title _ header _ " (and $terms.bugs blocking it)" %]
+    [% title = title _ "$terms.Bug $ids.0" %]
 [% ELSE %]
     [% title = title _ "($ids.size $terms.bugs selected)" %]
     [% header = title %]
@@ -33,13 +33,8 @@
     title = title 
     header = header 
     style_urls = ["skins/standard/summarize-time.css"]
+    doc_section = "timetracking.html"
     %]
-
-[% IF ids.size == 0 %]
-
-    <p>没有指定[% terms.bugs %]或[% terms.bugs %]不可见</p>
-
-[% ELSE %]
 
     [% INCLUDE query_form %]
 
@@ -48,6 +43,7 @@
         [% global.grand_total = 0 %]
 
         [% FOREACH workdata = part_list %]
+    [%# parts contains date ranges (from, to). %]
             [% part = parts.shift %]
             <div align="right">
               <h4 style="padding-right: 2em; margin: 0;">
@@ -72,10 +68,8 @@
 
         [% IF null.keys.size > 0 %] 
             [% INCLUDE inactive_report %]
-            <h4 style="margin: 0">总共存在 [% null.keys.size %]
+    <h4 style="margin: 0">总共存在 [% null.keys.size %]
                 个不活动的[% terms.bugs %]</h4>
-        [% END %]
-
     [% END %]
 
 [% END %]
@@ -112,19 +106,13 @@
         [% bug_id = bugdata.bug_id %]
         [% global.bug_count.$bug_id = 1 %]
         [% IF detailed %]
-            [%# XXX oy what a hack %]
-            [% timerow = '<td width="100" align="right" valign="top">' _ bugdata.total_time _ '</td>' %]
-            [% INCLUDE bug_header cid=col id=bug_id bug_status=bugdata.bug_status
-                                  short_desc=bugdata.short_desc extra=timerow %]
+            [% INCLUDE bug_header cid=col id=bug_id bugdata=bugdata extra=1 %]
              [% col = col + 1 %]
         [% END %]
         [% subtotal = subtotal + bugdata.total_time %]
     [% END %]
     <tr>
-      <td colspan="3">&nbsp;</td>
-      <td align="right">
-      <b>总共</b>：
-      </td>
+      <td colspan="4" align="right"><b>总计</b>:</td>
       <td align="right" class="subtotal" width="100">
         <b>[% subtotal FILTER format("%.2f") %]</b></td>
         [% global.total = global.total + subtotal %]
@@ -141,9 +129,8 @@
     [% global.total = 0 global.owner_count = {} global.bug_count = {} %]
 
     <table cellpadding="4" cellspacing="0" width="90%" class="realitems number">
-    [% keys = sort_bug_keys(workdata.keys) %]
-    [% FOREACH bug = keys %]
-        [% INCLUDE do_one_bug bug=bug bugdata=workdata.$bug
+    [% FOREACH bug = workdata.keys.nsort %]
+        [% INCLUDE do_one_bug id=bug bugdata=workdata.$bug
                               detailed=detailed %]
     [% END %]
 
@@ -155,13 +142,8 @@
 
 [% BLOCK do_one_bug %]
     [% subtotal = 0.00 cid = 0 %]
-
-    [%# hack apart the ID and summary. Sad. %]
-    [% items = bug.split(";") %]
-    [% id = items.shift %]
-    [% status = items.shift %]
     [% global.bug_count.$id = 1 %]
-    [% INCLUDE bug_header id=id bug_status=status short_desc=items.join(";") %]
+    [% INCLUDE bug_header id=id %]
 
     [% FOREACH owner = bugdata.sort("login_name") %]
         [% work_time = owner.total_time %]
@@ -185,17 +167,21 @@
       </td>
       <td align="right" class="subtotal" width="100">
         <b>[% subtotal FILTER format("%.2f") %]</b>
-      </td></tr>
+      </td>
+    </tr>
       [% global.total = global.total + subtotal %]
 [% END %]
 
 [% BLOCK bug_header %]
     <tr class="bug_header[% '2' IF cid % 2 %]">
-        <td width="10" valign="top">
-        [% INCLUDE buglink id=id %]</td>
-        <td width="10"><b>[% bug_status FILTER html %]</b></td>
-        <td colspan="2">[% short_desc FILTER html %]</td>
-        [% extra FILTER none %]
+        <td width="80" valign="top">
+          <b>[% "$terms.Bug $id" FILTER bug_link(id) FILTER none %]</b>
+        </td>
+        <td width="100"><b>[% get_status(bugs.$id.bug_status) FILTER html %]</b></td>
+        <td colspan="2">[% bugs.$id.short_desc FILTER html %]</td>
+        [% IF extra %]
+          <td align="right" valign="top">[% bugdata.total_time FILTER html %]</td>
+        [% END %]
     </tr>
 [% END %]
 
@@ -204,9 +190,8 @@
     <h3>Inactive [% terms.bugs %]</h3>
     <table cellpadding="4" cellspacing="0" width="90%" class="zeroitems">
     [% cid = 0 %]
-    [% FOREACH bug_id = null.keys.nsort %]
-        [% INCLUDE bug_header id=bug_id bug_status=null.$bug_id.1 
-                   short_desc=null.$bug_id.0 cid=cid %]
+    [% FOREACH bug_id = null.nsort %]
+        [% INCLUDE bug_header id=bug_id cid=cid %]
         [% cid = cid + 1 %]
     [% END %]
     </table>
@@ -216,12 +201,10 @@
 [% BLOCK section_total %]
     [% IF global.total > 0 %]
     <tr class="section_total">
-        <td align="left" width="10">
-        <b>总共</b></td>
-    <td colspan="[% colspan FILTER none %]" align="right"><b>[% additional FILTER none %]</b></td>
-    <td align="right">&nbsp;&nbsp; 
-        <b>[% global.total FILTER format("%.2f") %]</b>
-    </td></tr>
+      <td><b>总共</b></td>
+      <td colspan="[% colspan FILTER html %]" align="right"><b>[% additional FILTER html %]</b></td>
+      <td align="right"><b>[% global.total FILTER format("%.2f") %]</b></td>
+    </tr>
     [% ELSE %]
         <tr><td>
         指定时间段内没有分配时间。
@@ -301,20 +284,9 @@
 </tr></table>
 
 </form>
-<script type="application/x-javascript">
+<script type="text/javascript">
 <!--
    document.forms['summary'].start_date.focus()
 //--></script>
 <hr noshade size=1>
 [% END %]
-
-[%#
-  #
-  # Utility
-  #
-  #%]
-
-[% BLOCK buglink %]
-    <a href="show_bug.cgi?id=[% id FILTER url_quote %]"><b>[% terms.Bug %]&nbsp;[% id FILTER html %]</b></a>
-[% END %]
-

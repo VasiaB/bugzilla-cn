@@ -26,7 +26,9 @@
 
 [% PROCESS global/header.html.tmpl
            title = title
-           onload = "toggleCheckbox(document.getElementById('enter_bug'), 'new_bugmail');" %]
+           onload = "toggleCheckbox(document.getElementById('enter_bug'), 'new_bugmail');"
+           doc_section = "custom-fields.html#edit-custom-fields"
+%]
 
 <script type="text/javascript">
   <!--
@@ -84,7 +86,8 @@
       <th>&nbsp;</th>
       <td>&nbsp;</td>
     </tr>
-    [% IF field.type == constants.FIELD_TYPE_SINGLE_SELECT %]
+    [% IF field.type == constants.FIELD_TYPE_SINGLE_SELECT
+          || field.type == constants.FIELD_TYPE_MULTI_SELECT %]
       <tr>
         <th>&nbsp;</th>
         <td colspan="3">
@@ -100,6 +103,15 @@
   <input type="hidden" name="token" value="[% token FILTER html %]">
   <input type="submit" id="edit" value="提交">
 </form>
+
+[% IF field.obsolete %]
+<p>
+  <a href="editfields.cgi?action=del&amp;name=[% field.name FILTER html %]">Remove
+    this custom field from the database.</a><br>
+  This action will only be successful if the custom field has never been used
+  in [% terms.abug %].<br>
+</p>
+[% END %]
 
 <p>
   返回到 <a href="editfields.cgi">自定义字段列表</a>

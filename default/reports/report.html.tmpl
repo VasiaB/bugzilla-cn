@@ -122,10 +122,10 @@
   <table>
     <tr>
       <td>
-        [% formats = [ { name => "pie",   description => "饼状图" },
-                       { name => "bar",   description => "条状图" },
-                       { name => "line",  description => "折线图" },
-                       { name => "table", description => "表格" } ] %]
+        [% formats = [ { name => "pie",   description => "Pie" },
+                       { name => "bar",   description => "Bar" },
+                       { name => "line",  description => "Line" },
+                       { name => "table", description => "Table" } ] %]
 
         [% formaturl = "report.cgi?$switchbase&amp;width=$width" _ 
                        "&amp;height=$height&amp;action=wrap" %]

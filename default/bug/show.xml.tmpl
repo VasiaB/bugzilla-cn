@@ -41,7 +41,7 @@
     <bug>
       [% FOREACH field = bug.fields %]
         [% IF displayfields.$field %]
-          [%+ PROCESS bug_field FILTER none %]
+          [%+ PROCESS bug_field %]
         [% END %]
       [% END %]
 
@@ -69,12 +69,12 @@
         [% FOREACH c = bug.longdescs %]
           [% NEXT IF c.isprivate && !user.in_group(Param("insidergroup")) %]
           <long_desc isprivate="[% c.isprivate FILTER xml %]">
-            <who name="[% c.author.name FILTER xml FILTER none %]">[% c.author.email FILTER xml %]</who>
+            <who name="[% c.author.name FILTER xml %]">[% c.author.email FILTER xml %]</who>
             <bug_when>[% c.time FILTER time FILTER xml %]</bug_when>
             [% IF user.in_group(Param('timetrackinggroup')) && (c.work_time - 0 != 0) %]
               <work_time>[% PROCESS formattimeunit time_unit = c.work_time FILTER xml %]</work_time>
             [% END %]
-            <thetext>[% c.body FILTER xml FILTER none %]</thetext>
+            <thetext>[% c.body FILTER xml %]</thetext>
           </long_desc>
         [% END %]
       [% END %]
@@ -93,6 +93,7 @@
             <filename>[% a.filename FILTER xml %]</filename>
             <type>[% a.contenttype FILTER xml %]</type>
             <size>[% a.datasize FILTER xml %]</size>
+            <attacher>[% a.attacher.email FILTER xml %]</attacher>
         [% IF displayfields.attachmentdata %]
             <data encoding="base64">[% a.data FILTER base64 %]</data>
         [% END %]        

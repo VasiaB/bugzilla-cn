@@ -40,12 +40,14 @@
   <li><span class="separator">| </span><a href="report.cgi">报表</a></li>
 
   <li>
+    [% IF Bugzilla.has_flags %]
     <span class="separator">| </span>
     [% IF user.id %]
       <a href="request.cgi?requester=[% user.login FILTER url_quote %]&amp;requestee=
-               [% user.login FILTER url_quote %]&amp;do_union=1&amp;group=type">我的请求</a>
+                 [% user.login FILTER url_quote %]&amp;do_union=1&amp;group=type&amp;action=queue">My Requests</a>
     [% ELSE %]
       <a href="request.cgi">请求</a>
+	  [% END %]
     [% END %]
   [%-# Work around FF bug: keep this on one line %]</li>
 
@@ -62,6 +64,9 @@
           || user.get_products_by_permission("editcomponents").size %]
       <li><span class="separator">| </span><a href="admin.cgi">管理</a></li>
     [% END %]
+
+    [% PROCESS link_to_documentation %]
+
     <li>
       <span class="separator">| </span>
       [% IF user.authorizer.can_logout %]
@@ -82,6 +87,9 @@
           && user.authorizer.user_can_create_account %]
       <li><span class="separator">| </span><a href="createaccount.cgi">新建帐号</a></li>
     [% END %]
+
+    [% PROCESS link_to_documentation %]
+
     [% IF user.authorizer.can_login %]
       [%# Use the current script name. If an empty name is returned,
         # then we are accessing the home page. %]
@@ -110,3 +118,12 @@
     [% END %]
   [% END %]
 </ul>
+
+[% BLOCK link_to_documentation %]
+    [% IF doc_section %]
+      <li>
+        <span class="separator">| </span>
+        <a href="[% Param("docs_urlbase") _ doc_section FILTER html %]" target="_blank">Help</a>
+      </li>
+    [% END %]
+[% END %]

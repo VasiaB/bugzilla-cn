@@ -59,6 +59,14 @@
    ]
 %]
 
+[% IF user.in_group('editcomponents') %]
+  [% columns.push({
+       heading => "Action..."
+       content => "Add product"
+       contentlink => add_contentlink })
+  %]
+[% END %]
+
 [% PROCESS admin/table.html.tmpl
      columns = columns
      data = classifications
