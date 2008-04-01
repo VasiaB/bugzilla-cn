@@ -43,9 +43,8 @@
     [% END %]
 
   [% ELSIF message_tag == "account_creation_canceled" %]
-    [% title = "User Account Creation Canceled" %]
-    The creation of the user account [% account FILTER html %] has been
-    canceled.
+    [% title = "取消用户创建" %]
+    创建用户帐户： [% account FILTER html %] 的过程已经被取消。
 
   [% ELSIF message_tag == "account_updated" %]
     [% IF changed_fields.size
@@ -168,64 +167,62 @@
 
 
   [% ELSIF message_tag == "classification_created" %]
-    [% title = "New Classification Created" %]
-    The <em>[% classification.name FILTER html %]</em> classification has been created.
+    [% title = "创建了新分类" %]
+    分类： <em>[% classification.name FILTER html %]</em> 已经创建。
 
   [% ELSIF message_tag == "classification_deleted" %]
-    [% title = "Classification Deleted" %]
-    The <em>[% classification FILTER html %]</em> classification has been deleted.
+    [% title = "删除了分类" %]
+    分类“ <em>[% classification FILTER html %]</em> ”已被删除。
 
   [% ELSIF message_tag == "classification_updated" %]
     [% IF updated_classification || updated_description || updated_sortkey %]
-      [% title = "Classification Updated" %]
-      Changes to the <em>[% classification FILTER html %]</em> classification
-      have been saved:
+      [% title = "更新分类" %]
+      对分类“ <em>[% classification FILTER html %]</em> ”的更改已经保存：
       <ul>
         [% IF updated_classification %]
-          <li>Classification name updated</li>
+          <li>分类名称已经更新</li>
         [% END %]
         [% IF updated_description %]
-          <li>Description updated</li>
+          <li>描述已经更新</li>
         [% END %]
         [% IF updated_sortkey %]
-          <li>Sortkey updated</li>
+          <li>排序键已经更新</li>
         [% END %]
       </ul>
     [% ELSE %]
-      No changes made to <em>[% classification FILTER html %]</em>.
+      <em>[% classification FILTER html %]</em>　没有变化。
     [% END %]
 
   [% ELSIF message_tag == "component_created" %]
-    [% title = "Component Created" %]
-    The component <em>[% comp.name FILTER html %]</em> has been created.
+    [% title = "创建了模块" %]
+    模块 <em>[% comp.name FILTER html %]</em> 已经创建。
 
   [% ELSIF message_tag == "component_deleted" %]
-    [% title = "Component Deleted" %]
-    The component <em>[% comp.name FILTER html %]</em> has been deleted.
+    [% title = "删除了模块" %]
+    模块“ <em>[% comp.name FILTER html %]</em> ”已经删除。
     [% IF comp.bug_count %]
-      All [% terms.bugs %] being in this component and all references
-      to them have also been deleted.
+      属于该模块的 [% terms.bugs %] 以及相关信息已经删除。
     [% END %]
 
   [% ELSIF message_tag == "component_updated" %]
-    [% title = "Component Updated" %]
+    [% title = "更新了模块" %]
     [% IF changes.keys.size %]
-      Changes to the component <em>[% comp.name FILTER html %]</em> have been saved:
+      对模块“ <em>[% comp.name FILTER html %]</em>”的更新已经保存:
       <ul>
       [% IF changes.name.defined %]
-        <li>Name updated to '[% comp.name FILTER html %]'</li>
+        <li>名称更新为“[% comp.name FILTER html %]”</li>
       [% END %]
       [% IF changes.description.defined %]
-        <li>Description updated to '[% comp.description FILTER html_light %]'</li>
+        <li>描述更新为：“[% comp.description FILTER html_light %]”</li>
       [% END %]
       [% IF changes.initialowner.defined %]
-        <li>Default assignee updated to '[% comp.default_assignee.login FILTER html %]'</li>
+        <li>默认负责人更新为：“'[% comp.default_assignee.login FILTER html %]”</li>
       [% END %]
       [% IF changes.initialqacontact.defined %]
         [% IF comp.default_qa_contact.id %]
-          <li>Default QA contact updated to '[% comp.default_qa_contact.login FILTER html %]'</li>
+          <li>默认 QA 联系人更新为：“[% comp.default_qa_contact.login FILTER html %]”</li>
         [% ELSE %]
-          <li>Default QA contact deleted</li>
+          <li>删除了默认 QA 联系人</li>
         [% END %]
       [% END %]
       [% IF changes.cc_list.defined %]
@@ -234,13 +231,13 @@
           [% FOREACH cc_user = comp.initial_cc %]
             [% cc_list.push(cc_user.login) %]
           [% END %]
-          <li>Default CC list updated to [% cc_list.join(", ") FILTER html %]</li>
+          <li>默认抄送列表更新为：[% cc_list.join(", ") FILTER html %]</li>
         [% ELSE %]
-          <li>Default CC list deleted</li>
+          <li>删除了默认抄送列表</li>
         [% END %]
       [% END %]
     [% ELSE %]
-      No changes made to <em>[% comp.name FILTER html %]</em>.
+      <em>[% comp.name FILTER html %]</em>没有变化。
     [% END %]
 
   [% ELSIF message_tag == "custom_field_created" %]
@@ -248,8 +245,7 @@
     已成功创建自定义字段 '[% field.name FILTER html %]'
   [% ELSIF message_tag == "custom_field_deleted" %]
     [% title = "Custom Field Deleted" %]
-    The custom field '[% field.name FILTER html %]' has been
-    successfully deleted.
+   成功删除了自定义字段：“[% field.name FILTER html %]”。
 
   [% ELSIF message_tag == "custom_field_updated" %]
     [% title = "自定义字段已更新" %]
@@ -257,9 +253,9 @@
 
   [% ELSIF message_tag == "default_settings_updated" %]
     [% IF changes_saved %]
-      Changes to default preferences have been saved.
+      默认 preferences 的更改已经保存。
     [% ELSE %]
-      No changes made.
+      没有发生变化。
     [% END %]
 
   [% ELSIF message_tag == "emailold_change_canceled" %]
@@ -277,23 +273,21 @@
     [%+ new_email FILTER html %]的请求。
    您旧的帐号设备已被恢复。
 [% ELSIF message_tag == "field_value_created" %]
-    [% title = "New Field Value Created" %]
-    The value <em>[% value FILTER html %]</em> has been added as a valid choice
-    for the <em>[% field.description FILTER html %]</em>
+    [% title = "创建了新字段值" %]
+    已经把“ <em>[% value FILTER html %]</em>”添加到了字段 <em>[% field.description FILTER html %]</em>
     (<em>[% field.name FILTER html %]</em>) field.
     [% IF field.name == "bug_status" %]
-      You should now visit the <a href="editworkflow.cgi">status workflow page</a>
-      to include your new [% terms.bug %] status.
+      需要在 <a href="editworkflow.cgi">status workflow page</a>
+      增加 [% terms.bug %] 状态。
     [% END %]
 
   [% ELSIF message_tag == "field_value_deleted" %]
-    [% title = "Field Value Deleted" %]
-    The value <em>[% value FILTER html %]</em> of the
+    [% title = "字段值已经删除" %]
     <em>[% field.description FILTER html %]</em>
-    (<em>[% field.name FILTER html %]</em>) field has been deleted.
+    (<em>[% field.name FILTER html %]</em>)中的值<em>[% value FILTER html %]</em>已经删除。
 
   [% ELSIF message_tag == "field_value_updated" %]
-    [% title = "Field Value Updated" %]
+    [% title = "字段值更新完成" %]
     [% IF updated_value || updated_sortkey %]
       Changes to the <em>[% value FILTER html %]</em> value of the
       <em>[% field.description FILTER html %]</em>
@@ -349,7 +343,7 @@
         [%+ user.login FILTER html %]
       [% END %]
     [% ELSE %]
-      No users are being affected by your action.
+      没有用户受到此次操作的影响。
     [% END %]
 
   [% ELSIF message_tag == "group_updated" %]
@@ -463,11 +457,11 @@
     您的 [% terms.Bugzilla %] 登陆已改变。
 [% ELSIF message_tag == "milestone_created" %]
     [% title = "Milestone Created" %]
-    The milestone <em>[% milestone.name FILTER html %]</em> has been created.
+    里程碑：<em>[% milestone.name FILTER html %]</em> 已经建立。
 
   [% ELSIF message_tag == "milestone_deleted" %]
-    [% title = "Milestone Deleted" %]
-    The milestone <em>[% milestone.name FILTER html %]</em> has been deleted.
+    [% title = "删除里程碑" %]
+    里程碑：<em>[% milestone.name FILTER html %]</em> 已经删除。
     [% IF milestone.bug_count %]
       [%+ terms.Bugs %] targetted to this milestone have been retargetted to
       the default milestone <em>[% product.default_milestone FILTER html %]</em>.
@@ -602,10 +596,10 @@
     以确保按您的要求设备好各项参数 － 包括设置 “urlbase“ 选项
     为正确网址。
 [% ELSIF message_tag == "install_reset_password" %]
-    Enter a new password for [% user.login FILTER html %]:
+    为用户“[% user.login FILTER html %]”输入新密码:
 
   [% ELSIF message_tag == "install_reset_password_done" %]
-    New password set.
+    新密码已经设置。
 
   [% ELSIF message_tag == "install_webservergroup_empty" %]
     ****************************************************************************
