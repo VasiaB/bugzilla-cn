@@ -289,23 +289,23 @@
   [% ELSIF message_tag == "field_value_updated" %]
     [% title = "字段值更新完成" %]
     [% IF updated_value || updated_sortkey %]
-      Changes to the <em>[% value FILTER html %]</em> value of the
-      <em>[% field.description FILTER html %]</em>
-      (<em>[% field.name FILTER html %]</em>) field have been changed:
+      更改了<em>[% field.description FILTER html %]</em>
+      (<em>[% field.name FILTER html %]</em>)的值：<em>[% value FILTER html %]</em> value of the
+    
       <ul>
         [% IF updated_value %]
-          <li>Field value updated to <em>[% value FILTER html %]</em></li>
+          <li>字段值更新为：<em>[% value FILTER html %]</em></li>
           [% IF default_value_updated %]
-            (note that this value is the default for this field. All
+            (注意：这个值是这个字段的默认值。 All
             references to the default value will now point to this new value)
           [% END %]
         [% END %]
         [% IF updated_sortkey %]
-          <li>Field value sortkey updated to <em>[% sortkey FILTER html %]</em></li>
+          <li>字段排序键更新为：<em>[% sortkey FILTER html %]</em></li>
         [% END %]
       </ul>
     [% ELSE %]
-      No changes made to the field value <em>[% value FILTER html %]</em>.
+      字段值没有变化 <em>[% value FILTER html %]</em>.
     [% END %]
 
   [% ELSIF message_tag == "flag_cleared" %]
@@ -328,11 +328,11 @@
 
   [% ELSIF message_tag == "group_created" %]
     [% title = "New Group Created" %]
-    The group <em>[% group.name FILTER html %]</em> has been created.
+    新的组 <em>[% group.name FILTER html %]</em> 建立完成。
 
   [% ELSIF message_tag == "group_deleted" %]
     [% title = "Group Deleted" %]
-    The group <em>[% name FILTER html %]</em> has been deleted.
+    组： <em>[% name FILTER html %]</em> 删除完成。
 
   [% ELSIF message_tag == "group_membership_removed" %]
     [% title = "Group Membership Removed" %]
@@ -410,38 +410,33 @@
  [% END %]
 
   [% ELSIF message_tag == "keyword_created" %]
-    [% title = "New Keyword Created" %]
-    The keyword <em>[% name FILTER html %]</em> has been created.
+    [% title = "新关键词创建完成" %]
+    关键词 <em>[% name FILTER html %]</em> 已经创建。
 
   [% ELSIF message_tag == "keyword_deleted" %]
-    [% title = "Keyword Deleted" %]
-    The <em>[% keyword.name FILTER html %]</em> keyword has been deleted.
-    <b>After you have finished editing keywords, you need to
-    <a href="sanitycheck.cgi?rebuildkeywordcache=1">rebuild the keyword
-    cache</a></b> (on a very large installation of [% terms.Bugzilla %],
-    this can take several minutes).
+    [% title = "关键词删除完成" %]
+    关键词：“ <em>[% keyword.name FILTER html %]</em>”已经删除。
+    <b>完成关键词编辑后，您需要<a href="sanitycheck.cgi?rebuildkeywordcache=1">重建关键词缓存</a></b> (在大型 [% terms.Bugzilla %]系统中,这需要一些时间
+    )。
 
   [% ELSIF message_tag == "keyword_updated" %]
-    [% title = "Keyword Updated" %]
+    [% title = "关键词更新完成" %]
     [% IF changes.keys.size %]
-      Changes to the <em>[% keyword.name FILTER html %]</em> keyword have
-      been saved:
+      对关键词“ <em>[% keyword.name FILTER html %]</em>”的更改已经保存。
       <ul>
         [% IF changes.name.defined %]
           <li>
-            Keyword renamed to <em>[% keyword.name FILTER html %]</em>.
-            <b>After you have finished editing keywords, you need to
-            <a href="sanitycheck.cgi?rebuildkeywordcache=1">rebuild
-            the keyword cache</a></b> (on a very large installation
-            of [% terms.Bugzilla %], this can take several minutes).
+            关键词改名为：<em>[% keyword.name FILTER html %]</em>。
+            <b>您需要
+            <a href="sanitycheck.cgi?rebuildkeywordcache=1">重建关键词缓存</a></b> (在大型系统中[% terms.Bugzilla %], 这可能需要一些时间)。
           </li>
         [% END %]
         [% IF changes.description.defined %]
-          <li>Description updated to <em>[% keyword.description FILTER html %]</em></li>
+          <li>描述更新为： <em>[% keyword.description FILTER html %]</em></li>
         [% END %]
       </ul>
     [% ELSE %]
-      No changes made.
+      没有更改。.
     [% END %]
 
   [% ELSIF message_tag == "logged_out" %]
@@ -456,28 +451,27 @@
     [% title = "$terms.Bugzilla 登录已改变" %]
     您的 [% terms.Bugzilla %] 登陆已改变。
 [% ELSIF message_tag == "milestone_created" %]
-    [% title = "Milestone Created" %]
+    [% title = "里程碑创建完成" %]
     里程碑：<em>[% milestone.name FILTER html %]</em> 已经建立。
 
   [% ELSIF message_tag == "milestone_deleted" %]
-    [% title = "删除里程碑" %]
+    [% title = "里程碑删除完成" %]
     里程碑：<em>[% milestone.name FILTER html %]</em> 已经删除。
     [% IF milestone.bug_count %]
-      [%+ terms.Bugs %] targetted to this milestone have been retargetted to
-      the default milestone <em>[% product.default_milestone FILTER html %]</em>.
+      指向该里程碑的[%+ terms.Bugs %]重新指向了该产品的默认里程碑： <em>[% product.default_milestone FILTER html %]</em>.
     [% END %]
 
   [% ELSIF message_tag == "milestone_updated" %]
-    [% title = "Milestone Updated" %]
+    [% title = "里程碑更新完成" %]
     [% IF changes.size %]
-      Changes to the milestone <em>[% milestone.name FILTER html %]</em>
-      have been saved:
+      对里程碑 <em>[% milestone.name FILTER html %]</em>
+      的更改已经保存：
       <ul>
         [% IF changes.value.defined %]
-          <li>Milestone name updated to <em>[% milestone.name FILTER html %]</em></li>
+          <li>名称更改为： <em>[% milestone.name FILTER html %]</em></li>
         [% END %]
         [% IF changes.sortkey.defined %]
-          <li>Sortkey updated to <em>[% milestone.sortkey FILTER html %]</em>
+          <li>排序键更新为： <em>[% milestone.sortkey FILTER html %]</em>
         [% END %]
       </ul>
     [% ELSE %]
@@ -576,7 +570,7 @@
   [% ELSIF message_tag == "install_fk_add" %]
     添加外键： [% table FILTER html %].[% column FILTER html %] -&gt; [% fk.TABLE FILTER html %].[% fk.COLUMN FILTER html %]...
 [% ELSIF message_tag == "install_fk_drop" %]
-    Dropping foreign key: [% table FILTER html %].[% column FILTER html %] -&gt; [% fk.TABLE FILTER html %].[% fk.COLUMN FILTER html %]...
+    删除数据库外键关系: [% table FILTER html %].[% column FILTER html %] -&gt; [% fk.TABLE FILTER html %].[% fk.COLUMN FILTER html %]...
 
   [% ELSIF message_tag == "install_group_create" %]
     创建组 [% name FILTER html %]...
@@ -627,18 +621,15 @@
     请注意这在Windows下运行不会带来任何安全性。
     检查您的 [% terms.Bugzilla %] 目录文件的权限，避免不必要的写权限。
  [% ELSIF message_tag == "product_created" %]
-    [% title = "Product Created" %]
-    The product <em>[% product.name FILTER html %]</em> has been created. You will need to
-    <a href="editcomponents.cgi?action=add&product=[% product.name FILTER url_quote %]">
-    add at least one component</a> before anyone can enter [% terms.bugs %] against this product.
+    [% title = "产品创建完成" %]
+    产品 <em>[% product.name FILTER html %]</em> 已经创建。在向该产品提交 [% terms.bugs %] 前，需要您添加<a href="editcomponents.cgi?action=add&product=[% product.name FILTER url_quote %]">
+    添加至少一个模块</a> 。
 
   [% ELSIF message_tag == "product_deleted" %]
-    [% title = "Product Deleted" %]
-    The product <em>[% product.name FILTER html %]</em> and all its versions,
-    components, milestones and group controls have been deleted.
+    [% title = "产品删除完成" %]
+    产品 <em>[% product.name FILTER html %]</em> 以及其所有的版本、里程碑、模块、权限信息已经全部删除。
     [% IF product.bug_count %]
-      All [% terms.bugs %] being in this product and all references
-      to them have also been deleted.
+      所有属于该产品的 [% terms.bugs %] 以及关联已被删除。
     [% END %]
 
   [% ELSIF message_tag == "product_invalid" %]
@@ -682,7 +673,7 @@
       <a href="query.cgi?format=create-series">继续添加系列</a>.
     
   [% ELSIF message_tag == "shutdown" %]
-    [% title = "$terms.Bugzilla is Down" %]
+    [% title = "$terms.Bugzilla 已经关闭" %]
     [% Param("shutdownhtml") %]
     [% IF userid %]
       <p>基于安全原因，系统已自动注销你的登录。
@@ -707,17 +698,17 @@
   
 
   [% ELSIF message_tag == "version_created" %]
-    [% title = "Version Created" %]
+    [% title = "版本创建完成" %]
     产品<em>[% product.name FILTER html %]</em>的版本<em>[% version.name FILTER html %]</em>
     已经创建.
 
   [% ELSIF message_tag == "version_deleted" %]
-    [% title = "Version Deleted" %]
+    [% title = "版本已删除" %]
     产品<em>[% product.name FILTER html %]</em>的版本<em>[% version.name FILTER html %]</em>
     已经删除.
 
   [% ELSIF message_tag == "version_updated" %]
-    [% title = "Version Updated" %]
+    [% title = "版本已更新" %]
     版本号重命名为 <em>[% version.name FILTER html %]</em>.
 
   [% ELSIF message_tag == "workflow_updated" %]
