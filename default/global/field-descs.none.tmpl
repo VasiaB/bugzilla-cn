@@ -87,13 +87,13 @@
                    ${constants.FIELD_TYPE_DATETIME}      => "时间/日期",
                 } %]
 
-[% status_descs = { "UNCONFIRMED" => "UNCONFIRMED",
-                    "NEW"         => "NEW",
-                    "ASSIGNED"    => "ASSIGNED",
-                    "REOPENED"    => "REOPENED",
-                    "RESOLVED"    => "RESOLVED",
-                    "VERIFIED"    => "VERIFIED",
-                    "CLOSED"      => "CLOSED" } %]
+[% status_descs = { "UNCONFIRMED" => "未确认",
+                    "NEW"         => "新建",
+                    "ASSIGNED"    => "已分配",
+                    "REOPENED"    => "重新打开",
+                    "RESOLVED"    => "已解决",
+                    "VERIFIED"    => "已确认",
+                    "CLOSED"      => "已关闭" } %]
 
 [% MACRO get_status(status) GET status_descs.$status || status %]
 
