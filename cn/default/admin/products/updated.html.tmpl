@@ -1,0 +1,207 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Gavin Shelley <bugzilla@chimpychompy.org>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  #
+  # old_product : Bugzilla::Product Object; old product.
+  # product : Bugzilla::Product Object; new product.
+  #
+  # classification: Bugzilla::Classification Object; The product classification (may be empty or missing)
+  #
+  # checkvotes: boolean; is true if vote related fields have changed. If so, 
+  #             then the following parameters will be specified:
+  #
+  # toomanyvotes: list of hashes, each one with an 'id' and a 'name' hash key
+  #               detailing the bug id and the username of users who had too
+  #               many votes for a bug
+  #
+  # toomanytotalvotes: list of hashes, each one with an 'id' and a 'name' hash key
+  #                    detailing the bug id and the username of users who had
+  #                    too many total votes
+  #
+  # confirmedbugs: list of bug ids, which were confirmed by votes
+  #
+  # changer: string; login of the user making the changes, used for mailing
+  #          bug changes if necessary
+  #
+  #%]
+
+[% IF classification %]
+  [% classification_url_part = BLOCK %]&amp;classification=
+     [%- classification.name FILTER url_quote %]
+  [% END %]
+  [% classification_text = BLOCK %] 
+    of classification '[% classification.name FILTER html %]'
+  [% END %]
+[% END %]
+
+[% title = BLOCK %]Updating Product '[% product.name FILTER html %]' 
+                   [% classification_text FILTER none %][% END %]
+[% PROCESS global/header.html.tmpl
+  title = title
+  style_urls = ['skins/standard/admin.css']
+%]
+[% updated = 0 %]
+
+[% IF product.name != old_product.name %]
+  <p>
+  产品名称由 '[% old_product.name FILTER html %]' 更新为 
+  <a href="editproducts.cgi?action=edit&amp;product=
+  [%- product.name FILTER url_quote %]
+  [%- classification_url_part FILTER none %]">[% product.name FILTER html %]</a>。
+  </p>
+  [% updated = 1 %]
+[% END %]
+
+
+[% IF product.description != old_product.description %]
+  <p>
+    产品描述更新为
+  </p>
+  <p style="margin: 1em 3em 1em 3em">[% product.description FILTER html_light %]</p>
+  [% updated = 1 %]
+[% END %]
+
+[% IF product.disallow_new != old_product.disallow_new %]
+  <p>
+  产品现在
+  [% IF product.disallow_new %]
+    不允许
+  [% ELSE %]
+    允许 
+  [% END %]
+  提交新[% terms.bugs %]。
+  </p>
+  [% updated = 1 %]
+[% END %]
+
+[% IF product.milestone_url != old_product.milestone_url %]
+  <p>
+  里程碑 URL 
+  [% IF old_product.milestone_url != '' %]
+    从<br> <a href="[%- old_product.milestone_url FILTER html %]">
+    [%- old_product.milestone_url FILTER html %]</a>
+  [% END %]
+  更新为
+  [% IF product.milestone_url != '' %]
+     <br><a href="[%- product.milestone_url FILTER html %]">
+     [%- product.milestone_url FILTER html %]</a>.
+  [% ELSE %]
+    空.
+  [% END %]
+  </p>
+  [% updated = 1 %]
+[% END %]
+
+[% IF product.default_milestone != old_product.default_milestone %]
+  <p>
+  默认里程碑从'[% old_product.default_milestone FILTER html %]' 更新为
+  '[% product.default_milestone FILTER html %]'.
+  </p>
+  [% updated = 1 %]
+[% END %]
+  
+[% IF product.votes_per_user != old_product.votes_per_user %]
+  <p>
+  每用户投票数从
+  [%+ old_product.votes_per_user FILTER html %] 更新为 
+  [%+ product.votes_per_user FILTER html %].
+  </p>
+  [% updated = 1 %]
+[% END %]
+
+[% IF product.max_votes_per_bug != old_product.max_votes_per_bug %]
+  <p>
+  每个[% terms.bug %]最大投票数从
+  [%+ old_product.max_votes_per_bug FILTER html %]更新为 
+  [%+ product.max_votes_per_bug FILTER html %].
+  </p>
+  [% updated = 1 %]
+[% END %]
+
+[% IF product.votes_to_confirm != old_product.votes_to_confirm %]
+  <p>
+  确认一个[% terms.bug %]所需要的投票从
+  [%+ old_product.votes_to_confirm FILTER html %]更新为 
+  [%+ product.votes_to_confirm FILTER html %].
+  </p>
+  [% updated = 1 %]
+[% END %]
+
+[% UNLESS updated %]
+  <p>产品 '[% product.name FILTER html %]' 没有作任何修改.</p>
+[% END %]
+
+[%# Note that this display of changed votes and/or confirmed bugs is
+    not very scalable. We could have a _lot_, and we just list them all.
+    One day we should limit this perhaps, or have a more scalable display %]
+
+
+[% IF checkvotes %]
+  <hr>
+
+  <p>正在检查在此产品中向一个[% terms.abug %]投票很多张的用户...<br>
+  [% IF toomanyvotes.size > 0 %]
+    [% FOREACH detail = toomanyvotes %]
+      &rarr;removed votes for [% terms.bug %] <a href="show_bug.cgi?id=
+     [%- detail.id FILTER url_quote %]">
+     [%- detail.id FILTER html %]</a> from [% detail.name FILTER html %]<br>
+    [% END %]
+  [% ELSE %]
+    &rarr;there were none.
+  [% END %]
+  </p>
+
+  <p>正在检查在此产品中投票很多张的用户...<br>
+  [% IF toomanytotalvotes.size > 0 %]
+    [% FOREACH detail = toomanytotalvotes %]
+      &rarr;removed votes for [% terms.bug %] <a href="show_bug.cgi?id=
+     [%- detail.id FILTER url_quote %]">
+     [%- detail.id FILTER html %]</a> from [% detail.name FILTER html %]<br>
+    [% END %]
+  [% ELSE %]
+    &rarr;there were none.
+  [% END %]
+  </p>
+
+  <p>正在检查此产品中投过票但没有确认的[% terms.bugs %]...<br>
+  [% IF confirmedbugs.size > 0 %]
+    [% FOREACH id = confirmedbugs %]
+
+      [%# This is INCLUDED instead of PROCESSED to avoid variables getting
+          overwritten, which happens otherwise %]
+      [% INCLUDE bug/process/results.html.tmpl
+        type = 'votes'
+        mailrecipients = { 'changer' => changer }
+        header_done = 1
+        id = id
+      %]
+    [% END %]
+  [% ELSE %]
+    &rarr;there were none.
+  [% END %]
+  </p>
+
+[% END %]
+
+[% PROCESS admin/products/footer.html.tmpl %]
+
+[% PROCESS global/footer.html.tmpl %]

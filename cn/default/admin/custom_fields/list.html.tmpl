@@ -1,0 +1,105 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # custom_fields: a list of Bugzilla::Field objects, representing custom fields.
+  #%]
+
+[% PROCESS "global/field-descs.none.tmpl" %]
+
+[% PROCESS global/header.html.tmpl
+  title = "自定义字段"
+  doc_section = "custom-fields.html"
+%]
+
+[% delete_contentlink = BLOCK %]editfields.cgi?action=del&amp;name=%%name%%[% END %]
+
+[% columns = [
+     {
+       name => "name"
+       heading => "自定义字段"
+       contentlink => "editfields.cgi?action=edit&amp;name=%%name%%"
+     },
+     {
+       name => "description"
+       heading => "描述"
+     },
+     {
+       name => "sortkey"
+       heading => "排序键"
+     },
+     {
+       name => "type"
+       heading => "类型"
+     },
+     {
+       name => "enter_bug"
+       heading => "${terms.Bug}创建时可编辑"
+     },
+     {
+       name => "mailhead"
+       heading => "${terms.Bug}创建时包含在${terms.Bug}邮件中"
+     },
+     {
+       name => "obsolete"
+       heading => "废弃不用"
+     },
+     {
+       name => "action"
+       heading => "Action"
+       content => ""
+     }
+   ]
+%]
+
+[% USE Bugzilla %]
+[% custom_fields = Bugzilla.get_fields({ custom => 1 }) %]
+
+[%# We want to display the type name of fields, not their type ID. %]
+[% overrides.type = [] %]
+
+[% FOREACH field_type = field_types.keys %]
+  [% overrides.type.push({
+       match_value => field_type
+       match_field => 'type'
+       override_content => 1
+       content => field_types.${field_type}
+    })
+  %]
+[% END %]
+
+
+[% overrides.action = [ {
+     match_value => 1
+     match_field => 'obsolete'
+     override_content => 1
+     content => "Delete"
+     override_contentlink => 1
+     contentlink => delete_contentlink
+   } ]
+%] 
+
+[% PROCESS admin/table.html.tmpl
+     columns = columns
+     overrides = overrides
+     data = custom_fields
+%]
+
+<p>
+  <a href="editfields.cgi?action=add">添加自定义字段</a>
+</p>
+
+[% PROCESS global/footer.html.tmpl %]

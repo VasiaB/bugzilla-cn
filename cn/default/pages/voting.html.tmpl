@@ -1,0 +1,59 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Terry Weissman <terry@mozilla.org>
+  #                 Gervase Markham <gerv@gerv.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+[% INCLUDE global/header.html.tmpl title = "投票" %]
+
+<p>[% terms.Bugzilla %]有一个"投票(voting)"的功能，每个产品允许用户投上一定的票数，
+(有些产品被设置为不允许投票，则不能对该产品里的任何内容投票）。通过投票的方式，
+用户对哪些重要的[% terms.bugs %]必须修改提出自己的意见。
+</p>
+
+<p>根据系统管理员的设置，用户可以对一个[% terms.bug %]投上多票，但是注意，用户可投票的总数是确定的，所以要么
+对少量的[% terms.bugs %]投很多票，要么对很多[% terms.bugs %]每个投少量的票。
+</p>
+
+<p>要查看投票：</p>
+
+<ul>
+  <li>进入搜索页面，在"至少__票"字段输入数字 "1"。这样，
+  至少包含1票的[% terms.bugs %]就会被搜索出来</li>
+</ul>
+
+<p>要对某个[% terms.abug %]投票：</p>
+
+<ul>
+  <li>打开这个[% terms.bug %]。</li>
+
+  <li>点击"附加评论"上方的 "向此[% terms.bug %]投票"链接。 
+  (如果找不到该链接，则此[% terms.bug %]所在的产品可能被设置为不允许投票了。)</li>
+
+  <li>输入您想给此[% terms.bug %]投的票数。此页也显示了您已经给其它[% terms.bug %]投的票数，
+ 以便您对剩余可投的票数做到心中有数。</li>
+</ul>
+
+<p>根据您的email接收设置，您可在您投票的[% terms.bug %]发生更改时自动收到系统发出的email通知。</p>
+
+<p>任何时候，可通过点击页面底部的链接 "<a href=
+"votes.cgi?action=show_user">我的投票</a>"来查看自己的投票。</p>
+
+[% INCLUDE global/footer.html.tmpl %]

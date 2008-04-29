@@ -1,0 +1,48 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # Contributor(s): Shane H. W. Travis <travis@sedsystems.ca>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
+  #
+  #%]
+
+[%# Remember to PROCESS rather than INCLUDE this template. %]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% setting_descs = { 
+   "comment_sort_order"               => "当查看${terms.bug}时，以此顺序显示备注",
+   "csv_colsepchar"                   => "CSV 文件字段分隔符",
+   "display_quips"                    => "在${terms.bug}列表上部显示标语",
+   "zoom_textareas"                   => "激活时放大文本域(需要启用JavaScript)",
+   "newest_to_oldest"                 => "由新到老",
+   "newest_to_oldest_desc_first"      => "由新到老，但是保持描述置顶",
+   "off"                              => "关",
+   "oldest_to_newest"                 => "由老到新",
+   "on"                               => "开",
+   "per_bug_queries"                  => "为${terms.bugs}启用标签",
+   "post_bug_submit_action"           => "修改${terms.abug}后",
+   "next_bug"                         => "显示下一个${terms.bug}",
+   "same_bug"                         => "显示更改后的${terms.bug}",
+   "standard"                         => "经典",
+   "skin"                             => " $terms.Bugzilla 的外观(皮肤)",
+   "nothing"                          => "不处理",
+   "state_addselfcc"                  => "当${terms.bugs}改变时自动添加我到抄送列表",
+   "always"                           => "一直",
+   "never"                            => "总是",
+   "cc_unless_role"                   => "仅当没有相关角色时",
+   "lang"                             => "电子附件中使用的语言",
+   "quote_replies"                    => "点击回复链接时引用相关备注",
+   "quoted_reply"                     => "引用全部备注",
+   "simple_reply"                     => "仅参考备注编号",
+                   } 
+%]

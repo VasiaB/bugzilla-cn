@@ -1,0 +1,155 @@
+﻿[%# -*- mode: html -*- %]
+[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Terry Weissman <terry@mozilla.org>
+  #                 Jacob Steenhagen <jake@bugzilla.org>
+  #                 Vitaly Harisov  <vitaly@rathedg.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # release: a hash containing data about new releases, if any.
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+
+[% PROCESS global/header.html.tmpl
+   title = "$terms.Bugzilla 首页"
+   header = "首页" 
+   header_addl_info = "版本 $constants.BUGZILLA_VERSION"
+   style_urls = [ 'skins/standard/index.css' ]
+   onload = 'document.forms[\'f\'].quicksearch.focus();'
+%]
+
+
+<script type="text/javascript">
+<!--
+function addSidebar() {
+  if ((typeof window.sidebar == "object") && (typeof window.sidebar.addPanel == "function"))
+  {
+    var sidebarname=window.location.host;
+    if (!/bug/i.test(sidebarname))
+      sidebarname="[% terms.Bugzilla %] "+sidebarname;
+    window.sidebar.addPanel (sidebarname, "[% urlbase FILTER html %]sidebar.cgi", "");
+  }
+  else
+  {
+    var rv = window.confirm ("您的浏览器不支持侧边栏扩展，" + "您想现在升级吗？");
+    if (rv)
+      document.location.href = "http://www.mozilla.org/";
+  }
+}
+//-->
+</script>
+
+[% IF release %]
+  <div id="new_release">
+    [% IF release.data %]
+      [% IF release.deprecated %]
+        <p>[% terms.Bugzilla %] [%+ release.deprecated FILTER html %] 不再被支持，
+        我们强烈建议您升级以保证您的系统安全。</p>
+      [% END %]
+
+      <p>一个新的 [% terms.Bugzilla %] 版本 ([% release.data.latest_ver FILTER html %])
+      现在可用
+      <a href="[% release.data.url FILTER html %]">[% release.data.url FILTER html %]</a>.<br>
+      发行日期：[% release.data.date FILTER html %]</p>
+
+      <p class="notice">此信息仅显示给已登陆且有管理权限的用户。
+      您可以在 <a href="editparams.cgi?section=core#upgrade_notification">参数配置</a> 页面配置此通知。</p>
+    [% ELSIF release.error == "missing_package" %]
+      <p>缺少包 '[% release.package FILTER html %]'。 此包是用来
+      <a href="editparams.cgi?section=core#upgrade_notification">通知您新的发行版本</a>.</p>
+    [% ELSIF release.error == "cannot_download" %]
+      <p>无法创建本地 XML 文件 '[% release.xml_file FILTER html %]' 。
+      请确认此文件所在目录在 Web 服务器上可写，并且您可以访问外网。 
+      如果您需要使用代理服务器，请正确地设置
+      <a href="editparams.cgi?section=core#proxy_url">proxy_url</a> 参数。</p>
+    [% ELSIF release.error == "no_update" %]
+      <p>无法更新本地 XML 文件 '[% release.xml_file FILTER html %]' 。
+      请确认 Web 服务器可以编辑此文件。</p>
+    [% ELSIF release.error == "no_access" %]
+      <p>无法记取本地 XML 文件 '[% release.xml_file FILTER html %]' 。
+      请确定此文件设备了正确的权限。</p>
+    [% ELSIF release.error == "corrupted" %]
+      <p>本地 XML 文件 '[% release.xml_file FILTER html %]' 格式不正确。
+      请删除它并再此访问此页面。</p>
+    [% ELSIF release.error == "unknown_parameter" %]
+      <p>'[% Param("upgrade_notification") FILTER html %]' 不是一个有效的通知参数。
+      请在<a href="editparams.cgi?section=core#upgrade_notification">参数设置</a> 页检查此参数。</p>
+    [% END %]
+  </div>
+[% END %]
+
+<div id="page-index">
+  <div class="intro"></div>
+
+  <p>欢迎使用 [% terms.Bugzilla %]。要查看此版本 [% terms.Bugzilla %] 更新说明，请看 
+    <a href="page.cgi?id=release-notes.html">发行说明</a>!
+    您也可以查看 
+    <a href="[% Param('docs_urlbase') FILTER html %]using.html">
+    [%- terms.Bugzilla %] 用户手册</a> 来找到更多 
+    [%+ terms.Bugzilla %] 相关内容和使用说明。</p>
+
+  <p>常用功能：</p>
+  <ul>
+    <li id="query"><a href="query.cgi">查询已存[% terms.bug %]报告</a></li>
+    <li id="enter-bug"><a href="enter_bug.cgi">输入新的[% terms.bug %]报告</a></li>
+    <li id="report"><a href="report.cgi">查看统计报表和图</a></li>
+[% IF user.id %]
+    <li id="userprefs"><a href="userprefs.cgi">更改密码或用户配置</a></li>
+  [% IF user.authorizer.can_logout %]
+    <li id="logout"><a href="relogin.cgi">注销 [% user.login FILTER html %]</a></li>
+  [% END %]
+[% ELSIF user.authorizer.can_login %]
+  </ul>
+    [% PROCESS "account/auth/login-small.html.tmpl" %]
+  <ul>
+  [% IF Param('createemailregexp') && user.authorizer.user_can_create_account %]
+    <li id="account"><a href="createaccount.cgi">创建新的 [% terms.Bugzilla %] 帐号</a></li>
+  [% END %]
+[% END %]
+    <li id="sidebar"><a href="javascript:addSidebar()">添加到侧边栏</a> (需要 Mozilla 浏览器如 Mozilla Firefox)</li>
+    <li id="quick_search_plugin">
+      <a href="javascript:window.external.AddSearchProvider('[% urlbase FILTER html %]search_plugin.cgi')">安装快速查找插件</a>
+      (需要 Firefox 2 或 Internet Explorer 7)
+    </li>
+
+
+    [%# List items of links to more things users can do on this installation. %]
+    [% Hook.process("links") %]
+
+  </ul>
+
+  <form id="f" name="f" action="buglist.cgi" method="get"
+        onsubmit="if (this.quicksearch.value == '')
+                  { alert('请先输入一个或多个查找条件。');
+                    return false; } return true;">
+  <div>
+    <p>输入 [% terms.abug %] 编号或其它查找条件：</p>
+    <input id="quicksearch" type="text" name="quicksearch">
+    <input id="find" type="submit" value="搜索">
+    <a href="page.cgi?id=quicksearch.html">[帮助]</a>
+  </div>
+  </form>
+
+  <div class="outro"></div>
+</div>
+
+[% PROCESS global/footer.html.tmpl %]

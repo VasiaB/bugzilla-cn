@@ -1,0 +1,92 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Dave Miller <justdave@bugzilla.org>
+  #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[% 
+   title = "必需设置"
+   desc = "设置 $terms.Bugzilla 必需设置的核心参数" 
+%]
+
+[% param_descs = {
+  maintainer => "维护者，维护此${terms.Bugzilla}系统的人的电子邮件地址。",
+
+  urlbase => "所有${terms.Bugzilla}链接的共同初始开始链接",
+
+  docs_urlbase => "所有$terms.Bugzilla文档链接的共同初始开始链接 " _
+                  "它可以是绝对的链接，或相对于以上设置的链接" _
+                  "留空将隐藏文档链接。",
+
+  sslbase => "所有${terms.Bugzilla} HTTPS(SSL)安全链接的共同初始开始链接。",
+
+  ssl => "控制${terms.Bugzilla}什么时候强制会话使用<tt>sslbase</tt>指定的 HTTPS 安全链接。",
+
+  cookiedomain => "此域用于 $terms.Bugzilla 的 cookie。一般设置为空。" _
+                  "如果您的Web站点位于 'www.foo.com'，设置此参数为 " _
+                  "'.foo.com' 将会允许 'bar.foo.com' 访问 " _
+                  "$terms.Bugzilla 的 cookie。这对有多个域名指向同一Web服务器的情况十分有用。" _
+                  "您可以通过此方法共享 $terms.Bugzilla cookie。",
+
+  cookiepath => "Cookie 路径，相对于您的Web根目录，用来限制" _
+                "${terms.Bugzilla} 的cookie。一般地，这是URL base的一部分，以“/”开头。<br>" _
+                "例如，如果${terms.Bugzilla} 服务器访问地址为 'http://www.somedomain.com/bugzilla/'，设置" _
+                "此参数为 /bugzilla/。如果设置为“/”将会允许" _
+                "此 Web 服务器上的所有站点或虚拟主机读取 ${terms.Bugzilla} 的 cookie。",
+
+  timezone => "时区，数据库服务器所在的时区。如果设置为空，时区将不会显示此时间戳。",
+
+  utf8 => "${terms.Bugzilla}中所有文字使用 UTF-8 (Unicode) 编码。" _
+          "新安装的系统最好设置此值为“开”以避免字符编码问题(乱码)。<br>" _
+          "<strong>已存在的数据库仅当所有数据使用<kbd>contrib/recode.pl</kbd>脚本转换编码为 UTF-8 后" _
+          "设置此参数为“开”。</strong>. <br><br>" _
+          "注意：如果您把此参数从“关”设置为“开”，您必须马上重新运行 checksetup.pl 脚本。",
+
+  shutdownhtml => "如果此字段设置为非空，$terms.Bugzilla 将会完全禁用，" _
+                  "且此文字将会显示在 $terms.Bugzilla 页面上。",
+
+  announcehtml => "如果此字段设置为非空，$terms.Bugzilla 将会" _
+                  "显示此字段的文字在每个HTML页面的顶部。" _
+                  "此处的HTML代码没有被包装或封闭，您可以使用 <tt>&lt;div&gt;</tt>。" _
+                  " div<em>id=message</em> 来显示为红色边框中的绿色文字。" _
+                  "或 <em>class=bz_private</em> 来显示深红色的背景。" _
+                  "任何定义在<tt>skins/standard/global.css</tt> 或" _
+                  "<tt>skins/custom/global.css</tt> 的样式层叠表都会起作用。" _
+                  "要使用居中文字，使用 <em>style=\"text-align: " _
+                  "center;\"</em>.",
+
+  proxy_url => "$terms.Bugzilla 可以需要访问 web 来获取最新版本信息。" _
+               "请参阅 <tt>upgrade_notification</tt> 参数。如果您使用代理服务器访问网络，" _
+               "且不能读取 HTTP_PROXY 环境变量，您必须设置代理，" _
+               "使用 <code>http://user:pass@proxy_url/</code> 这样的格式。",
+
+  upgrade_notification => "<p>$terms.Bugzilla 可以在新版本可用时通知您。" _
+                          "此通知仅出现在管理员的 $terms.Bugzilla 首页。</p>" _
+                          "<ul><li>'development_snapshot' notifies you about the latest " _
+                          "release on the trunk, i.e. development snapshots.</li>" _
+                          "<li>'latest_stable_release' notifies you about the most recent release " _
+                          "available on the most recent stable branch. This branch may be " _
+                          "different from the branch your installation is based on.</li>" _
+                          "<li>'stable_branch_release' notifies you only about new releases " _
+                          "corresponding to the branch your installation is based on. " _
+                          "If you are running a release candidate, you will get " _
+                          "a notification for newer release candidates too.</li>" _
+                          "<li>'disabled' 将会禁用更新通知，" _
+                          "且不会建立与远程服务器端的连接。</li></ul>" }
+%]

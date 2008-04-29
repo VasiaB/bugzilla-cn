@@ -1,0 +1,135 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+  
+[% types = [
+  { name => "noop", description => "---" },
+  { name => "equals", description => "等于" },
+  { name => "notequals", description => "不等于" },
+  { name => "anyexact", description => "等于字符串中的任意字符" },
+  { name => "substring", description => "包含字符串" },
+  { name => "casesubstring", description => "包含字符串(严格匹配)" },
+  { name => "notsubstring", description => "不包含字符串" },
+  { name => "anywordssubstr", description => "包含任一字符串" },
+  { name => "allwordssubstr", description => "包含所有字符串" },
+  { name => "nowordssubstr", description => "排除字符串" },
+  { name => "regexp", description => "包含正则表达式" },
+  { name => "notregexp", description => "不包含正则表达式" },
+  { name => "lessthan", description => "小于" },
+  { name => "greaterthan", description => "大于" },
+  { name => "anywords", description => "包含任一单词" },
+  { name => "allwords", description => "包含所有单词" },
+  { name => "nowords", description => "排除单词" },
+  { name => "changedbefore", description => "之前修改" },
+  { name => "changedafter", description => "之后修改" },
+  { name => "changedfrom", description => "改前的值为" },
+  { name => "changedto", description => "改后的值为" },
+  { name => "changedby", description => "修改人" },
+  { name => "matches", description => "匹配" } ] %]
+
+  <p>
+    <strong>
+      <a name="chart">使用布尔表达式的高级查询</a>：
+    </strong>
+  </p>
+
+[%# Whoever wrote the original version of boolean charts had a seriously twisted mind %]
+
+[% jsmagic = "onclick=\"this.form.action='query.cgi#chart'; this.form.method='POST'; return 1;\"" %]
+
+[% FOREACH chart = default.charts %]
+  [% chartnum = loop.count - 1 %]
+  <table>
+    <tr>
+      <td>
+        <input type="checkbox" id="negate[% chartnum FILTER html %]"
+             name="negate[% chartnum FILTER html %]" value="1"
+            [% "checked" IF chart.negate %]>
+        <label for="negate[% chartnum FILTER html %]">
+          否 (与整个表达式相反)
+        </label>
+      </td>
+    </tr>
+  [% FOREACH row = chart.rows %]
+    [% rownum = loop.count - 1 %]
+    <tr>
+    [% FOREACH col = row %]
+      [% colnum = loop.count - 1 %]
+      <td>
+        <select name="[% "field${chartnum}-${rownum}-${colnum}" %]">
+          [% FOREACH field = fields %]
+            <option value="[% field.name %]"
+              [%- " selected" IF field.name == col.field %]>[% field.description %]</option>
+          [% END %]
+        </select>
+
+        <select name="[% "type${chartnum}-${rownum}-${colnum}" %]">
+          [% FOREACH type = types %]
+            <option value="[% type.name %]"
+              [%- " selected" IF type.name == col.type %]>[% type.description %]</option>
+          [% END %]
+        </select>
+
+        <input name="[% "value${chartnum}-${rownum}-${colnum}" %]" 
+               value="[% col.value FILTER html %]"> 
+      </td>
+      
+      [% UNLESS loop.last %]
+        <td align="center"> 
+          或者 
+        </td>    
+      </tr>
+      <tr>
+      [% ELSE %]
+        <td>
+          [% newor = colnum + 1 %]
+          <input type="submit" value="或者" [% jsmagic %]
+                 name="cmd-add[% "${chartnum}-${rownum}-${newor}" %]"
+                 id="cmd-add[% "${chartnum}-${rownum}-${newor}" %]">
+        </td>
+      [% END %]
+      
+    [% END %]
+    </tr>
+    
+    [% UNLESS loop.last %]
+    <tr>
+      <td>并且</td>
+    </tr>    
+    [% ELSE %]
+    <tr>
+      <td>
+        [% newand = rownum + 1; newchart = chartnum + 1 %]
+        <input type="submit" value="并且" [% jsmagic %]
+               name="cmd-add[% "${chartnum}-${newand}-0" %]"
+               id="cmd-add[% "${chartnum}-${newand}-0" %]">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="submit" value="添加布尔表达式" [% jsmagic %]
+               name="cmd-add[% newchart %]-0-0"
+               id="cmd-add[% newchart %]-0-0">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </td>
+    </tr>   
+    [% END %]
+    
+  [% END %]
+  </table>
+  <hr>
+[% END %]

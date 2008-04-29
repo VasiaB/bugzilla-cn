@@ -1,0 +1,433 @@
+﻿[%# -*- mode: html -*- %]
+[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Erik Stambaugh <erik@dasbistro.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # events: hash, keyed by event_id number.  Values are anonymous hashes of:
+  #     schedule: array of hashes containing schedule info:
+  #         day:    value in day column
+  #         time:   value selected in time column
+  #         mailto_type: 0=user 1=group
+  #         mailto: recipient's id (profile or group)
+  #     queries:  as with schedule, an anonymous array containing hashes of:
+  #         name:  the named query's name
+  #         title: title to be displayed on the results
+  #         sort:  integer that sets execution order on named queries
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% title = "订阅设置" %]
+[% PROCESS global/header.html.tmpl %]
+
+<p>
+  "订阅(Whining)"表示[% terms.Bugzilla %]定期执行某个搜索，
+  并将[% terms.bugs %]查询的结果通过email发送出来。
+  </p>
+
+<p>
+  欲创建一个订阅事件，请点击"新增事件"，输入信息的主题和
+  描述文字。描述文字将和[% terms.bug %]列表一起
+  通过email发送出来。
+</p>
+
+<p>
+  点击"新增计划"向事件添加计划。计划的内容包括
+  一日、一日的某个时刻、时间间隔(例如每15分钟)以及email地址。
+  一个事件可包含多个计划，以便针对不同的用户多次运行。
+</p>
+
+<p>
+  搜索来自保存的搜索名称, 可通过点击<a href="query.cgi">搜索</a>页面
+  来创建搜索并予以命名。点击"新增搜索"，选择已存搜索的名称，并为[% terms.bug %]列表输入标题。
+  用户也可在"排序"标签下输入一个数字，此数字将决定该搜索的执行顺序(从小到大)。
+  如果选中 "每个[% terms.bug %]一条信息"，则每个[% terms.bug %]都将发出一条信息。
+</p>
+
+<p>
+  [% IF Param("timezone") %]
+    所有时间以服务器时间为准 ([% Param("timezone") FILTER upper %]).
+  [% ELSE %]
+    所有时间以服务器时间为准
+  [% END %]
+</p>
+
+<form method="post" action="editwhines.cgi">
+[%# This hidden submit button must be here to set default behavior when
+    the user presses return on a form input field #%]
+<input type="submit" value="Update / Commit" name="commit"
+       style="display: none;" id="commit">
+<input type="hidden" name="update" value="1">
+<input type="hidden" name="token" value="[% token FILTER html %]">
+
+[% FOREACH event = events %]
+
+<table cellspacing="2" cellpadding="2" width="100%"
+       style="border: 1px solid;">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" colspan="2">
+      事件： 
+    </th>
+    <td align="right">
+      <input type="submit" value="删除事件"
+             name="remove_event_[% event.key %]"
+             id="remove_event_[% event.key %]">
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+      Email 主题行：
+    </td>
+    <td>
+      <input type="text" name="event_[% event.key %]_subject"
+             size="60" maxlength="128" value="
+             [%- event.value.subject FILTER html %]">
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right">
+      订阅信息里包含的描述文字：
+    </td>
+    <td>
+      [% INCLUDE global/textarea.html.tmpl
+         name           = "event_${event.key}_body"
+         minrows        = 3
+         maxrows        = 10
+         defaultrows    = 5
+         cols           = 80
+         defaultcontent = event.value.body
+       %]
+    </td>
+  </tr>
+
+  [% IF event.value.schedule.size == 0 %]
+
+    <tr>
+      <td valign="top" align="right">
+        计划：
+      </td>
+      <td align="left" bgcolor="#FFEEEE">
+        无可执行计划<br>
+        <input type="submit" value="添加新计划"
+               name="add_schedule_[% event.key %]"
+               id="add_schedule_[% event.key %]">
+      </td>
+    </tr>
+
+  [% ELSE %]
+
+    <tr>
+      <td valign="top" align="right">
+        计划：
+      </td>
+      <td align="left" bgcolor="#EEFFEE">
+
+        <table>
+          <tr>
+            <th>
+              执行间隔
+            </th>
+            [% IF mail_others %]
+              <th>
+                邮件发送到
+              </th>
+            [% END %]
+          </tr>
+          [% FOREACH schedule = event.value.schedule %]
+            <tr>
+              <td align="left">
+
+                [%# these hidden fields allow us to compare old values instead
+                    of reading the database to tell if a field has changed %]
+
+                <input type="hidden" value="[% schedule.day FILTER html %]"
+                       name="orig_day_[% schedule.id %]">
+                <input type="hidden" value="[% schedule.time FILTER html %]"
+                       name="orig_time_[% schedule.id %]">
+                [% PROCESS day_field val=schedule.day %]
+                [% PROCESS time_field val=schedule.time %]
+              </td>
+              <td align="left">
+                [% IF mail_others %]
+                  <input type="hidden" name="orig_mailto_type_[% schedule.id %]"
+                         value="[% schedule.mailto_type FILTER html %]">
+                  <select name="mailto_type_[% schedule.id %]">
+                    <option value="0" [% IF schedule.mailto_type == 0 %]
+                                        selected
+                                      [% END %]>用户</option>
+                    <option value="1" [% IF schedule.mailto_type == 1 %]
+                                        selected
+                                      [% END %]>组</option>
+                  </select>
+                  <input type="hidden" name="orig_mailto_[% schedule.id %]"
+                         value="[% schedule.mailto FILTER html %]">
+                  <input type="text" name="mailto_[% schedule.id %]"
+                         value="[% schedule.mailto FILTER html %]" size="30">
+                [% END %]
+              </td>
+              <td align="left">
+                <input type="submit" value="删除"
+                       name="remove_schedule_[% schedule.id %]"
+                       id="remove_schedule_[% schedule.id %]">
+              </td>
+            </tr>
+          [% END %]
+
+        <tr>
+          <td>
+            <input type="submit" value="新增计划"
+                   name="add_schedule_[% event.key %]"
+                   id="add_schedule_[% event.key %]">
+          </td>
+        </tr>
+
+        </table>
+
+      </td>
+
+    </tr>
+
+  [% END %]
+
+  [% IF event.value.queries.size == 0 %]
+
+    <tr>
+      <td valign="top" align="right">
+        已存搜索：
+      </td>
+      <td align="left" colspan="1">
+        没有搜索 <br>
+        <input type="submit" value="新增搜索"
+               name="add_query_[% event.key %]"
+               id="add_query_[% event.key %]">
+      </td>
+      <td align="right" valign="bottom">
+        <input type="submit" value="更新/提交" name="commit" id="update">
+      </td>
+    </tr>
+
+  [% ELSE %]
+
+    <tr>
+      <td valign="top" align="right">
+        已存搜索：
+      </td>
+      <td align="left">
+
+        <table>
+          <tr>
+            <th>排列键值</th>
+            <th>搜索名称</th>
+            <th>标题</th>
+          </tr>
+
+          [% FOREACH query = event.value.queries %]
+
+            <tr>
+              <td align="left">
+                <input type="text" name="query_sort_[% query.id %]"
+                       size="3" value="[% query.sort %]">
+                <input type="hidden" value="[% query.sort %]"
+                       name="orig_query_sort_[% query.id %]">
+              </td>
+              <td align="left">
+                <input type="hidden" value="[% query.name FILTER html %]"
+                       name="orig_query_name_[% query.id %]">
+                [% PROCESS query_field thisquery=query.name %]
+              </td>
+              <td align="left">
+                <input type="hidden" value="[% query.title FILTER html %]"
+                       name="orig_query_title_[% query.id %]">
+                <input type="text" name="query_title_[% query.id %]"
+                       size="50" value="[% query.title FILTER html %]"
+                       maxlength="64">
+              </td>
+              <td align="left">
+                <input type="hidden" value="[% query.onemailperbug FILTER html %]"
+                       name="orig_query_onemailperbug_[% query.id %]">
+                <input type="checkbox" [% IF query.onemailperbug == 1 %]
+                       checked [% END %]name="query_onemailperbug_
+                       [% query.id %]">
+                每个[% terms.bug %]一条消息
+              </td>
+              <td align="right">
+                <input type="submit" value="Remove"
+                       name="remove_query_[% query.id %]"
+                       id="remove_query_[% query.id %]">
+              </td>
+            </tr>
+
+          [% END %]
+
+          <tr>
+            <td colspan="3">
+              <input type="submit" value="新增搜索"
+                     name="add_query_[% event.key %]"
+                     id="add_query_[% event.key %]">
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+      <td align="right" valign="bottom">
+        <input type="submit" value="更新/提交" name="commit" id="update">
+      </td>
+    </tr>
+
+  [% END %]
+
+</table>
+
+[% END %]
+
+<p align="left">
+  <input type="submit" value="新增事件" name="add_event" id="add_event">
+</p>
+
+</form>
+
+[% PROCESS global/footer.html.tmpl %]
+
+[% BLOCK query_field +%]
+
+  [% IF available_queries.size > 0 %]
+
+    <select name="query_name_[% query.id %]">
+      [% FOREACH q = available_queries %]
+        <option [% "selected" IF q == thisquery %] value="[% q FILTER html %]">
+            [% q FILTER html %]
+        </option>
+      [% END %]
+    </select>
+
+  [% ELSE %]
+    请访问<a href="query.cgi">搜索</a>页面以保存搜索。
+  [% END %]
+
+[%+ END %]
+
+[% BLOCK day_field +%]
+  <select name="day_[% schedule.id %]">
+      [%
+        options = [
+            ['All',  '每天',                 ],
+            ['MF',   '周一到周五',    ],
+            ['Sun',  '周日',                   ],
+            ['Mon',  '周一',                   ],
+            ['Tue',  '周二',                  ],
+            ['Wed',  '周三',                ],
+            ['Thu',  '周四',                 ],
+            ['Fri',  '周五',                   ],
+            ['Sat',  '周六',                 ],
+            ['1',    '每月1号',  ],
+            ['2',    '每月2号',  ],
+            ['3',    '每月3号',  ],
+            ['4',    '每月4号',  ],
+            ['5',    '每月5号',  ],
+            ['6',    '每月6号',  ],
+            ['7',    '每月7号',  ],
+            ['8',    '每月8号',  ],
+            ['9',    '每月9号',  ],
+            ['10',   '每月10号', ],
+            ['11',   '每月11号', ],
+            ['12',   '每月12号', ],
+            ['13',   '每月13号', ],
+            ['14',   '每月14号', ],
+            ['15',   '每月15号', ],
+            ['16',   '每月16号', ],
+            ['17',   '每月17号', ],
+            ['18',   '每月18号', ],
+            ['19',   '每月19号', ],
+            ['20',   '每月20号', ],
+            ['21',   '每月21号', ],
+            ['22',   '每月22号', ],
+            ['23',   '每月23号', ],
+            ['24',   '每月24号', ],
+            ['25',   '每月25号', ],
+            ['26',   '每月26号', ],
+            ['27',   '每月27号', ],
+            ['28',   '每月28号', ],
+            ['29',   '每月29号', ],
+            ['30',   '每月30号', ],
+            ['31',   '每月31号', ],
+            ['last', '每月最后一天',    ],
+        ]
+      %]
+
+      [% FOREACH option = options %]
+        <option value="[% option.0 %]" 
+                [%- IF val == option.0 +%] selected[% END %]>
+                [%- option.1 -%]
+        </option>
+      [% END %]
+
+  </select>
+[%+ END %]
+
+[% BLOCK time_field +%]
+<select name="time_[% schedule.id %]">
+
+  [%
+    options = [
+        [ '0',     '00:00',         ],
+        [ '1',     '01:00',         ],
+        [ '2',     '02:00',         ],
+        [ '3',     '03:00',         ],
+        [ '4',     '04:00',         ],
+        [ '5',     '05:00',         ],
+        [ '6',     '06:00',         ],
+        [ '7',     '07:00',         ],
+        [ '8',     '08:00',         ],
+        [ '9',     '09:00',         ],
+        [ '10',    '10:00',         ],
+        [ '11',    '11:00',         ],
+        [ '12',    '12:00',         ],
+        [ '13',    '13:00',         ],
+        [ '14',    '14:00',         ],
+        [ '15',    '15:00',         ],
+        [ '16',    '16:00',         ],
+        [ '17',    '17:00',         ],
+        [ '18',    '18:00',         ],
+        [ '19',    '19:00',         ],
+        [ '20',    '20:00',         ],
+        [ '21',    '21:00',         ],
+        [ '22',    '22:00',         ],
+        [ '23',    '23:00',         ],
+        [ '60min', '每小时',       ],
+        [ '30min', '每30分钟', ],
+        [ '15min', '每15分钟', ],
+    ]
+  %]
+
+      [% FOREACH option = options %]
+        <option value="[% option.0 %]" 
+                [%- IF val == option.0 +%] selected[% END %]>
+                [%- option.1 -%]
+        </option>
+      [% END %]
+
+</select>
+
+[%+ END %]
+

@@ -1,0 +1,122 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # Contributor(s): Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # value: string; The field value being deleted.
+  # bug_count: number; The number of bugs that have this field value.
+  # value_count: number; The number of values left for this field, including
+  #              this value.
+  # field: object; the field the value is being deleted from.
+  # param_name: string; The name of the parameter (defaultxxx) associated
+  #             with the field.
+  #%]
+
+[% title = BLOCK %]
+  从字段 '[% field.description FILTER html %]'
+  ([% field.name FILTER html %]) 中删除字段值 '[% value FILTER html %]'
+[% END %]
+
+[% PROCESS global/header.html.tmpl
+  title = title
+  style_urls = ['skins/standard/admin.css']
+%]
+
+<table border="1" cellpadding="4" cellspacing="0">
+<tr bgcolor="#6666FF">
+  <th valign="top" align="left">字段</th>
+  <th valign="top" align="left">值</th>
+</tr>
+<tr>
+  <td valign="top">字段名：</td>
+  <td valign="top">[% field.description FILTER html %]</td>
+</tr>
+<tr>
+  <td valign="top">字段值：</td>
+  <td valign="top">[% value FILTER html %]</td>
+</tr>
+<tr>
+  <td valign="top">[% terms.Bugs %]数：</td>
+  <td valign="top">
+[% IF bug_count %]
+  <a title="列出字段 '[% field.description FILTER html %]' 是 '[% value FILTER html %]' 的[% terms.bugs %]"
+     href="buglist.cgi?[% field.name FILTER url_quote %]=[%- value FILTER url_quote %]">[% bug_count FILTER html %]</a>
+[% ELSE %]
+  无
+[% END %]
+  </td>
+</tr>
+</table>
+
+<h2>请确认</h2>
+
+[% IF (param_name.defined && Param(param_name) == value) || bug_count || (value_count == 1) %]
+
+  <p>对不起，字段值 '[% value FILTER html %]'不能从
+  '[% field.description FILTER html %]' 字段中删除是因为：</p>
+
+  <ul class="warningmessages">
+    [% IF param_name.defined && Param(param_name) == value %]
+      <li>'[% value FILTER html %]' 是字段 '[% field.description FILTER html %]'的默认值
+          [% IF user.groups.tweakparams %]
+            在删除此值前您必须先 <a href="editparams.cgi?section=bugfields#
+            [%- param_name FILTER url_quote %]">改变字段默认值</a>
+          [% END %]
+    [% END %]
+
+    [% IF bug_count %]
+      <li>有
+          [% IF bug_count > 1 %] 
+            [% bug_count FILTER html %] [%+ terms.bugs %] 
+          [% ELSE %]
+            一个[% terms.bug %] 
+          [% END %]
+          使用了此字段值，在删除前，您必须改变
+          <a title="列出字段 '[% field.description FILTER html %]' 的值为 '[% value FILTER html %]' 的[% terms.bugs %]"
+             href="buglist.cgi?[% field.name FILTER url_quote %]=[% value FILTER url_quote %]">
+            [% IF bug_count > 1 %]
+              这些[% terms.bugs %] 
+            [% ELSE %]
+              这个[% terms.bug %]
+            [% END %]
+          </a>
+          的字段值为其它值。
+    [% END %]
+
+    [% IF value_count == 1 %]
+      <li>字段值 '[% value FILTER html %]' 是字段 '[%- field.description FILTER html %]' 最后一个，
+          所以不能够被删除。
+    [% END %]
+  </ul>
+
+[% ELSE %]
+
+  <p>您确实想要删除此字段值吗？</p>
+
+  <form method="post" action="editvalues.cgi">
+    <input type="submit" value="删除" id="delete">
+    <input type="hidden" name="action" value="delete">
+    <input type="hidden" name="field" value="[% field.name FILTER html %]">
+    <input type="hidden" name="value" value="[% value FILTER html %]">
+    <input type="hidden" name="token" value="[% token FILTER html %]">
+  </form>
+
+[% END %]
+
+[% PROCESS admin/fieldvalues/footer.html.tmpl
+  no_edit_link = 1
+ +%]
+
+[% PROCESS global/footer.html.tmpl %] 

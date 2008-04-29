@@ -1,0 +1,63 @@
+Template.pm
+621:FILTERS html
+return $var;
+------------>
+				if (utf8::is_utf8($var)) {
+					return $var;
+				}
+				else {
+					return decode_utf8($var);
+				}
+
+671:FILTERS wrap_comment
+return sub { wrap_comment($_[0], $cols) }
+------------->
+					if (utf8::is_utf8($_[0])) {
+						return sub { wrap_comment($_[0], $cols) }
+					}
+					else {
+						return sub { wrap_comment(decode_utf8($_[0]), $cols) }
+					}
+
+677:FILTERS none
+none => sub { return decode_utf8($_[0]); } ,
+------------->
+            none => sub { 
+				if (utf8::is_utf8($_[0])) {
+					return $_[0]; 
+				}
+				else {
+					return decode_utf8($_[0]);
+				}
+			} ,
+
+
+Util.pm
+123:sub html_light_quote
+return $text;
+------------>
+		if (utf8::is_utf8($text)) {
+			return $text;
+		}
+		else {
+			return decode_utf8($text);
+		}
+
+
+180:sub html_light_quote
+return decode_utf8($scrubber->scrub($text));
+------------>
+		if (utf8::is_utf8($text)) {
+			return $scrubber->scrub($text);
+		}
+		else {
+			return decode_utf8($scrubber->scrub($text));
+		}
+
+
+可以修改系统组的描述
+editgroups.cgi:542
+sub doGroupChanges
+    if (defined $cgi->param('desc')) {
+        $group->set_description($cgi->param('desc'));
+    }

@@ -1,0 +1,100 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s):     John Vandenberg <zeroj@null.net>
+  #                     Tobias Burnus <burnus@net-b.de>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+From: [% Param('mailfrom') %]
+To: [% emailaddress %]
+Subject: [% PROCESS subject %]
+X-Bugzilla-Type: admin
+
+变更请求被除 [% remoteaddress %] 取消。
+
+如果你没有作出这个请求，则可能是别人无意中使用了您的
+[% terms.Bugzilla %]帐号登录，或尝试破解您的帐号。
+
+请查看以下信息，并在适当时候向 [% maintainer %] 举报。
+
+      令牌(Token)：[% token %]
+         令牌类型：[% tokentype %]
+             用户：[% emailaddress %]
+         发出时间：[% issuedate %]
+         事件数据：[% eventdata %]
+     被取消的原因：[% PROCESS cancelactionmessage %]
+
+[% BLOCK subject %]
+  [% IF tokentype == 'new_account' %]
+    用户帐号创建请求被取消、
+  [% ELSIF tokentype == 'password' %]
+    密码更改请求被取消
+  [% ELSIF tokentype == 'emailnew' OR tokentype == 'emailold' %]
+    邮件地址更改请求被取消
+  [% ELSE %]
+    [% tokentype %] 令牌(Token)被取消
+  [% END %]
+[% END %]
+
+[% BLOCK cancelactionmessage %]
+  [% IF    cancelaction == 'account_exists' %]
+    帐号 [% email %] 已存在。
+
+  [% ELSIF cancelaction == 'email_change_canceled' %]
+    已取消将帐号由 [% old_email %] 改变成 [% new_email %] 的请求。
+    been canceled.
+
+  [% ELSIF cancelaction == 'email_change_canceled_reinstated' %]
+    已取消将您的帐号改为 [% new_email %] 的请求，旧的帐号已被恢复。
+
+  [% ELSIF cancelaction == 'emailold_change_canceled' %]
+    已取消将你的帐号改为[% new_email %]的请求。
+
+  [% ELSIF cancelaction == 'password_change_canceled' %]
+    您已经申请取消密码更改。
+
+  [% ELSIF cancelaction == 'account_creation_canceled' %]
+    已经取消用户帐号 [% emailaddress %] 的创建。
+
+  [% ELSIF cancelaction == 'user_logged_in' %]
+    您已登陆。
+
+  [% ELSIF cancelaction == 'wrong_token_for_changing_passwd' %]
+    您已尝试使用令牌(token)来更改密码。
+
+  [% ELSIF cancelaction == 'wrong_token_for_cancelling_email_change' %]
+    您已尝试使用令牌(token)来取消邮件地址的更改。
+
+  [% ELSIF cancelaction == 'wrong_token_for_confirming_email_change' %]
+    您已尝试使用令牌(token)来确认邮件地址的更改。
+
+  [% ELSIF cancelaction == 'wrong_token_for_creating_account' %]
+    您已尝试使用令牌(token)来创建用户帐号。
+
+  [% ELSE %]
+    [%# Give sensible error if the cancel-token function is used incorrectly.
+      #%]
+    使用[% terms.Bugzilla %]的令牌取消功能有误。
+    您输入了字符串'[% cancelaction %]'。你应当输入一个标签(tag)，
+    然后在文件cancel-token.txt.tmpl中定义这个标签(tag)。
+
+    如果您是 [% terms.Bugzilla %] 最终用户，请将此信息转发给 [% Param('maintainer') %]。
+  [% END %]
+[% END %]

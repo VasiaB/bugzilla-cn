@@ -1,0 +1,168 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Dave Miller <justdave@syndicomm.com>
+  #                 Joel Peshkin <bugreport@peshkin.net>
+  #                 Jacob Steenhagen <jake@bugzilla.org>
+  #                 Vlad Dascalu <jocuri@softhome.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # groups: array with group objects having the properties:
+  #   - id: number. The ID of the group.
+  #   - name: string. The name of the group.
+  #   - description: string. The description of the group.
+  #   - userregexp: string. The user regexp for the given group.
+  #   - isactive: boolean int. Specifies if the group is active or not.
+  #   - isbuggroup: boolean int. Specifies if it can be used for bugs.
+  #%]
+
+[% PROCESS global/header.html.tmpl
+  title = "编辑组"
+  subheader = "此处可编辑用户属组"
+%]
+
+[% edit_contentlink = "editgroups.cgi?action=changeform&amp;group=%%id%%" %]
+[% del_contentlink = "editgroups.cgi?action=del&amp;group=%%id%%" %]
+
+[% columns =
+  [{name               => 'name'
+    heading            => '名称'
+    contentlink        => edit_contentlink
+   }
+   {name               => 'description'
+    heading            => '描述'
+    allow_html_content => 1
+   }
+   {name               => 'userregexp'
+    heading            => '用户正则表达式'
+   }
+   {name               => 'is_active_bug_group'
+    heading            => "用于$terms.Bugs"
+    align              => 'center'
+   }
+   {name               => 'type'
+    heading            => '类型'
+    align              => 'center'
+   }
+   {name               => 'action'
+    heading            => '操作'
+   }
+  ]
+%]
+
+[% overrides.is_active_bug_group = [ {
+     match_value => "0"
+     match_field => 'is_active_bug_group'
+     override_content => 1
+     content => "&nbsp;"
+   },
+   {
+     match_value => "1"
+     match_field => 'is_active_bug_group'
+     override_content => 1
+     content => "X"
+   }]
+   overrides.userregexp = [ {
+     match_value => ""
+     match_field => 'userregexp'
+     override_content => 1
+     content => "&nbsp;"
+   }]
+   overrides.action = [ {
+     match_value => Param("chartgroup")
+     match_field => 'name'
+     override_content => 1
+     content => "(被用于'chartgroup'组)"
+   },
+   {
+     match_value => Param("insidergroup")
+     match_field => 'name'
+     override_content => 1
+     content => "(被用于'insidergroup'组)"
+   },
+   {
+     match_value => Param("timetrackinggroup")
+     match_field => 'name'
+     override_content => 1
+     content => "(被用于'timetrackinggroup'组)"
+   },
+   {
+     match_value => Param("querysharegroup")
+     match_field => 'name'
+     override_content => 1
+     content => "(被用于'querysharegroup'组)"
+   },
+   {
+     match_value => "1"
+     match_field => 'isbuggroup'
+     override_content => 1
+     content => "删除"
+     override_contentlink => 1
+     contentlink => del_contentlink
+   }]
+   overrides.type = [ {
+     match_value => "0"
+     match_field => 'isbuggroup'
+     override_content => 1
+     content => "系统"
+   },
+   {
+     match_value => "1"
+     match_field => 'isbuggroup'
+     override_content => 1
+     content => "用户"
+   }]
+%] 
+
+[% PROCESS admin/table.html.tmpl
+  columns = columns
+  data    = groups
+  overrides = overrides
+%]
+
+<p><a href="editgroups.cgi?action=add">添加群组</a></p>
+
+<p>
+  <b>名称</b> 可用于B<!-- blah -->ugzilla->user->in_group()函数，
+用来在自定义 cgi 文件中控制指定组权限。
+也可用于限制用户通过电子邮件提交的[% terms.abug %]所到的特定的组的集合。
+</p>
+
+<p>
+  <b>描述</b> 显示在[% terms.bug %]提交页面，让此组的成员用户可以选择
+是否此[% terms.bug %]仅对相同的组可见。
+</p>
+
+<p>
+  <b>用户正则表达式</b> 是可选的，如果填了，它将自动将用户登陆名(email 地址)
+  匹配 perl 正则表达式的用户添加到此组中。
+不要忘记结尾符号'$'。例如'@mycompany\.com$'
+</p>
+
+<p>
+  <b>用于[% terms.Bugs %]</b> 决定此组用户是否有资格提交[% terms.bugs %]的标记。
+如果您移除此标记，系统将不再允许此组用户提交新[% terms.bugs %]。
+但此组用户已提交的[% terms.bugs %]不受影响。
+</p>
+
+<p>
+  <b>类型</b> 字段表明群组是否是系统组。
+</p>
+
+[% PROCESS global/footer.html.tmpl %]

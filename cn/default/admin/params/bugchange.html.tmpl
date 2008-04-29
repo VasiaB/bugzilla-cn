@@ -1,0 +1,50 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Dave Miller <justdave@bugzilla.org>
+  #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+[%
+   title = "${terms.Bug}改变方针"
+   desc = "设置${terms.bug}改变方针"
+%]
+
+[% param_descs = {
+  duplicate_or_move_bug_status => "当${terms.abug}标记为与其它重复或转移到其它系统时，" _
+                                  "使用此${terms.bug}状态。",
+
+  letsubmitterchoosepriority => "如果此选项设置为“开”，则用户可以在提交${terms.bugs}时" _
+                                "选择初始的${terms.bug}优先级。<br>" _
+                                "如果设置为“关”，则所有${terms.bugs}的初始化优先级为系统默认的优先级。",
+
+  letsubmitterchoosemilestone => "如果此选项设置为“开”，则用户可以在提交${terms.bugs}时" _
+                                 "可以选择目标里程碑。<br>" _
+                                 "如果设置为“关”，则所有${terms.bugs}的初始化目标里程碑为系统默认的目标里程碑。",
+
+  musthavemilestoneonaccept => "如果此选项设置为“开”，则接受此${terms.bug}时必须设置目标里程碑。",
+
+  commentonclearresolution => "如果此选项设置为“开”，则清除此${terms.bug}解决途径时必须输入简短评论。",
+
+  commentonchange_resolution => "如果此选项设置为“开”，则改变此${terms.bug}解决途径时必须输入简短评论。",
+
+  commentonreassignbycomponent => "如果此选项设置为“开”，则在将此${terms.bug}重新分配给其它模块时必须输入简短评论。",
+
+  commentonduplicate => "如果此选项设置为“开”，则用户在将${terms.bug}标记为重复时，必须输入简短评论。",
+
+  noresolveonopenblockers => "如果${terms.bugs}有未解决的依赖，则不允许其标记为“已解决”。" }
+%]

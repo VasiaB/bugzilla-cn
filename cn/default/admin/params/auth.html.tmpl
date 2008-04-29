@@ -1,0 +1,114 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Dave Miller <justdave@bugzilla.org>
+  #                 Frédéric Buclin <LpSolit@gmail.com>
+  #                 Marc Schumann <wurblzap@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+[%
+   title = "用户认证"
+   desc = "设置认证政策"
+%]
+
+[% param_descs = {
+  auth_env_id => "用于外部认证系统保存每个用户唯一标识的环境变量名<br>" _
+                 "留空如果外部认证系统不存在或没有启用。",
+
+  auth_env_email => "用于外部认证系统保存用户 Email 地址的环境变量名<br>" _
+                    "此为环境认证必不可少的字段。如果不使用此特性，" _
+                    "请保持此字段为空。",
+
+  auth_env_realname => "用于外部认证系统保存用户真实姓名的环境变量名<br>" _
+                       "留空如果外部认证系统不存在或没有启用。",
+
+  user_info_class => "搜集用户信息的方法。
+                      可以选择多种方法。如果第一种返回空，则尝试第二种，依此类推。
+                      可用的类型是：
+                      <dl>
+                        <dt>CGI</dt>
+                        <dd>
+                          通过 CGI 表单界面询问用户名和密码。
+                        </dd>
+                        <dt>Env</dt>
+                        <dd>
+                          通过系统环境变量传递预认证用户信息。
+                        </dd>
+                      </dl>",
+
+  user_verify_class => "用于验证(认证)通过 user_info_class 获取的用户信息的方法。
+                        可以选择多种方法。如果第一种返回空，则尝试第二种，依此类推。
+                        可用的类型是：
+                        <dl>
+                          <dt>DB</dt>
+                          <dd>
+                            ${terms.Bugzilla} 自带的认证方法，这是最普遍的选择。
+                          </dd>
+                          <dt>RADIUS</dt>
+                          <dd>
+                            RADIUS 认证使用 RADIUS 服务器。
+                            此方法还处理实验阶段; 请查阅
+                            $terms.Bugzilla 文档以了解更多信息。
+                            使用此方法需要设置
+                            <a href=\"?section=radius\">额外的参数</a>。
+                          </dd>
+                          <dt>LDAP</dt>
+                          <dd>
+                            LDAP 认证使用 LDAP 服务器。
+                            此方法还处理实验阶段; 请查阅
+                            $terms.Bugzilla 文档以了解更多信息。
+                            使用此方法需要设置
+                            <a href=\"?section=ldap\">额外的参数</a>。
+                          </dd>
+                        </dl>",
+
+  rememberlogin => "会话 cookies 的控制管理
+                    <ul>
+                      <li>
+                        打开 - 会话 cookies 将不会过期(用户每个浏览器仅需登陆一次)。
+                      </li>
+                      <li>
+                        关闭 - 会话 cookies 将持续到浏览器关闭时。(用户的每个新的浏览器进程必须重新登陆)。
+                      </li>
+                      <li>
+                        默认开/默认关 - 以下描述的默认行为，
+                        但用户可以自己决定是否记住本次会话。
+                      </li>
+                    </ul>",
+
+  loginnetmask => "用户选择“允许多个 IP 使用同一会话”时的网络掩码的位数。" _
+                  "将此参数设备为 32 将禁用此功能。<br> " _
+                  "注意：启用此功能将降低您的系统安全性。",
+
+  requirelogin => "如果此参数设备为“打开”，所有访问此系统前台页面都需要登陆。" _
+                  "匿名用户将被禁止访问。",
+
+  emailregexp => "合法 Email 地址的正则表达式。" _
+                 "这将默认尝试匹配全部合格的 Email 地址。" _
+                 "另一个常用值是 <tt>^[^@]+$</tt>，即意思为" _
+                 "'本地用户名，不允许 @ 符号'",
+
+  emailregexpdesc => "当 Email 地址不匹配<tt>emailregexp</tt>参数的正则表达式时的英语描述。",
+
+  emailsuffix => "此处是附在任意 Email 地址后的字符串。当实际发送邮件时将使用此附加后的地址。" _
+                 "这在您改变<tt>emailregexp</tt>参数，允许本地用户注册，但要将邮件发往" _
+                 "username@my.local.hostname 之类的地址时十分有用。",
+
+  createemailregexp => "此处定义用户自己创建用户时允许注册的 Email 地址" _
+                       "默认值 (.*) 允许任何 Email 地址注册。" _
+                       "如果此参数为空，则用户不允许自己创建帐号，必须由管理员创建。" }
+%]

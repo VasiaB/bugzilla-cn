@@ -1,0 +1,86 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Dave Miller <justdave@syndicomm.com>
+  #                 Joel Peshkin <bugreport@peshkin.net>
+  #                 Jacob Steenhagen <jake@bugzilla.org>
+  #                 Vlad Dascalu <jocuri@softhome.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # none
+  #%]
+
+[% PROCESS global/header.html.tmpl
+  title = "添加组"
+  subheader = "此页面可以定义新的用户群组"
+%]
+
+<form method="post" action="editgroups.cgi">
+  <table border="1" cellpadding="4" cellspacing="0"><tr>
+    <th>组名</th>
+    <th>描述</th>
+    <th>用户正则表达式</th>
+    <th>用于[% terms.Bugs %]</th>
+  </tr><tr>
+    <td><input size="20" name="name"></td>
+    <td><input size="40" name="desc"></td>
+    <td><input size="30" name="regexp"></td>
+    <td><input type="checkbox" name="isactive" value="1" checked></td>
+  </tr>
+  <tr>
+    <th>图标链接：</th>
+    <td colspan="3"><input type="text" size="80" maxlength="255" id="icon_url" name="icon_url"></td>
+  </tr></table><hr>
+
+  <input type="checkbox" name="insertnew" value="1"
+    [% IF Param("makeproductgroups") %] checked[% END %]>
+    插入新组到所有已存在的产品<p>
+  <input type="submit" id="create" value="添加">
+  <input type="hidden" name="action" value="new">
+  <input type="hidden" name="token" value="[% token FILTER html %]">
+</form>
+
+<p><b>名称</b> 可用于B<!-- blah -->ugzilla->user->in_group()函数，
+用来在自定义 cgi 文件中控制指定组权限。
+也可用于限制用户通过电子邮件提交的[% terms.abug %]所到的特定的组的集合。不允许输入空格。</p>
+
+<p><b>描述</b> 显示在[% terms.bug %]提交页面，让此组的成员用户可以选择
+是否此[% terms.bug %]仅对相同的组可见。</p>
+
+<p><b>用于[% terms.Bugs %]</b> 决定此组用户是否有资格提交[% terms.bugs %]的标记。
+如果您移除此标记，系统将不再允许此组用户提交新[% terms.bugs %]。
+但此组用户已提交的[% terms.bugs %]不受影响。</p>
+
+<p><b>用户正则表达式</b> 是可选的，如果填了，它将自动将用户登陆名(email 地址)
+  匹配 perl 正则表达式的用户添加到此组中。</p>
+
+<p>
+  <b>图标链接</b> 可选，用于此组的个性图标的链接。
+  即可用此系统的相对链接，也可用绝对链接。
+  图标将会显示在[% terms.bugs %]评论作者名字的旁边。
+</p>
+
+<p>默认地，新加的组将会关联到所有已存在的产品。
+不选择 "插入新组到所有已存在的产品" 复选框将会使组仅当将其控制权限添加到某个产品时才可见。</p>
+
+<p>返回到 <a href="./">首页</a>
+
+或返回到 <a href="editgroups.cgi">组列表</a>
+
+[% PROCESS global/footer.html.tmpl %] 

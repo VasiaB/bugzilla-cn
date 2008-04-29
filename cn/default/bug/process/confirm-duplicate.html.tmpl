@@ -1,0 +1,75 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Myk Melez <myk@mozilla.org>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # original_bug_id: number; the bug number for the bug
+  #   against which a bug is being duped
+  # duplicate_bug_id: number; the bug number for the bug
+  #   being duped
+  # cclist_accessible: boolean; whether or not users on the cc: list
+  #   of the original bug can access that bug.
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+[% PROCESS global/header.html.tmpl title="重复警告" %]
+[% orig_bug = "$terms.bug $original_bug_id"
+     FILTER bug_link(original_bug_id) %]
+
+<p>
+  当标记[% terms.abug %]为"重复"时，重复[% terms.bug %]
+  的报告人通常被加入到原来[% terms.bug %]的抄送人列表中。但原[% terms.bug %] [%+ original_bug_id %]
+  的权限设置使得报告人不能正常看见该[% terms.bug %]。
+</p>
+
+<p>
+  <b>将报告人加入[% orig_bug FILTER none %]的抄送列表
+  [% IF cclist_accessible %]
+    将立刻
+  [% ELSE %]
+    将来可能
+  [% END %]
+  授予报告人参看此[% terms.bug %]的权限。</b>
+  确认这样做吗？
+</p>
+
+<form method="post" action="process_bug.cgi">
+
+[% PROCESS "global/hidden-fields.html.tmpl" exclude="^Bugzilla_(login|password)$" %]
+
+<p>
+  <input type="radio" name="confirm_add_duplicate" value="1">
+    是，把报告人加入[%+ original_bug_id %]的抄送人列表中
+</p>
+<p>
+  <input type="radio" name="confirm_add_duplicate" value="0" checked="checked">
+    不，不要把报告人加入[%+ original_bug_id %]的抄送人列表
+</p>
+<p>
+  [% "取消修改，重新访问$terms.bug $duplicate_bug_id"
+     FILTER bug_link(duplicate_bug_id) FILTER none %]
+</p>
+<p>
+  <input type="submit" id="process" value="提交">
+</p>
+
+</form>
+
+[% PROCESS global/footer.html.tmpl %]

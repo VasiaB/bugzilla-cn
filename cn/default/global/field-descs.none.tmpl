@@ -1,0 +1,111 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# Remember to PROCESS rather than INCLUDE this template. %]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% field_descs = { "[Bug creation]"       => "[${terms.Bug} 创建]",
+                   "actual_time"          => "实际小时数"
+                   "alias"                => "别名",
+                   "assigned_to"          => "责任人",
+                   "blocked"              => "阻塞",
+                   "bug_file_loc"         => "URL",
+                   "bug_id"               => "${terms.Bug} ID",
+                   "bug_severity"         => "严重程度",
+                   "bug_status"           => "状态",
+                   "changeddate"          => "上次修改日期",
+                   "cc"                   => "抄送",
+                   "classification"       => "类别",
+                   "cclist_accessible"    => "抄送人可用",
+                   "component_id"         => "模块ID",
+                   "component"            => "模块",
+                   "creation_ts"          => "${terms.Bug}创建时间",
+                   "deadline"             => "最后期限",
+                   "delta_ts"             => "已改变",
+                   "dependson"            => "依赖于",
+                   "dup_id"               => "重复",
+                   "estimated_time"       => "初始估计时间",
+                   "everconfirmed"        => "已确认",
+                   "keywords"             => "关键字",
+                   "newcc"                => "抄送",
+                   "op_sys"               => "操作系统",
+                   "opendate"             => "打开日期",
+                   "percentage_complete"  => "完成百分比",
+                   "priority"             => "优先级",
+                   "product_id"           => "产品ID",
+                   "product"              => "产品",
+                   "qa_contact"           => "QA联系人",
+                   "remaining_time"       => "剩余小时数",
+                   "rep_platform"         => "硬件平台",
+                   "reporter"             => "提交者",
+                   "reporter_accessible"  => "提交者可用",
+                   "resolution"           => "解决途径",
+                   "setting"              => "设置",
+                   "settings"             => "设置",
+                   "short_desc"           => "摘要",
+                   "status_whiteboard"    => "白板",
+                   "target_milestone"     => "目标里程碑",
+                   "version"              => "版本",
+                   "votes"                => "投票数",
+                   "work_time"            => "已处理小时数"} %]
+
+[%# Also include any custom fields or fields which don't have a
+    Description here, by copying their Description from the
+    database. If you want to override this for your language
+    or your installation, just use a hook. %]
+
+[% USE Bugzilla %]
+[% FOREACH bz_field = Bugzilla.get_fields() %]
+  [% SET field_descs.${bz_field.name} = bz_field.description
+     IF !field_descs.${bz_field.name}.defined %]
+[% END %]
+
+[% field_types = { ${constants.FIELD_TYPE_UNKNOWN}       => "未知类型",
+                   ${constants.FIELD_TYPE_FREETEXT}      => "文本框",
+                   ${constants.FIELD_TYPE_SINGLE_SELECT} => "下拉列表",
+                   ${constants.FIELD_TYPE_MULTI_SELECT}  => "多选框",
+                   ${constants.FIELD_TYPE_TEXTAREA}      => "大文本框",
+                   ${constants.FIELD_TYPE_DATETIME}      => "时间/日期",
+                } %]
+
+[% status_descs = { "UNCONFIRMED" => "未确认",
+                    "NEW"         => "新建",
+                    "ASSIGNED"    => "已分配",
+                    "REOPENED"    => "重新打开",
+                    "RESOLVED"    => "已解决",
+                    "VERIFIED"    => "已确认",
+                    "CLOSED"      => "已关闭" } %]
+
+[% MACRO get_status(status) GET status_descs.$status || status %]
+
+[% resolution_descs = { "FIXED"      => "已修复",
+                        "INVALID"    => "无效",
+                        "WONTFIX"    => "暂时不改",
+                        "DUPLICATE"  => "重复",
+                        "WORKSFORME" => "无法重现",
+                        "MOVED"      => "移出",
+                        "---"        => "---",
+                        " "          => " " } %]
+
+[% MACRO get_resolution(res) GET resolution_descs.$res || res %]
+
+[% Hook.process("end") %]

@@ -1,0 +1,38 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Frédéric Buclin.
+  #
+  # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% PROCESS global/header.html.tmpl title = "系统检修"
+                                   style_urls = ['skins/standard/admin.css'] %]
+
+<div>
+  <p>
+    [% terms.Bugzilla %] 正在检测您的数据库的完整性，
+    这可能需要几分钟时间。
+  </p>
+
+  <p>
+    如果发现了错误，将会<span class="alert">像这样加重显示</span>。
+    根据错误的不同，系统可能会给出一些简单修复错误的链接。
+    修复完这些错误后将会自动再次运行系统检修脚本
+    (所以请注意这可能会花比第一次更长的时间)。
+  </p>
+</div>
+
+<hr>

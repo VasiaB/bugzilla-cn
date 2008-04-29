@@ -1,0 +1,43 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 2005 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): A. Karl Kornel <karl@kornel.name>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+Content-Type: text/plain
+From: [% Param('mailfrom') %]
+To: [% user.email %]
+Subject: [[% terms.Bugzilla %]] 其它人正以您的帐号 [% user.login -%] 身份操作
+X-Bugzilla-Type: admin
+
+    [%+ sudoer.identity %] 使用了 'sudo' 功能来用您的帐号访问 
+[%+ terms.Bugzilla %]。
+
+[% IF reason %]
+    [%+ sudoer.identity %] 给出以下的原因：
+
+[% reason FILTER wrap_comment %]
+[% ELSE %]
+    [%+ sudoer.identity %] 没有给出任何原因。
+[% END %]
+
+    如果您认为此操作不恰当，请联系
+[%+ Param("maintainer") %]. 有关此功能的更多信息，请访问
+<[% urlbase %]page.cgi?id=sudo.html>.

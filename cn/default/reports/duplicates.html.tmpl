@@ -1,0 +1,169 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Gervase Markham <gerv@gerv.net>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # products: an array of product objects this user can see.
+  #
+  # sortby: string. the column on which we are sorting the buglist.
+  # reverse: boolean. True if we are reversing the current sort.
+  # maxrows: integer. Max number of rows to display.
+  # changedsince: integer. The number of days ago for the changedsince column.
+  # openonly: boolean. True if we are only showing open bugs.
+  # query_products: list of strings. The set of products we check for dups.
+  #
+  # Additionally, you need to fulfill the interface to
+  # duplicates-table.html.tmpl.
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% IF query_products.size %]
+  [% title = BLOCK %]
+    Most Frequently Reported [% terms.Bugs %] for [% query_products.join(', ') FILTER html %]
+  [% END %]
+[% ELSE %]
+  [% title = "经常被报告的 $terms.Bugs" %]
+[% END%]
+
+[% PROCESS global/header.html.tmpl
+   title = title
+   style = ".resolved { background-color: #d9d9d9; color: #000000; }"
+%]
+
+<p>
+  <a href="#explanation">这些数据是什么？</a>
+  <br>
+  <a href="#params">修改参数</a>
+</p>
+
+[% PROCESS "reports/duplicates-table.html.tmpl" %]
+
+[%# *** Parameters *** %]
+
+[% bug_ids_string = vis_bug_ids.join(',') %]
+
+<h3><a name="params">修改参数</a></h3>
+
+<form method="get" action="duplicates.cgi">
+  <input type="hidden" name="sortby" value="[% sortby FILTER html %]">
+  <input type="hidden" name="reverse" value="[% reverse %]">
+  <input type="hidden" name="bug_id" value="[% bug_ids_string %]">
+  <table>
+    <tr>
+      <td>想要排序或有条件显示，请点击：</td>
+      <td>
+        <input type="radio" name="sortvisible" id="entirelist" value="0"
+          [% "checked" IF NOT sortvisible %]>
+        <label for="entirelist">
+          完整列表
+        </label>
+        <br>
+        <input type="radio" name="sortvisible" id="visiblelist" value="1"
+          [% "checked" IF sortvisible %]>
+        <label for="visiblelist">
+          当前可见列表
+        </label>
+      </td>
+      <td rowspan="4" valign="top">限于产品：</td>
+      <td rowspan="4" valign="top">
+        <select name="product" size="5" multiple="multiple">
+          [% FOREACH p = products %]
+            <option name="[% p.name FILTER html %]"
+            [% " selected" IF lsearch(query_products, p.name) != -1 %]
+            >[% p.name FILTER html %]</option>
+          [% END %]
+        </select>
+      </td>
+     </tr>
+
+    <tr>
+      <td>最大行数：</td>
+      <td>
+        <input size="4" name="maxrows" value="[% maxrows %]">
+      </td>
+    </tr>
+
+    <tr>
+      <td>更改列的最后更改时间为：</td>
+      <td>
+        <input size="4" name="changedsince" value="[% changedsince %]">日
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <label for="openonly">
+          仅限于未解决的[% terms.bugs %]：
+        </label>
+      </td>
+      <td>
+        <input type="checkbox" name="openonly" id="openonly" value="1"
+          [% "checked" IF openonly %]>
+      </td>
+    </tr>
+
+  </table>
+
+  <input type="submit" id="change" value="更改">
+</form>
+
+<form method="post" action="buglist.cgi">
+  <input type="hidden" name="bug_id" value="[% bug_ids_string %]">
+  <input type="hidden" name="order" value="使用上次的顺序">
+  或仅显示为<input type="submit" id="list" 
+                                value="[% terms.bug %] 列表">.
+  (注意: 顺序可能不同。)
+</form>
+
+<hr>
+
+<b>
+  <a name="explanation">什么是"最常报告的 [% terms.Bugs %]"？</a>
+</b>
+
+<blockquote>
+  最常报告的[% terms.Bugs %]列表是[% terms.Bugzilla %]系统每隔24小时自动收集生成的[% terms.Bugs %]，目的是
+  减少[% terms.Bugs %]的重复输入。重复出现相同的[% terms.Bugs %]会造成开发和QA人员精力的浪费。
+</blockquote>
+
+<b>如何使用这个列表？</b>
+
+<ul>
+  <li>查看常见[% terms.bugs %]列表。</li>
+  <li>如果您遇到的问题已经被列出了：</li>
+
+  <ul>
+    <li>点击[% terms.bug %]编号确认您找到的[% terms.bug %]和已存在的[% terms.bug %]是相同的。
+      您也可以在已存在的[% terms.bug %]上添加新的注释。
+    </li>
+  </ul>
+
+  <li>如果您的发现的问题不在列表中：</li>
+
+  <ul>
+    <li><a href="query.cgi">搜索已存在的类似[% terms.bug %]</a></li>
+    <li>如果您在[% terms.Bugzilla %]中找到了类似的[% terms.bug %]，您可以添加新的注释。</li>
+    <li>如果您在[% terms.Bugzilla %]中没有找到类似的[% terms.bug %]，
+        <a href="enter_bug.cgi">输入新的[% terms.bug %]</a>。</li>
+  </ul>
+</ul>
+
+[% PROCESS global/footer.html.tmpl %]

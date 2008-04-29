@@ -1,0 +1,108 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  #                 Gervase Markham <gerv@mozilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[% PROCESS "global/field-descs.none.tmpl" %]
+
+[% INCLUDE global/header.html.tmpl
+   title = "编辑工作流"
+   style_urls = ['skins/standard/admin.css']
+%]
+
+<script type="text/javascript">
+<!--
+  function toggle_cell(cell) {
+    if (cell.checked)
+      cell.parentNode.className = "checkbox-cell checked";
+    else
+      cell.parentNode.className = "checkbox-cell";
+  }
+//-->
+</script>
+
+<p>
+  此页面您可以定义您的工作流中可用哪种状态转换。
+  为了与老版本的[% terms.Bugzilla %]兼容，重新打开[% terms.abug %]
+  仅会显示为“未确认”(UNCONFIRMED)或“重新打开”(REOPENED)(如果您的工作流允许的话)，
+  但不会二者都显示。此决定依赖于[% terms.bug %]是否被确认过。
+  所以，最好允许双向转换，让[% terms.Bugzilla %]选择正确的。
+</p>
+
+<form id="workflow_form" method="POST" action="editworkflow.cgi">
+<table>
+  <tr>
+    <th colspan="2">&nbsp;</th>
+    <th colspan="[% statuses.size FILTER html %]" class="title">到</th>
+  </tr>
+
+  <tr>
+    <th rowspan="[% statuses.size + 2 FILTER html %]" class="title">从</th>
+    <th>&nbsp;</th>
+    [% FOREACH status = statuses %]
+      <th class="col-header[% status.is_open ? " open-status" : " closed-status" %]">
+        [% status.name FILTER html %]
+      </th>
+    [% END %]
+  </tr>
+
+  [%# This defines the entry point in the workflow %]
+  [% p = [{id => 0, name => "{Start}", is_open => 1}] %]
+  [% FOREACH status = p.merge(statuses) %]
+    <tr class="highlight">
+      <th align="right" class="[% status.is_open ? "open-status" : "closed-status" %]">
+        [% status.name FILTER html %]
+      </th>
+
+      [% FOREACH new_status = statuses %]
+        [% IF status.id != new_status.id %]
+          [% checked = workflow.${status.id}.${new_status.id}.defined ? 1 : 0 %]
+          [% mandatory = (status.id && new_status.name == Param("duplicate_or_move_bug_status")) ? 1 : 0 %]
+          <td align="center" class="checkbox-cell[% " checked" IF checked || mandatory %]"
+              title="From [% status.name FILTER html %] to [% new_status.name FILTER html %]">
+            <input type="checkbox" name="w_[% status.id %]_[% new_status.id %]"
+                   id="w_[% status.id %]_[% new_status.id %]" onclick="toggle_cell(this)"
+                   [%+ "checked='checked'" IF checked || mandatory %]
+                   [%+ "disabled='disabled'" IF mandatory %]>
+          </td>
+        [% ELSE %]
+          <td class="checkbox-cell forbidden">&nbsp;</td>
+        [% END %]
+      [% END %]
+    </tr>
+  [% END %]
+</table>
+
+<p>
+  当[% terms.abug %]标记为其它的重复或移动到其它系统中去时，此[% terms.bug %]的状态自动设为
+  <b>[% Param("duplicate_or_move_bug_status") FILTER html %]</b>。所有到此 [% terms.bug %]状态
+  的转换都必须设置(这就是您不能编辑到<b>[% Param("duplicate_or_move_bug_status") FILTER html %]</b>
+  转换的原因)。<br>
+  <b>注意：</b>您可以通过访问
+  <a href="editparams.cgi?section=bugchange#duplicate_or_move_bug_status">参数设置</a>
+  页面并编辑参数 <i>duplicate_or_move_bug_status</i> 来改变此项设置。
+</p>
+
+<p align="center">
+  <input type="hidden" name="action" value="update">
+  <input type="hidden" name="token" value="[% token FILTER html %]">
+  <input type="submit" value="提交更改"> -
+  <a href="editworkflow.cgi">取消更改</a> -
+  <a href="editworkflow.cgi?action=edit_comment">查看当前触发器</a>
+</p>
+
+</form>
+
+[% INCLUDE global/footer.html.tmpl %]

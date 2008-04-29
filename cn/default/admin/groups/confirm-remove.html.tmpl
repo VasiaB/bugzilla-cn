@@ -1,0 +1,63 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Dave Miller <justdave@syndicomm.com>
+  #                 Joel Peshkin <bugreport@peshkin.net>
+  #                 Jacob Steenhagen <jake@bugzilla.org>
+  #                 Vlad Dascalu <jocuri@softhome.net>
+  #                 Max Kanat-Alexander <mkanat@bugzilla.org>
+  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[%# INTERFACE:
+  # group: The Bugzilla::Group being changed.
+  # regexp: the regexp according to which the update is performed.
+  #%]
+
+[% IF regexp %]
+  [% title = "请确认: 删除匹配正则表达式的用户的直接成员关系？" %]
+[% ELSE %]
+  [% title = "请确认: 删除所有直接成员关系？" %]
+[% END %]
+
+[% PROCESS global/header.html.tmpl %]
+
+[% IF regexp %]
+  <p>此选项将会移除 '[% group.name FILTER html %]'
+    组中登陆名匹配正则表达式：
+    '[% regexp FILTER html %]' 的所有成员关系。</p>
+[% ELSE %]
+  <p>此选项将会移除 '[% group.name FILTER html %]' 组中明确定义的用户。</p>
+[% END %]
+  
+<p>一般地，仅当您从[% terms.Bugzilla %] 2.16 或更早版本升级而来的话，您才需要这样做。
+  使用此选项要 <b>特别小心</b> 参考文档以获取更多信息。
+</p>
+    
+<form method="post" action="editgroups.cgi">
+  <input type="hidden" name="group_id" value="[% group.id FILTER html %]">
+  <input type="hidden" name="regexp" value="[% regexp FILTER html %]">
+  <input type="hidden" name="action" value="remove_regexp">
+  
+  <input name="token" type="hidden" value="[% token FILTER html %]">
+  <input name="confirm" type="submit" value="确认">
+  <p>或 <a href="editgroups.cgi">返回到编辑组页面</a></p>
+</form>
+    
+<p>返回到 <a href="editgroups.cgi">组列表</a></p>
+
+[% PROCESS global/footer.html.tmpl %] 

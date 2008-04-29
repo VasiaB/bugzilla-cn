@@ -1,0 +1,128 @@
+﻿[%# The contents of this file are subject to the Mozilla Public
+  # License Version 1.1 (the "License"); you may not use this file
+  # except in compliance with the License. You may obtain a copy of
+  # the License at http://www.mozilla.org/MPL/
+  #
+  # Software distributed under the License is distributed on an "AS
+  # IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+  # implied. See the License for the specific language governing
+  # rights and limitations under the License.
+  #
+  # The Original Code is the Bugzilla Bug Tracking System.
+  #
+  # The Initial Developer of the Original Code is Netscape Communications
+  # Corporation. Portions created by Netscape are
+  # Copyright (C) 1998 Netscape Communications Corporation. All
+  # Rights Reserved.
+  #
+  # Contributor(s): Myk Melez <myk@mozilla.org>
+  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
+  #%]
+
+[% PROCESS global/variables.none.tmpl %]
+
+[% PROCESS global/header.html.tmpl 
+  title = "搜索特定的" _ terms.Bug
+%]
+
+[% WRAPPER search/tabs.html.tmpl %]
+
+<p>
+通过输入[% terms.bug %]的描述词句来查找特定的[% terms.bug %]。 
+[% terms.Bugzilla %]将搜索出描述、评论中包含这些词句的[% terms.bug %]，并以关联程度排序。
+</p>
+
+<p>
+例如, 您要找这样一个[% terms.bug %]：当浏览含有 Flash 动画的安全 Web 站点时，浏览器崩溃了。
+<br>您可以输入搜索词：“崩溃 安全 Flash”。
+</p>
+
+<form name="queryform" method="get" action="buglist.cgi">
+<input type="hidden" name="query_format" value="specific">
+<input type="hidden" name="order" value="relevance desc">
+
+<table>
+  <tr>
+    <td align="right" valign="baseline">
+      <b><label for="bug_status">状态：</label></b>
+    </td>
+    <td>
+      <select name="bug_status" id="bug_status">
+        [% statuses = [ { name = 'open', label = "活动" },
+                        { name = 'closed', label = "已关闭" },
+                        { name = 'all', label = "全部" } ] %]
+        [% FOREACH status = statuses %]
+            <option value="__[% status.name %]__" 
+                  [% " selected" IF default.bug_status.0 == "__${status.name}__" %]>
+            [% status.label FILTER html %]
+          </option>
+        [% END %]
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline">
+      <b><label for="product">产品：</label></b>
+    </td>
+    <td>
+      <select name="product" id="product">
+        <option value="">全部</option>
+        [% IF Param('useclassification') %]
+          [% FOREACH c = classification %]
+            <optgroup label="[% c.name FILTER html %]">
+            [% FOREACH p = user.get_selectable_products(c.id) %]
+              [% IF p.components.size %]
+                <option value="[% p.name FILTER html %]"
+                  [% " selected" IF lsearch(default.product, p.name) != -1 %]>
+                  [% p.name FILTER html %]
+                </option>
+              [% END %]
+            [% END %]
+            </optgroup>
+          [% END %]
+        [% ELSE %]
+          [% FOREACH p = product %]
+            <option value="[% p.name FILTER html %]"
+              [% " selected" IF lsearch(default.product, p.name) != -1 %]>
+              [% p.name FILTER html %]
+            </option>
+          [% END %]
+        [% END %]
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline">
+      <b><label for="content">搜索词：</label></b>
+    </td>
+    <td>
+      <input name="content" size="40" id="content"
+             value="[% default.content.0 FILTER html %]">
+      <script type="text/javascript"> <!--
+          document.forms['queryform'].content.focus(); 
+      // -->
+      </script>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+    
+      [% IF Param('specific_search_allow_empty_words') %]
+        <input type="submit" id="search" value="搜索">
+      [% ELSE %]
+        <input type="submit" id="search" value="搜索"
+             onclick="if (this.form.content.value == '')
+                      {alert('搜索词不能为空。您必须' +
+                             '在搜索条件中至少输入一个搜索词');
+                       return false;} return true;">
+      [% END %]
+    </td>
+  </tr>
+</table>
+</form>
+
+[% END %]
+
+[% PROCESS global/footer.html.tmpl %]
+
