@@ -34,13 +34,12 @@
   <link rel="Top" href="[% urlbase FILTER html %]">
 
   [%# *** Bug List Navigation *** %]
-  [% IF bug_list && bug_list.size > 0 %]
+  [% IF bug && bug_list && bug_list.size > 0 %]
     <link rel="Up" href="buglist.cgi?regetlastlist=1">
 
     <link rel="First" href="show_bug.cgi?id=[% bug_list.first %]">
     <link rel="Last" href="show_bug.cgi?id=[% bug_list.last %]">
 
-    [% IF bug && bug.bug_id %]
     [% current_bug_idx = lsearch(bug_list, bug.bug_id) %]
 
     [% IF current_bug_idx != -1 %]
@@ -56,7 +55,6 @@
       [% END %]
 
     [% END %]
-  [% END %]
   [% END %]
 
   [%# *** Attachment *** %]

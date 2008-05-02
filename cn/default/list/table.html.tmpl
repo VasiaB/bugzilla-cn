@@ -81,19 +81,19 @@
       [% END %]
     </colgroup>
 
-    <tr class="bz_buglist_header bz_first_buglist_header" align="left">
+    <tr align="left">
       [% IF dotweak %]
       <th>&nbsp;</th>
       [% END %]
       <th colspan="[% splitheader ? 2 : 1 %]" class="first-child">
-        [% desc = '' %]
-        [% IF (om = order.match("^bugs\.bug_id( desc)?")) %]
-          [% desc = ' desc' IF NOT om.0 %]
-        [% END %]
+        [% IF sorted_by_relevance %]
+          ID
+        [% ELSE %]
           <a href="buglist.cgi?
-                  [% urlquerypart FILTER html %]&amp;order=bugs.bug_id[% desc FILTER url_quote %]
+                    [% urlquerypart FILTER html %]&amp;order=bugs.bug_id
                     [%-#%]&amp;query_based_on=
                     [% defaultsavename OR searchname FILTER url_quote %]">ID</a>
+        [% END %]
       </th>
 
       [% IF splitheader %]
@@ -104,11 +104,7 @@
           [% PROCESS columnheader %]
         [% END %]
 
-        </tr><tr class="bz_buglist_header" align="left">
-        [% IF dotweak %]
-          <th>&nbsp;</th>
-        [% END %]
-        <th>&nbsp;</th>
+        </tr><tr align="left"><th>&nbsp;</th>
 
         [% FOREACH id = displaycolumns %]
           [% NEXT IF loop.count() % 2 == 0 %]
@@ -130,6 +126,9 @@
 
 [% BLOCK columnheader %]
   <th colspan="[% splitheader ? 2 : 1 %]">
+    [% IF sorted_by_relevance %]
+      [%- abbrev.$id.title || field_descs.$id || column.title -%]
+    [% ELSE %]
       [% IF column.name.match('\s+AS\s+') %]
         [%# For aliased columns, use their ID for sorting. %]
         [% column.sortalias = id %]
@@ -137,17 +136,13 @@
         [%# Other columns may sort on their name directly. %]
         [% column.sortalias = column.name %]
       [% END %]
-    [% desc = '' %]
-    [% IF (om = order.match("$column.sortalias( desc)?")) %]
-      [% desc = ' desc' IF NOT om.0 %]
-    [% END %]
-    [% order = order.remove("$column.sortalias( desc)?,?") %]
       <a href="buglist.cgi?[% urlquerypart FILTER html %]&amp;order=
-      [% column.sortalias FILTER url_quote %][% desc FILTER url_quote %]
+        [% column.sortalias FILTER url_quote %]
         [% ",$order" FILTER url_quote IF order %]
         [%-#%]&amp;query_based_on=
         [% defaultsavename OR searchname FILTER url_quote %]">
           [%- abbrev.$id.title || field_descs.$id || column.title -%]</a>
+    [% END %]
   </th>
 [% END %]
 
@@ -198,6 +193,8 @@
         [%- get_status(bug.$column).truncate(abbrev.$column.maxlength, abbrev.$column.ellipsis) FILTER html %]
       [% ELSIF column == 'resolution' %]
         [%- get_resolution(bug.$column).truncate(abbrev.$column.maxlength, abbrev.$column.ellipsis) FILTER html %]
+      [% ELSIF column == 'bug_severity' %]
+        [%- get_severity(bug.$column).truncate(abbrev.$column.maxlength, abbrev.$column.ellipsis) FILTER html %]
       [% ELSE %]
         [%- bug.$column.truncate(abbrev.$column.maxlength, abbrev.$column.ellipsis) FILTER html -%]
       [% END %]

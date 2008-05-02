@@ -33,7 +33,7 @@
 [% IF Param('docs_urlbase') &&
       docslinks.keys.size || (admindocslinks.keys.size && user.in_group('admin')) %]
   <div id="docslinks">
-    <h2>相关文档</h2>
+    <h2>Related documentation</h2>
     <ul>
       [% IF user.in_group('admin') %]
         [% PROCESS docslinkslist docstype = admindocslinks %]
