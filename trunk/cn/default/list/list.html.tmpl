@@ -49,10 +49,7 @@
   title = title
   style = style
   atomlink = "buglist.cgi?$urlquerypart&title=$title&ctype=atom" 
-  javascript_urls = [ "js/util.js", "js/keyword-chooser.js", "js/field.js",
-                      "js/yui/yahoo-dom-event.js", "js/yui/calendar.js" ]
-  style_urls = [ "skins/standard/buglist.css", "skins/standard/yui/calendar.css" ]
-  doc_section = "query.html#list"
+  javascript_urls = [ "js/util.js", "js/keyword-chooser.js" ]
 %]
 
 <div class="bz_query_head" align="center">
@@ -74,7 +71,7 @@
   [% END %]
 
   [% IF user.settings.display_quips.value == 'on' %]
-    [% DEFAULT quip = "$terms.Bugzilla would like to put a random quip here, but no one has entered any." %]
+    [% DEFAULT quip = "此处为放置随机标语的地方，但目前系统中无任何标语可用。" %]
     <span class="bz_quip">
       <a href="quips.cgi"><i>[% quip FILTER html %]</i></a>
     </span>

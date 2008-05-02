@@ -29,6 +29,10 @@
   #   those fields
   #%]
 
+[%# The global Bugzilla->cgi object is used to obtain form variable values. %]
+[% USE Bugzilla %]
+[% cgi = Bugzilla.cgi %]
+
 [% PROCESS global/variables.none.tmpl %]
 
 [% PROCESS global/header.html.tmpl
@@ -36,16 +40,10 @@
 
 <form action="process_bug.cgi" method="post">
 
-[% SET exclude_items = ['version', 'component', 'target_milestone'] %]
-[% IF verify_bug_groups %]
-  [% exclude_items.push('bit-\d+') %]
-[% END %]
-
 [% PROCESS "global/hidden-fields.html.tmpl"
-     exclude = '^' _ exclude_items.join('|') _ '$' %]
+     exclude=("^version|component|target_milestone|bit-\\d+$") %]
 
 <input type="hidden" name="confirm_product_change" value="1">
-    
 [%# Verify the version, component, and target milestone fields. %]
   <h3>确认版本,模块[% "，目标里程碑" IF Param("usetargetmilestone") %]</h3>
 
@@ -64,46 +62,35 @@
   <table>
     <tr>
       <td>
-      <b>版本：</b><br>
-      [% IF versions.size == 1 %]
-        [% SET default_version = versions.0 %]
-      [% ELSE %]
-        [% SET default_version = defaults.version %]
-      [% END %]
+        <b>版本：</b><br>
         [% PROCESS "global/select-menu.html.tmpl" 
                    name="version"
                    options=versions
-                 default=default_version
+                   default=defaults.version
                    size=10 %]
       </td>
       <td>
-      <b>模块：</b><br>
-      [% IF components.size == 1 %]
-        [% SET default_component = components.0 %]
-      [% ELSE %]
-        [% SET default_component = defaults.component %]
-      [% END %]
+        <b>模块：</b><br>
         [% PROCESS "global/select-menu.html.tmpl"
                    name="component"
                    options=components
-                 default=default_component
+                   default=defaults.component
                    size=10 %]
       </td>
       [% IF Param("usetargetmilestone") %]
         <td>
-        <b>目标里程碑：</b><br>
+          <b>目标里程碑：</b><br>
         [% PROCESS "global/select-menu.html.tmpl"
                    name="target_milestone"
                    options=milestones
-                 default=defaults.milestone
+                   default=defaults.target_milestone
                    size=10 %]
         </td>
       [% END %]
     </tr>
   </table>
 
-[% IF verify_bug_groups %]
-    <h3>确认[% terms.Bug %]的组</h3>
+  <h3>确认[% terms.Bug %]的组</h3>
 
   [% IF old_groups.size %]
     <p>这些组不再是'[% product.name FILTER html %]'产品的合法组，
@@ -140,8 +127,6 @@
     <p>这些组是可选的，您可以限制这些[% terms.bugs %]到
     以下的一个或多个组：<br>
     [% FOREACH group = optional_groups %]
-      <input type="hidden" name="defined_bit-[% group.group.id FILTER html %]"
-             value="1">
       <input type="checkbox" id="bit-[% group.group.id FILTER html %]"
              name="bit-[% group.group.id FILTER html %]"
              [% ((group.membercontrol == constants.CONTROLMAPDEFAULT && user.in_group(group.group.name))
@@ -169,7 +154,6 @@
     [% END %]
     </p>
   [% END %]
-[% END %]
 
 <input type="submit" id="change_product" value="提交">
 

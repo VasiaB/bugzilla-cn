@@ -30,19 +30,17 @@
 
 [% PROCESS global/header.html.tmpl
   title = "$terms.bug $bug_id已更改完成"
-  header = "活动日志： $terms.bug $bug.bug_id: $filtered_desc"
+  header = "活动日志"
+  subheader = "$terms.Bug <a href=\"show_bug.cgi?id=$bug_id\">$bug_id</a>"
  %]
 
-<p>
-  [% "Back to $terms.bug $bug.bug_id" FILTER bug_link(bug.bug_id) FILTER none %]
-</p>
+<br>
 
 [% PROCESS bug/activity/table.html.tmpl %]
 
-[% IF operations.size > 0 %]
 <p>
-    [% "返回到 $terms.bug $bug.bug_id" FILTER bug_link(bug.bug_id) FILTER none %]
+  <a href="show_bug.cgi?id=[% bug_id %]">返回到[% terms.bug %] 
+  [%+ bug_id %]</a>
 </p>
-[% END %]
 
 [% PROCESS global/footer.html.tmpl %]

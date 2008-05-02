@@ -35,28 +35,10 @@
     checking_modules  => '正在检查 perl 模块...',
     header => "* 这是基于 ##perl_ver## 的 Bugzilla ##bz_ver##\n"
             . "* 运行于 ##os_name## ##os_ver##",
-    install_all => <<EOT,
-
-To attempt an automatic install of every required and optional module
-with one command, do:
-
-  ##perl## install-module.pl --all
-
-EOT
-    install_data_too_long => <<EOT,
-WARNING: Some of the data in the ##table##.##column## column is longer than
-its new length limit of ##max_length## characters. The data that needs to be
-fixed is printed below with the value of the ##id_column## column first and
-then the value of the ##column## column that needs to be fixed:
-
-EOT
-    install_module => 'Installing ##module## version ##version##...',
     module_found => "找到 v##ver##",
     module_not_found => "没有找到",
     module_ok => '确定',
     module_unknown_version => "找到未知版本",
-    template_precompile   => "Precompiling templates...",
-    template_removing_dir => "Removing existing compiled templates...",
 );
 
 1;

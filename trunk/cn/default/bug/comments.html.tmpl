@@ -215,10 +215,9 @@
 [% IF comment.already_wrapped %]
     [% wrapped_comment = comment.body %]
 [% ELSE %]
-    [% wrapped_comment = comment.body FILTER wrap_comment %]
+    [% wrapped_comment = comment.body FILTER wrap_comment FILTER none %]
 [% END %]
-<pre class="bz_comment_text" 
-     [% ' id="comment_text_' _ count _ '"' IF mode == "edit" %]>
+<pre[% ' id="comment_text_' _ count _ '"' IF mode == "edit" %]>
   [%- wrapped_comment FILTER quoteUrls(bug.bug_id) -%]
 </pre>
     </div>
