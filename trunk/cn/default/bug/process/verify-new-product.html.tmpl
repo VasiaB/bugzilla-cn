@@ -145,6 +145,8 @@
   [% IF mandatory_groups.size %]
     <p>这些组是强制的，[% terms.bugs %]将会被自动地限制到这些组：<br>
     [% FOREACH group = mandatory_groups %]
+      <input type="hidden" name="defined_bit-[% group.group.id FILTER html %]"
+             value="1">
       <input type="checkbox" id="bit-[% group.group.id FILTER html %]" checked="checked"
              name="bit-[% group.group.id FILTER html %]" value="1" disabled="disabled">
       <label for="bit-[% group.group.id FILTER html %]">

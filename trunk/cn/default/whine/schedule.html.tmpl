@@ -36,7 +36,10 @@
 [% PROCESS global/variables.none.tmpl %]
 
 [% title = "订阅设置" %]
-[% PROCESS global/header.html.tmpl %]
+[% PROCESS global/header.html.tmpl
+  title = title
+  doc_section = "whining.html"
+%]
 
 <p>
   "订阅(Whining)"表示[% terms.Bugzilla %]定期执行某个搜索，

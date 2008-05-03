@@ -31,6 +31,7 @@
    javascript_urls = ["js/expanding-tree.js"]
    style_urls      = ["skins/standard/dependency-tree.css"]
    subheader      = filtered_desc
+   doc_section = "hintsandtips.html#dependencytree"
 %]
 
 [% PROCESS depthControlToolbar %]
@@ -143,10 +144,10 @@
       <span class="summ_text">[%+ bug.short_desc FILTER html %]</span>
       <span class="summ_info">[[% INCLUDE buginfo %]]</span>
     </a>
-    <a href="showdependencytree.cgi?id=[% bugid FILTER uri %]"
+    <a href="showdependencytree.cgi?id=[% bugid FILTER url_quote %]"
        class="tree_link">
       <img src="skins/standard/dependency-tree/tree.png"
-           title="查看[% terms.bug %] [%+ bugid FILTER uri %]的依赖树">
+           title="查看[% terms.bug %] [%+ bugid FILTER html %]的依赖树">
     </a>
   [% END %]
 [% END %]

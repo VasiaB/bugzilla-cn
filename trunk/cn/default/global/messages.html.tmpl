@@ -136,6 +136,82 @@
     [% title = "向搜索页面增加字段.." %]
     [% link  = "如果页面未自动刷新，请点击此处。" %]
 
+  [% ELSIF message_tag == "classification_created" %]
+    [% title = "新分类已创建" %]
+    分类 <em>[% classification.name FILTER html %]</em> 已创建.
+
+  [% ELSIF message_tag == "classification_deleted" %]
+    [% title = "分类已删除" %]
+    分类 <em>[% classification FILTER html %]</em> 已删除.
+
+  [% ELSIF message_tag == "classification_updated" %]
+    [% IF updated_classification || updated_description || updated_sortkey %]
+      [% title = "分类已更新" %]
+      分类 <em>[% classification FILTER html %]</em> 的改变
+      已保存:
+      <ul>
+        [% IF updated_classification %]
+          <li>分类名已更新</li>
+        [% END %]
+        [% IF updated_description %]
+          <li>分类描述已更新</li>
+        [% END %]
+        [% IF updated_sortkey %]
+          <li>分类排序已更新</li>
+        [% END %]
+      </ul>
+    [% ELSE %]
+      分类 <em>[% classification FILTER html %]</em> 没有作任何改变.
+    [% END %]
+
+  [% ELSIF message_tag == "component_created" %]
+    [% title = "模块已创建" %]
+    模块 <em>[% comp.name FILTER html %]</em> 已成功创建.
+
+  [% ELSIF message_tag == "component_deleted" %]
+    [% title = "模块已删除" %]
+    模块 <em>[% comp.name FILTER html %]</em> 已删除.
+    [% IF comp.bug_count %]
+      属于此模块的所有 [% terms.bugs %] 和所有引用
+      也被删除.
+    [% END %]
+
+  [% ELSIF message_tag == "component_updated" %]
+    [% title = "模块已更新" %]
+    [% IF changes.keys.size %]
+      模块 <em>[% comp.name FILTER html %]</em> 的改变已保存:
+      <ul>
+      [% IF changes.name.defined %]
+        <li>名称已更新为 '[% comp.name FILTER html %]'</li>
+      [% END %]
+      [% IF changes.description.defined %]
+        <li>描述已更新为 '[% comp.description FILTER html_light %]'</li>
+      [% END %]
+      [% IF changes.initialowner.defined %]
+        <li>默认责任人已更新为 '[% comp.default_assignee.login FILTER html %]'</li>
+      [% END %]
+      [% IF changes.initialqacontact.defined %]
+        [% IF comp.default_qa_contact.id %]
+          <li>默认 QA 联系人已更新为 '[% comp.default_qa_contact.login FILTER html %]'</li>
+        [% ELSE %]
+          <li>默认 QA 联系人已删除</li>
+        [% END %]
+      [% END %]
+      [% IF changes.cc_list.defined %]
+        [% IF comp.initial_cc.size %]
+          [% cc_list = [] %]
+          [% FOREACH cc_user = comp.initial_cc %]
+            [% cc_list.push(cc_user.login) %]
+          [% END %]
+          <li>默认抄送列表已更新为 [% cc_list.join(", ") FILTER html %]</li>
+        [% ELSE %]
+          <li>默认抄送列表已删除</li>
+        [% END %]
+      [% END %]
+    [% ELSE %]
+      <em>[% comp.name FILTER html %]</em> 没有任何改变.
+    [% END %]
+
   [% ELSIF message_tag == "buglist_updated_named_query" %]
     您的名为 <code><a 
      href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=[% queryname FILTER url_quote %]"

@@ -29,7 +29,7 @@
   #   entered a comment along with their change) or a number less than that
   #   (if they didn't), in which case no comments are displayed.
   # comments: array; all the comments on the bug.
-  # bug_id: number; the ID of the bug being changed.
+  # bug: Bugzilla::Bug; the bug being changed.
   #%]
 
 [%# The global Bugzilla->cgi object is used to obtain form variable values. %]
@@ -58,7 +58,7 @@
 <p>
   添加的评论：
   <blockquote>
-    [% PROCESS "bug/comments.html.tmpl" bug = { 'bug_id' => bug_id } %]
+    [% PROCESS "bug/comments.html.tmpl" %]
   </blockquote>
 </p>
 [% END %]
@@ -77,7 +77,10 @@
 <ul>
   <li>
     <form method="post" action="process_bug.cgi">
-      [% PROCESS "global/hidden-fields.html.tmpl" exclude="^Bugzilla_(login|password)$" %]
+      <input type="hidden" name="delta_ts" 
+             value="[% bug.delta_ts FILTER html %]">
+      [% PROCESS "global/hidden-fields.html.tmpl" 
+          exclude="^Bugzilla_login|Bugzilla_password|delta_ts$" %]
       <input type="submit" id="process" value="继续提交我的修改">
         这会导致上面的修改被覆盖
         [% "，除了已添加的评论" IF comments.size > start_at %].

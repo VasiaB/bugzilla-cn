@@ -22,8 +22,11 @@
 
 [% PROCESS "global/field-descs.none.tmpl" %]
 
-[% PROCESS global/header.html.tmpl title = "$terms.Bug 图表"
-                                   h1 = "欢迎使用 $terms.Bugzilla 图表助手" %]
+[% PROCESS global/header.html.tmpl
+  title = "$terms.Bug 图表"
+  h1 = "欢迎使用 $terms.Bugzilla 图表助手"
+  doc_section = "reporting.html#charts"
+%]
 
 <div align="center">
   [% IF url_image %]

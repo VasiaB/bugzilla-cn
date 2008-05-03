@@ -1,4 +1,4 @@
-﻿# -*- Mode: perl; indent-tabs-mode: nil -*-
+﻿*- Mode: perl; indent-tabs-mode: nil -*-
 #
 # The contents of this file are subject to the Mozilla Public
 # License Version 1.1 (the "License"); you may not use this file
@@ -18,7 +18,7 @@
 # Rights Reserved.
 #
 # Contributor(s): Gervase Markham <gerv@gerv.net>
-# Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
+# Localization: jiangyanfeng <jiangyanfeng@gmail.com>
 
 # Important! The following classes of directives are excluded in the test,
 # and so do not need to be added here. Doing so will cause warnings.
@@ -276,8 +276,7 @@
 ],
 
 'bug/comments.html.tmpl' => [
-  'comment.isprivate', 
-  'comment.time', 
+  'comment.id',
   'bug.bug_id',
 ],
 
@@ -317,6 +316,7 @@
   '" maxlength=\"$maxlength\"" IF maxlength',
   '" onfocus=\"$onfocus\"" IF onfocus',
   'flag.status',
+  '" spellcheck=\"$spellcheck\"" IF spellcheck',
 ],
 
 'bug/navigate.html.tmpl' => [
@@ -390,10 +390,6 @@
   'productstring', 
 ],
 
-'bug/activity/show.html.tmpl' => [
-  'bug_id', 
-],
-
 'bug/activity/table.html.tmpl' => [
   'change.attachid', 
   'change.field', 
@@ -420,6 +416,10 @@
   'flag.status',
   'bugid',
   'obsolete_attachments',
+],
+
+'attachment/midair.html.tmpl' => [
+  'attachment.id',
 ],
 
 'attachment/show-multiple.html.tmpl' => [

@@ -50,14 +50,17 @@
        name => "product_count"
        align => "right"
        heading => "产品数"
-     },
-     { 
+     }
+	]
+%]
+
+[% IF user.in_group('editcomponents') %]
+  [% columns.push({
        heading => "操作"
        content => "添加产品"
-       contentlink => add_contentlink
-     },
-   ]
-%]
+       contentlink => add_contentlink })
+   %]
+[% END %]
 
 [% PROCESS admin/table.html.tmpl
      columns = columns
