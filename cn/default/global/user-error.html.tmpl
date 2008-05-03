@@ -229,13 +229,26 @@
                     'query.html#list' => "$terms.Bug lists"} %]
     在搜索或创建已存搜索时，请输入搜索条件。
 
-  [% ELSIF error == "bugs_not_changed" %]
-    [% title = BLOCK %][% terms.Bugs %] Not Changed[% END %]
-    您未做任何更改，因此选择的[% terms.bugs %]没有作任何更改。
-
   [% ELSIF error == "chart_too_large" %]
     [% title = "图表太大" %]
     对不起，图表尺寸不能超过 2000 x 2000 。
+
+  [% ELSIF error == "comment_invalid_isprivate" %]
+    You tried to modify the privacy of comment id [% id FILTER html %],
+    but that is not a valid comment on this [% terms.bug %].
+
+  [% ELSIF error == "comment_required" %]
+    [% title = "必须输入评论" %]
+    您必须
+    [% IF old && new %]
+      写点<b>评论</b> 当改变 [% terms.abug %] 状态从
+      [%+ old.name FILTER html %] 到 [% new.name FILTER html %]的时候.
+    [% ELSIF new %]
+      为此 [% terms.bug %] 写点描述.
+    [% ELSE %]
+      在本次修改时写点<b>评论</b>.
+    [% END %]
+
 
   [% ELSIF error == "comment_required" %]
     [% title = "必须输入评论" %]
@@ -378,6 +391,51 @@
     [% title = "字段已存在" %]
     字段 '[% field.name FILTER html %]'     
     ([% field.description FILTER html %]) 已存在，请选择其它名称。
+
+  [% ELSIF error == "dupe_id_required" %]
+    [% title = "Duplicate $terms.Bug Id Required" %]
+    You must specify [% terms.abug %] id to mark this [% terms.bug %]
+    as a duplicate of.
+
+  [% ELSIF error == "freetext_too_long" %]
+    [% title = "Text Too Long" %]
+    The text you entered is too long ([% text.length FILTER html %] characters,
+    above the maximum length allowed of [% constants.MAX_FREETEXT_LENGTH FILTER none %]
+    characters):
+    <p><em>[% text FILTER html %]</em></p>
+
+  [% ELSIF error == "group_change_denied" %]
+    [% title = "Cannot Add/Remove That Group" %]
+    You tried to add or remove group id [% group_id FILTER html %]
+    from [% terms.bug %] [%+ bug.id FILTER html %], but you do not
+    have permissions to do so.
+
+  [% ELSIF error == "group_invalid_removal" %]
+    You tried to remove [% terms.bug %] [%+ bug.id FILTER html %]
+    from group id [% group_id FILTER html %], but [% terms.bugs %] in the 
+    '[% product.name FILTER html %]' product can not be removed from that
+    group.
+    
+  [% ELSIF error == "group_invalid_restriction" %]
+    You tried to restrict [% terms.bug %] [%+ bug.id FILTER html %] to
+    to group id [% group_id FILTER html %], but [% terms.bugs %] in the
+    '[% product.name FILTER html %]' product can not be restricted to
+    that group.
+
+  [% ELSIF error == "illegal_time" %]
+    [% title = "Illegal Time" %]
+    '<tt>[% time FILTER html %]</tt>' is not a legal time.
+    [% IF format %]
+      Please use the format '<tt>[% format FILTER html %]</tt>'.
+    [% END %]
+
+  [% ELSIF error == "product_admin_denied" %]
+    [% title = "Product Access Denied" %]
+    You are not allowed to edit properties of product '[% product FILTER html %]'.
+
+  [% ELSIF error == "resolution_cant_clear" %]
+    [% terms.Bug %] [%+ bug_id FILTER bug_link(bug_id) FILTER none %] is 
+    closed, so you cannot clear its resolution.
 
   [% ELSIF error == "field_invalid_name" %]
     [% title = "Invalid Field Name" %]

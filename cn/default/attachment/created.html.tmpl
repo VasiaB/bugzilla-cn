@@ -29,6 +29,10 @@
 
 [% PROCESS global/header.html.tmpl
   title = "更改已提交"
+  javascript_urls = [ "js/util.js", "js/keyword-chooser.js", "js/field.js",
+                      "js/yui/yahoo-dom-event.js", "js/yui/calendar.js" ]
+  style_urls = [ "skins/standard/yui/calendar.css", "skins/standard/show_bug.css" ]
+  doc_section = "bug_page.html"
 %]
 
 <dl>
@@ -64,4 +68,4 @@
 <a href="attachment.cgi?bugid=[% attachment.bug_id %]&amp;action=enter">为[% terms.Bug %] #[% attachment.bug_id %]再创建一个附件</a>
 </p>
 
-[% PROCESS global/footer.html.tmpl %]
+[% PROCESS bug/show.html.tmpl %]

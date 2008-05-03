@@ -40,7 +40,10 @@
                    "bz_component_$bug.component",
                    "bz_bug_$bug.bug_id"
                   ]
-    javascript_urls = [ "js/util.js", "js/keyword-chooser.js" ]
+    javascript_urls = [ "js/util.js", "js/keyword-chooser.js", "js/field.js",
+                        "js/yui/yahoo-dom-event.js", "js/yui/calendar.js" ]
+		style_urls = [ "skins/standard/yui/calendar.css", "skins/standard/show_bug.css" ]
+		doc_section = "bug_page.html"
   %]
 [% END %]
 
@@ -55,13 +58,12 @@
 
 [% PROCESS bug/navigate.html.tmpl %]
 
-<hr>
 
 [% PROCESS bug/edit.html.tmpl %]
 
 <hr>
 
-[% PROCESS bug/navigate.html.tmpl %]
+[% PROCESS bug/navigate.html.tmpl bottom_navigator => 1%]
 
 <br>
 

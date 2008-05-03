@@ -23,7 +23,10 @@
 
 [% title = BLOCK %]确认删除标记类型 '[% flag_type.name FILTER html %]'[% END %]
 
-[% PROCESS global/header.html.tmpl title = title %]
+[% PROCESS global/header.html.tmpl
+	title = title
+  doc_section = "flags-overview.html#flags-delete"
+%]
 
 <p>
    标记类型 ‘[% flag_type.name FILTER html %]’ 有 [% flag_type.flag_count %] 个标记。

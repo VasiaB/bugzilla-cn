@@ -34,6 +34,8 @@
 [% title = BLOCK %]修改组: [% group.name FILTER html %][% END %]
 
 [% PROCESS global/header.html.tmpl
+  title = title
+  doc_section = "groups.html#edit-groups"
   style = "
     .grant_table { border-collapse: collapse; }
     .grant_table td, .grant_table th {

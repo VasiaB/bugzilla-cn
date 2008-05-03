@@ -514,6 +514,7 @@ function doOnSelectProduct(selectmode) {
       [% FOREACH qv = [
         { name => "substring", description => "包含" },
         { name => "exact", description => "严格匹配" },
+        { name => "notequals", description => "不是" },
         { name => "regexp", description => "匹配正则表达式" },
         { name => "notregexp", description => "不匹配正则表达式" } ] %]
 

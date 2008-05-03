@@ -34,7 +34,10 @@
   [% title = "请确认: 删除所有直接成员关系？" %]
 [% END %]
 
-[% PROCESS global/header.html.tmpl %]
+[% PROCESS global/header.html.tmpl
+  title = title
+  doc_section = "groups.html"
+%]
 
 [% IF regexp %]
   <p>此选项将会移除 '[% group.name FILTER html %]'

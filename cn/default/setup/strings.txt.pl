@@ -1,4 +1,4 @@
-﻿# The contents of this file are subject to the Mozilla Public
+# The contents of this file are subject to the Mozilla Public
 # License Version 1.1 (the "License"); you may not use this file
 # except in compliance with the License. You may obtain a copy of
 # the License at http://www.mozilla.org/MPL/
@@ -27,18 +27,37 @@
 # Please keep the strings in alphabetical order by their name.
 
 %strings = (
-    any  => '任何',
-    blacklisted => '(黑名单)',
-    checking_for => '正在检查',
-    checking_dbd      => '正在检查可用的 perl DBD 模块...',
-    checking_optional => '以下的 Perl 模块是可选的：',
-    checking_modules  => '正在检查 perl 模块...',
-    header => "* 这是基于 ##perl_ver## 的 Bugzilla ##bz_ver##\n"
-            . "* 运行于 ##os_name## ##os_ver##",
-    module_found => "找到 v##ver##",
-    module_not_found => "没有找到",
-    module_ok => '确定',
-    module_unknown_version => "找到未知版本",
+    any  => 'any',
+    blacklisted => '(blacklisted)',
+    checking_for => 'Checking for',
+    checking_dbd      => 'Checking available perl DBD modules...',
+    checking_optional => 'The following Perl modules are optional:',
+    checking_modules  => 'Checking perl modules...',
+    done => 'done.',
+    header => "* This is Bugzilla ##bz_ver## on perl ##perl_ver##\n"
+            . "* Running on ##os_name## ##os_ver##",
+    install_all => <<EOT,
+
+To attempt an automatic install of every required and optional module
+with one command, do:
+
+  ##perl## install-module.pl --all
+
+EOT
+    install_data_too_long => <<EOT,
+WARNING: Some of the data in the ##table##.##column## column is longer than
+its new length limit of ##max_length## characters. The data that needs to be
+fixed is printed below with the value of the ##id_column## column first and
+then the value of the ##column## column that needs to be fixed:
+
+EOT
+    install_module => 'Installing ##module## version ##version##...',
+    module_found => "found v##ver##",
+    module_not_found => "not found",
+    module_ok => 'ok',
+    module_unknown_version => "found unknown version",
+    template_precompile   => "Precompiling templates...",
+    template_removing_dir => "Removing existing compiled templates...",
 );
 
 1;

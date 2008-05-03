@@ -20,7 +20,10 @@
 
 [% PROCESS "global/field-descs.none.tmpl" %]
 
-[% PROCESS global/header.html.tmpl title = "自定义字段" %]
+[% PROCESS global/header.html.tmpl 
+	title = "自定义字段" 
+  doc_section = "custom-fields.html"
+%]
 
 [% columns = [
      {
