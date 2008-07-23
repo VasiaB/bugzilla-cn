@@ -17,6 +17,7 @@
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  #                 Max Kanat-Alexander <mkanat@bugzilla.org>
   # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
@@ -27,11 +28,9 @@
   # milestones: array; milestones for the new product.
   # defaults: hash; keys are names of fields, values are defaults for
   #   those fields
+  #
+  # verify_bug_groups: If groups need to be confirmed in addition to fields.
   #%]
-
-[%# The global Bugzilla->cgi object is used to obtain form variable values. %]
-[% USE Bugzilla %]
-[% cgi = Bugzilla.cgi %]
 
 [% PROCESS global/variables.none.tmpl %]
 
@@ -40,21 +39,26 @@
 
 <form action="process_bug.cgi" method="post">
 
+[% SET exclude_items = ['version', 'component', 'target_milestone'] %]
+[% IF verify_bug_groups %]
+  [% exclude_items.push('bit-\d+') %]
+[% END %]
 [% PROCESS "global/hidden-fields.html.tmpl"
-     exclude=("^version|component|target_milestone|bit-\\d+$") %]
+     exclude = '^' _ exclude_items.join('|') _ '$' %]
 
 <input type="hidden" name="confirm_product_change" value="1">
+    
 [%# Verify the version, component, and target milestone fields. %]
   <h3>确认版本,模块[% "，目标里程碑" IF Param("usetargetmilestone") %]</h3>
 
   <p>
   [% IF Param("usetargetmilestone") %]
     您正在把[% terms.bug %]移动到产品
-    <b>[% cgi.param("product") FILTER html %]</b>中，
+  <b>[% product.name FILTER html %]</b>,
     但是，版本、模块、里程碑已经不再正确，请重新设置正确的版本、模块和里程碑：
   [% ELSE %]
     您正在把[% terms.bug %]移动到产品
-    <b>[% cgi.param("product") FILTER html %]</b>,
+  <b>[% product.name FILTER html %]</b>,
     但是，版本、模块已经不再正确，请重新设置正确的版本、模块：
   [% END %]
   </p>
@@ -63,33 +67,44 @@
     <tr>
       <td>
         <b>版本：</b><br>
-        [% PROCESS "global/select-menu.html.tmpl" 
-                   name="version"
-                   options=versions
-                   default=defaults.version
-                   size=10 %]
-      </td>
-      <td>
+      [% IF versions.size == 1 %]
+        [% SET default_version = versions.0 %]
+      [% ELSE %]
+        [% SET default_version = defaults.version %]
+      [% END %]
+      [% PROCESS "global/select-menu.html.tmpl" 
+                 name="version"
+                 options=versions
+                 default=default_version
+                 size=10 %]
+    </td>
+    <td>
         <b>模块：</b><br>
-        [% PROCESS "global/select-menu.html.tmpl"
-                   name="component"
-                   options=components
-                   default=defaults.component
-                   size=10 %]
-      </td>
-      [% IF Param("usetargetmilestone") %]
-        <td>
+      [% IF components.size == 1 %]
+        [% SET default_component = components.0 %]
+      [% ELSE %]
+        [% SET default_component = defaults.component %]
+      [% END %]
+      [% PROCESS "global/select-menu.html.tmpl"
+                 name="component"
+                 options=components
+                 default=default_component
+                 size=10 %]
+    </td>
+    [% IF Param("usetargetmilestone") %]
+      <td>
           <b>目标里程碑：</b><br>
         [% PROCESS "global/select-menu.html.tmpl"
                    name="target_milestone"
                    options=milestones
-                   default=defaults.target_milestone
+                 default=defaults.milestone
                    size=10 %]
         </td>
       [% END %]
     </tr>
   </table>
 
+[% IF verify_bug_groups %]
   <h3>确认[% terms.Bug %]的组</h3>
 
   [% IF old_groups.size %]
@@ -124,12 +139,14 @@
   [% END %]
 
   [% IF optional_groups.size %]
-    <p>这些组是可选的，您可以限制这些[% terms.bugs %]到
-    以下的一个或多个组：<br>
+    <p>These groups are optional. You can decide to restrict [% terms.bugs %] to
+    one or more of the following groups:<br>
     [% FOREACH group = optional_groups %]
+      <input type="hidden" name="defined_bit-[% group.group.id FILTER html %]"
+             value="1">
       <input type="checkbox" id="bit-[% group.group.id FILTER html %]"
              name="bit-[% group.group.id FILTER html %]"
-             [% ((group.membercontrol == constants.CONTROLMAPDEFAULT && user.in_group(group.group.name))
+             [%+ ((group.membercontrol == constants.CONTROLMAPDEFAULT && user.in_group(group.group.name))
                  || (group.othercontrol == constants.CONTROLMAPDEFAULT && !user.in_group(group.group.name))
                  || cgi.param("bit-$group.group.id") == 1) ?
                  'checked="checked"' : ''
@@ -145,8 +162,6 @@
   [% IF mandatory_groups.size %]
     <p>这些组是强制的，[% terms.bugs %]将会被自动地限制到这些组：<br>
     [% FOREACH group = mandatory_groups %]
-      <input type="hidden" name="defined_bit-[% group.group.id FILTER html %]"
-             value="1">
       <input type="checkbox" id="bit-[% group.group.id FILTER html %]" checked="checked"
              name="bit-[% group.group.id FILTER html %]" value="1" disabled="disabled">
       <label for="bit-[% group.group.id FILTER html %]">
@@ -156,6 +171,7 @@
     [% END %]
     </p>
   [% END %]
+[% END %]
 
 <input type="submit" id="change_product" value="提交">
 

@@ -90,7 +90,10 @@
         [% END %]
         <tr>
           <th>[% product.name FILTER html %]</th>
-          <td colspan="3">
+          <td colspan="2" ><a href="buglist.cgi?bug_id=
+              [%- product.bug_ids.join(",") FILTER url_quote %]">([% terms.bug %] list)</a>
+          </td>
+          <td>
             [% IF product.maxperbug < product.maxvotes AND
                   product.maxperbug > 1 %]
               <font size="-1">
@@ -140,7 +143,9 @@
     </table>
 
     [% IF canedit %]
-      <input type="submit" value="改变我的投票" id="change">
+      <input type="submit" value="改变我的投票" id="change"> 或者
+      <a href="buglist.cgi?bug_id=[% all_bug_ids.join(",") FILTER url_quote %]">查看所有
+        as [% terms.bug %] list</a>
       <br>
       <br>
       要想改变投票，
@@ -152,6 +157,9 @@
         改变复选框选项
       [% END %]
       然后点击 <b>改变我的投票</b>。
+    [% ELSE %]
+       <a href="buglist.cgi?bug_id=[% all_bug_ids.join(",") FILTER url_quote %]">查看所有
+         as [% terms.bug %] list</a>
     [% END %]
   </form>
 [% ELSE %]

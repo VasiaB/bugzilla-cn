@@ -33,25 +33,25 @@
   <tr>
     <td bgcolor="#ff0000">
       <font size="+2">
-        You already used the form to file [% "$terms.bug $bugid" FILTER bug_link(bugid) FILTER none %].
+        你已经使用该表单创建了 [% "$terms.bug $bugid" FILTER bug_link(bugid) FILTER none %].
       </font>
     </td>
   </tr>
 </table>
 
-<p><font size="big">You are highly encouraged to visit [% "$terms.bug $bugid"
+<p><font size="big">建议你访问 [% "$terms.bug $bugid"
 FILTER bug_link(bugid) FILTER none %].</font></p>
 
 [% IF allow_override %]
-  <p>If you are sure you used the same form to submit a new [% terms.bug %],
-  click 'File [% terms.bug %] again'.<p>
+  <p>如果你确定是要新创建一个[% terms.bug %]，
+  请再次点击“再次创建 [% terms.bug %]”按钮.<p>
 
   <form name="create" id="create" method="post" action="post_bug.cgi"
   [%- IF Bugzilla.cgi.param("data") %] enctype="multipart/form-data"[% END %]>
     [% PROCESS "global/hidden-fields.html.tmpl"
                exclude="^(Bugzilla_login|Bugzilla_password|ignore_token)$" %]
     <input type="hidden" name="ignore_token" value="[% bugid FILTER html %]">
-    <input type="submit" value="File [% terms.bug %] again" id="file_bug_again">
+    <input type="submit" value="再次创建 [% terms.bug %] " id="file_bug_again">
   </form>
 [% END %]
 
