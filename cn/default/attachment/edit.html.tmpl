@@ -254,6 +254,7 @@
             <label for="isprivate">私有</label><br>
           [% END %]
           <br>
+        </small>
 
         [% IF flag_types.size > 0 %]
           [% PROCESS "flag/list.html.tmpl" bug_id = attachment.bug_id
@@ -261,8 +262,8 @@
         [% END %]
 
         <div id="smallCommentFrame">
-          <b><label for="comment">评论</label> (对此附件所属
-          [%+ terms.bug %]):</b><br>
+          <b><small><label for="comment">评论</label> (对此附件所属
+          [%+ terms.bug %]):</small></b><br>
             [% INCLUDE global/textarea.html.tmpl
               id      = 'comment'
               name    = 'comment'
@@ -318,15 +319,15 @@
             <!--
             if (typeof document.getElementById == "function") {
 [% IF patchviewerinstalled %]
-              document.write('<iframe id="viewDiffFrame" style="height: 400px; width: 100%; display: none;"></iframe>');
+              document.write('<iframe id="viewDiffFrame" style="height: 400px; width: 100%; display: none;"><\/iframe>');
 [% END %]
-              document.write('<button type="button" id="editButton" onclick="editAsComment();">将此附件作为评论编辑</button>');
-              document.write('<button type="button" id="undoEditButton" onclick="undoEditAsComment();" style="display: none;">撤销附件评论编辑</button>');
-              document.write('<button type="button" id="redoEditButton" onclick="redoEditAsComment();" style="display: none;">将此附件作为评论编辑</button>');
+              document.write('<button type="button" id="editButton" onclick="editAsComment();">将此附件作为评论编辑<\/button>');
+              document.write('<button type="button" id="undoEditButton" onclick="undoEditAsComment();" style="display: none;">撤销附件评论编辑<\/button>');
+              document.write('<button type="button" id="redoEditButton" onclick="redoEditAsComment();" style="display: none;">将此附件作为评论编辑<\/button>');
 [% IF patchviewerinstalled %]
-              document.write('<button type="button" id="viewDiffButton" onclick="viewDiff();">比较附件不同</button>');
+              document.write('<button type="button" id="viewDiffButton" onclick="viewDiff();">比较附件不同<\/button>');
 [% END %]
-              document.write('<button type="button" id="viewRawButton" onclick="viewRaw();" style="display: none;">查看原始附件</button>');
+              document.write('<button type="button" id="viewRawButton" onclick="viewRaw();" style="display: none;">查看原始附件<\/button>');
             }
             //-->
           </script>

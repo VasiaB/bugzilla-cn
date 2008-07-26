@@ -20,88 +20,88 @@
   
 [% help_html = [ 
 { id => "short_desc_type", 
-  html => "The type of summary search you would like" },   
+  html => "你所希望的，搜索摘要的方式" },   
 { id => "short_desc", 
-  html => "The $terms.bug summary is a short sentence which succinctly  
-           describes <br> what the $terms.bug is about." },   
+  html => "$terms.bug 的摘要，是一段简洁的，描述
+           <br> $terms.bug 的话。" },   
 { id => "classification", 
-  html => "$terms.Bugs are categorised into Classifications, Products and Components. classifications is the<br>
-           top-level categorisation." },   
+  html => "$terms.Bugs 是按照分类，产品，模块来组织的，<br>
+           分类是最顶层的组织方式。" },   
 { id => "product", 
   html => Param('useclassification') ?
-       "$terms.Bugs are categorised into Products and Components. Select a Classification to narrow down this list" :
-       "$terms.Bugs are categorised into Products and Components. Product is 
-           the<br>top-level categorisation." },   
+       "$terms.Bugs 是按照分类，产品，模块来分类的。通过选择分类来缩小产品范围" :
+       "$terms.Bugs 是按照产品，模块来组织的。
+           <br>产品是最顶层的组织方式。" },   
 { id => "component", 
-  html => "Components are second-level categories; each belongs to a<br> 
-           particular Product. Select a Product to narrow down this list." },   
+  html => "模块是第二级的分类方式；每个模块都属于特定的<br> 
+           产品。通过选择产品来缩小模块的选择范围。" },   
 { id => "version", 
-  html => "The version field defines the version of the software the 
-           $terms.bug<br>was found in." },   
+  html => "版本（version）字段定义了$terms.bug 发现时的软件的版本
+           。<br>" },   
 { id => "target_milestone", 
-  html => "The target_milestone field is used to define when the engineer<br>
-           the $terms.bug is assigned to expects to fix it." },   
+  html => "目标里程碑（target_milestone）定义了工程师分配的预计修复<br>
+           $terms.bug的时间。" },   
 { id => "long_desc", 
-  html => "$terms.Bugs have comments added to them by $terms.Bugzilla users.  
-           You can<br>search for some text in those comments." },   
+  html => "$terms.Bugs 有 $terms.Bugzilla 用户添加的评论。  
+           <br>可以搜索其中的一些文本。" },   
 { id => "long_desc_type", 
-  html => "The type of comment search you would like" },   
+  html => "搜索评论的方式。" },   
 { id => "bug_file_loc", 
-  html => "$terms.Bugs can have a URL associated with them - for example, a 
-           pointer<br>to a web site where the problem is seen." },   
+  html => "${terms.Bugs}可以有一个网址（URL）关联，例如,  
+           <br>指向发现问题的网页。" },   
 { id => "bug_file_loc_type", 
-  html => "The type of URL search you would like" },   
+  html => "搜索URL的方式。" },   
 { id => "status_whiteboard", 
-  html => "Each $terms.bug has a free-form single line text entry box for 
-           adding<br>tags and status information." },   
+  html => "每一个 $terms.bug 都有一行文字
+           <br>来添加标记和状态信息。" },   
 { id => "status_whiteboard_type", 
-  html => "The type of whiteboard search you would like" },   
+  html => "搜索白板（whiteboard）的方式" },   
 { id => "keywords", 
-  html => "You can add keywords from a defined list to $terms.bugs, in order 
-           to<br>tag and group them." },   
+  html => "$terms.bugs 可以被标上预定义的关键词，
+           <br>用来标记和分组。" },   
 { id => "keywords_type", 
-  html => "The type of keyword search you would like" },   
+  html => "关键词搜索方式。" },   
 { id => "bug_status", 
-  html => "$terms.Abug may be in any of a number of states." },
+  html => "$terms.Abug 可以有多种不同的状态。" },
 { id => "resolution", 
-  html => "If $terms.abug is in a resolved state, then one of these reasons
-           will<br>be given for its resolution." },   
+  html => "如果${terms.abug}状态为已解决（resolved）
+           <br>那么这个字段就会记录解决方式。" },   
 { id => "bug_severity", 
-  html => "How severe the $terms.bug is, or whether it's an enhancement." },   
+  html => "$terms.bug 的严重程度。" },   
 { id => "priority", 
-  html => "Engineers prioritize their $terms.bugs using this field." },   
+  html => "工程师用来区分 $terms.bugs 的优先级." },   
 { id => "rep_platform", 
-  html => "The hardware platform the $terms.bug was observed on." },   
+  html => "$terms.bug 出现的硬件平台。" },   
 { id => "op_sys", 
-  html => "The operating system the $terms.bug was observed on." },   
+  html => "$terms.bug 出现的操作系统。" },   
 { id => "email1", 
-  html => "Every $terms.bug has people associated with it in different 
-           roles.<br>Here, you can search on what people are in what role." },
+  html => "每一个$terms.bug 都与不同角色的用户相关联。
+           <br>可以搜索有关的用户，角色" },
 { id => "email2", 
-  html => "Every $terms.bug has people associated with it in different 
-           roles.<br>Here, you can search on what people are in what role." },
+  html => "每一个$terms.bug 都与不同角色的用户相关联。
+            <br>可以搜索有关的用户，角色" },
 { id => "bug_id", 
-  html => "You can limit your search to a specific set of $terms.bugs ." },   
+  html => "可以把搜索 $terms.bugs的范围限制一个指定的集合内。" },   
 { id => "votes", 
-  html => "Some $terms.bugs can be voted for, and you can limit your search to 
-           $terms.bugs<br>with more than a certain number of votes." },   
+  html => "有些 $terms.bugs 可以投票，可以限制
+           <br>$terms.bugs 必须包含适当的投票数量。" },   
 { id => "chfield", 
-  html => "You can search for specific types of change - this field define <br>
-           which field you are interested in changes for." },   
+  html => "可以搜索指定字段的变更，选择<br>
+           需要搜索的字段。" },   
 { id => "chfieldfrom", 
-  html => "Specify the start and end dates either in YYYY-MM-DD format<br>
-           (optionally followed by HH:mm, in 24 hour clock), or in relative<br>
-           dates such as 1h, 2d, 3w, 4m, 5y, which respectively mean one hour,<br>
-           two days, three weeks, four months, or five years ago. 0d is last<br>
-           midnight, and 0h, 0w, 0m, 0y is the beginning of this hour, week,<br>
-           month, or year." },
+  html => "指定开始和结束日期，格式：YYYY-MM-DD<br>
+           (也可以附加24小时制的时间 HH:mm)，或者相对时间<br>
+           例如：1h, 2d, 3w, 4m, 5y, <br>
+           一小时，两天，三周，4个月，5年前的。0d 表示凌晨到现在，<br>
+           0h, 0w, 0m, 0y 表示从今天零开始，本周开始，<br>
+           这个月开始，今年开始。" },
 { id => "chfieldto", 
-  html => "Specify the start and end dates either in YYYY-MM-DD format<br>
-           (optionally followed by HH:mm, in 24 hour clock), or in relative<br>
-           dates such as 1h, 2d, 3w, 4m, 5y, which respectively mean one hour,<br>
-           two days, three weeks, four months, or five years ago. 0d is last<br>
-           midnight, and 0h, 0w, 0m, 0y is the beginning of this hour, week,<br>
-           month, or year." },
+  html => "指定开始和结束日期，格式：YYYY-MM-DD<br>
+           (也可以附加24小时制的时间 HH:mm)，或者相对时间<br>
+           例如：1h, 2d, 3w, 4m, 5y, <br>
+           一小时，两天，三周，4个月，5年前的。0d 表示凌晨到现在，<br>
+           0h, 0w, 0m, 0y 表示从今天零开始，本周开始，<br>
+           这个月开始，今年开始。" },
 { id => "chfieldvalue", 
-  html => "The value the field defined above changed to during that time." },   
+  html => "在上面时间段内，指定字段的值" },   
 ] %]

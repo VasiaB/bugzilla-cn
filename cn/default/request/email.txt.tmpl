@@ -50,6 +50,7 @@ Subject: [% flag.type.name %] [%+ subject_status %]: [[% terms.Bug %] [%+ bug.bu
 X-Bugzilla-Type: request
 [%- IF attachment %] :
   [附件 [% attachment.id %]] [% attachment.description %][% END %]
+X-Bugzilla-Type: request
 
 [%+ USE wrap -%]
 [%- FILTER bullet = wrap(80) -%]

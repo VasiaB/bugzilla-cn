@@ -24,8 +24,8 @@
 [% INCLUDE global/header.html.tmpl title = "A $terms.Bug's Life Cycle" %]
 
 <p>
-The <b>status</b> and <b>resolution</b> fields define and track the life
-cycle of [% terms.abug %].  
+<b>状态（status）</b>和<b>解决（resolution）</b>字段用来定义和跟踪
+[% terms.abug %]的生命周期（lifecycle）。  
 </p>
 
 <a name="status"></a>
@@ -34,20 +34,20 @@ cycle of [% terms.abug %].
 <table border="1" cellpadding="4">
   <tr align="center" valign="top">
     <td width="50%">
-      <h1>STATUS</h1>
+      <h1>状态（STATUS）</h1>
     </td>
 
     <td>
-      <h1>RESOLUTION</h1>
+      <h1>解决（RESOLUTION）</h1>
     </td>
   </tr>
 
   <tr valign="top">
-    <td>The <b>status</b> field indicates the general health of a 
-    [% terms.bug %]. Only certain status transitions are allowed.</td>
+    <td><b>状态（status）</b>字段标示出了 
+    [% terms.bug %] 现在的状况。只有合适的状态才被允许。</td>
 
-    <td>The <b>resolution</b> field indicates what happened to this
-    [%+ terms.bug %].</td>
+    <td>The <b>解决方式（resolution）</b>字段指示了这个
+    [%+ terms.bug %]发生了的变化。</td>
   </tr>
 
   <tr valign="top">
@@ -57,11 +57,11 @@ cycle of [% terms.abug %].
           <b>[% get_status("UNCONFIRMED") FILTER html %]</b>
         </dt>
         <dd>
-          This [% terms.bug %] has recently been added to the database. 
-          Nobody has validated that this [% terms.bug %] is true. Users
-          who have the "canconfirm" permission set may confirm
-          this [% terms.bug %], changing its state to [% get_status("NEW") FILTER html %]. Or, it may be
-          directly resolved and marked [% get_status("RESOLVED") FILTER html %].
+          这个[% terms.bug %]刚刚加入到数据库中。
+          还没有人验证这个[% terms.bug %]是否是真的 。
+          有“确认（canconfirm）“权限的用户可确认
+          该[% terms.bug %]，通过更改其状态为[% get_status("NEW") FILTER html %]。或者，可以直接被修复，
+          更改状态为[% get_status("RESOLVED") FILTER html %]。
         </dd>
 
         <dt>
@@ -90,7 +90,7 @@ cycle of [% terms.abug %].
         </dt>
         <dd>
           This [% terms.bug %] was once resolved, but the resolution was 
-          deemed incorrect. For example, a <b>[% get_status("WORKSFORME") FILTER html %]</b> [% terms.bug %] is
+          deemed incorrect. For example, a <b>[% get_resolution("WORKSFORME") FILTER html %]</b> [% terms.bug %] is
           <b>[% get_status("REOPENED") FILTER html %]</b> when more information shows up and
           the [% terms.bug %] is now reproducible. From here [% terms.bugs %] are
           either marked <b>[% get_status("ASSIGNED") FILTER html %]</b> or
@@ -119,7 +119,7 @@ cycle of [% terms.abug %].
         </dt>
         <dd>
           A resolution has been taken, and it is awaiting verification by
-          QA. From here [% terms.bugs %] are either re-opened and become 
+          （QA）. From here [% terms.bugs %] are either re-opened and become 
           <b>[% get_status("REOPENED") FILTER html %]</b>, are marked
           <b>[% get_status("VERIFIED") FILTER html %]</b>, or are closed for
           good and marked <b>[% get_status("CLOSED") FILTER html %]</b>.
@@ -129,7 +129,7 @@ cycle of [% terms.abug %].
           <b>[% get_status("VERIFIED") FILTER html %]</b>
         </dt>
         <dd>
-          QA has looked at the [% terms.bug %] and the resolution and 
+          （QA） has looked at the [% terms.bug %] and the resolution and 
           agrees that the appropriate resolution has been taken. [% terms.Bugs %] remain
           in this state until the product they were reported
           against actually ships, at which point they become
@@ -227,6 +227,13 @@ This field describes the impact of [% terms.abug %].
 
     <td>major loss of function</td>
   </tr>
+
+  <tr>
+    <th>Normal</th>
+
+    <td>regular issue, some loss of functionality under specific circumstances</td>
+  </tr>
+
 
   <tr>
     <th>Minor</th>

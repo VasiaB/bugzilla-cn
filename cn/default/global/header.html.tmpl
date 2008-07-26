@@ -19,7 +19,6 @@
   #                 Vaskin Kissoyan <vkissoyan@yahoo.com>
   #                 Vitaly Harisov <vitaly@rathedg.com>
   #                 Svetlana Harisova <light@rathedg.com>
-  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -75,7 +74,7 @@
         [% javascript %]
       </script>
     [% END %]
-    
+
     [% IF javascript_urls %]
       [% FOREACH javascript_url = javascript_urls %]
         <script src="[% javascript_url FILTER html %]" type="text/javascript"></script>
@@ -84,7 +83,7 @@
         <script type="text/javascript">
           YAHOO.namespace('bugzilla');
         </script>
-     	[% END %]
+      [% END %]
     [% END %]
 
     [%# Set up the skin CSS cascade:
@@ -216,6 +215,8 @@
     [%# Required for the 'Autodiscovery' feature in Firefox 2 and IE 7. %]
     <link rel="search" type="application/opensearchdescription+xml"
                        title="[% terms.Bugzilla %]" href="./search_plugin.cgi">
+                       
+    [% Hook.process("additional_header") %]                   
   </head>
 
 [%# Migration note: contents of the old Param 'bodyhtml' go in the body tag,
