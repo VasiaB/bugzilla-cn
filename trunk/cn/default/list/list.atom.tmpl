@@ -19,7 +19,6 @@
   #                 John Belmonte <john@neggie.net>
   #                 Jason Remillard <jremillardshop@letterboxes.org>
   #                 Phil Ringnalda <bugzilla@philringnalda.com>
-  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #
   # This is a template for generating an Atom representation of a buglist. 
   #%]
@@ -31,7 +30,7 @@
 
 <?xml version="1.0"[% IF Param('utf8') %] encoding="UTF-8"[% END %]?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>[% title FILTER html %]</title>
+  <title>[% title FILTER xml %]</title>
   <link rel="alternate" type="text/html"
         href="[% urlbase FILTER html %]buglist.cgi?
         [%- urlquerypart.replace('ctype=atom[&]?','') FILTER xml %]"/>
@@ -45,7 +44,7 @@
 
   [% FOREACH bug = bugs %]
   <entry>
-    <title>[% "@" IF bug.secure_mode %][[% terms.Bug %] [%+ bug.bug_id FILTER xml %]] [% bug.short_desc FILTER html %]</title>
+    <title>[% "@" IF bug.secure_mode %][[% terms.Bug %] [%+ bug.bug_id FILTER xml %]] [% bug.short_desc FILTER xml %]</title>
     <link rel="alternate" type="text/html"
           href="[% urlbase FILTER html %]show_bug.cgi?id=
           [%- bug.bug_id FILTER xml %]"/>

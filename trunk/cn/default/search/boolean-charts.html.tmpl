@@ -61,7 +61,7 @@
       <td>
         <input type="checkbox" id="negate[% chartnum FILTER html %]"
              name="negate[% chartnum FILTER html %]" value="1"
-            [% "checked" IF chart.negate %]>
+            [%+ "checked" IF chart.negate %]>
         <label for="negate[% chartnum FILTER html %]">
           否 (与整个表达式相反)
         </label>
@@ -75,8 +75,9 @@
       <td>
         <select name="[% "field${chartnum}-${rownum}-${colnum}" %]">
           [% FOREACH field = fields %]
-            <option value="[% field.name %]"
-              [%- " selected" IF field.name == col.field %]>[% field.description %]</option>
+            <option value="[% field.name %]" [% "selected" IF field.name == col.field %]>
+              [% field_descs.${field.name} || field.description FILTER html %]
+            </option>
           [% END %]
         </select>
 

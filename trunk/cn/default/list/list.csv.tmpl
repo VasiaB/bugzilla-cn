@@ -17,7 +17,6 @@
   #
   # Contributor(s): Myk Melez <myk@mozilla.org>
   #                 Gervase Markham <gerv@gerv.net>
-  # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [% PROCESS "global/field-descs.none.tmpl" %]
@@ -42,7 +41,7 @@ bug_id
       [% ELSIF column == 'resolution' %]
         [%- bug.$column = get_resolution(bug.$column) %]
       [% END %]
-      [% bug.$column FILTER csv FILTER none %]
+      [% bug.$column FILTER csv %]
     [% END %]
 
 [% END %]

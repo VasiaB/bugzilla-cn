@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -29,118 +29,118 @@
 
 [% INCLUDE global/header.html.tmpl title = "$terms.Bug Writing Guidelines" %]
 
-  <p>Effective [% terms.bug %] reports are the most likely to be fixed. 
-  These guidelines explain how to write such reports.
+  <p>有效的报告有助于修复[% terms.bug %]。
+  本文旨在提供撰写有效事件报告的简短教程。
 
-<h3>Principles</h3>
+<h3>原则</h3>
 
   <ul>
-    <li>Be precise</li>
-    <li>Be clear - explain it so others can reproduce the [% terms.bug %]</li>
-    <li>One [% terms.bug %] per report</li>
-    <li>No [% terms.bug %] is too trivial to report - 
-    small [% terms.bugs %] may hide big [% terms.bugs %]</li>
+    <li>精确的</li>
+    <li>清晰的 - 清楚的说明过程以便于其他人可以重现这个 [% terms.bug %]</li>
+    <li>一个 [% terms.bug %] 一个报告</li>
+    <li>没有一个[% terms.bug %]是微不足到而不用提交-
+    小 [% terms.bugs %] 往往是大 [% terms.bugs %]的先兆。</li>
     <li>Clearly separate fact from speculation</li>
   </ul>
 
-<h3>Preliminaries</h3>
+<h3>准备工作</h3>
 
 <ol>
-  <li>Reproduce your [% terms.bug %] using a recent build of the
-  software, to see whether it has already been fixed.
+  <li>使用最新构建(build)的软件重现你的[% terms.bug %]
+  ，检查它是否已经被修复。
   </li>
 
   <li><a href="query.cgi?format=specific">Search</a> 
-  [% terms.Bugzilla %], to see whether your [% terms.bug %] has
-  already been reported.</li>
+  [% terms.Bugzilla %]，以检查你的[% terms.bug %]是否
+已经报告过了。</li>
 </ol>
 
-<h3>Reporting a New [% terms.Bug %]</h3>
+<h3>报告一个新[% terms.Bug %]</h3>
 
-<p>If you have reproduced the [% terms.bug %] in a recent build and 
-no-one else appears to have reported it, then:</p>
+<p>如果在最新构建的软件中重现了这个[% terms.bug %]而且 
+也没有人提交过，那么：</p>
 
 <ol>
- <li>Choose 
- "<a href="enter_bug.cgi">Enter a new [% terms.bug %]</a>"</li>
- <li>Select the product in which you've found the [% terms.bug %]</li>
- <li>Fill out the form. Here is some help understanding it:</li>
+ <li>选择
+ "<a href="enter_bug.cgi">提交新 [% terms.bug %]</a>"</li>
+ <li>选择您发现该缺陷[% terms.bug %]的产品</li>
+ <li>填写表单。这里是一些帮助:</li>
 </ol>
 
   <blockquote>
-    <p><b>Component:</b> In which sub-part of the software does it 
-          exist?<br>
-    This field is required.
-    Click the word "Component" to see a description of each 
-    component. If none seems appropriate, look for a "General" component.</p>
+    <p><b>组件：</b>在软件的哪个组件发现的？
+          的？<br>
+   必填字段。
+    点击"组件（Component）"查看每个组件（Componet）的描述。 
+    如果没有一个是恰当，那么选择一个“一般(General)”组件（Component）。 </p>
 
-    <p><b>OS:</b> On which operating system (OS) did you find 
-          it?
-    (e.g. Linux, Windows XP, Mac OS X.)<br>
-    If you know the [% terms.bug %] happens on more than one type of 
-    operating system, choose "All". 
-    If your OS isn't listed, choose Other.</p>
+    <p><b>操作系统(OS):</b> 在那个操作系统上发现
+         的？
+    （例如 Linux，Windows XP，Mac OS X。）<br>
+   如果你知道出现该[% terms.bug %]的，是一个以上的
+    操作系统, 那么选择"所有（All）". 
+    如果列表没有列出所需操作系统，那么选择其他（Other）。</p>
 
-    <p><b>Summary:</b> How would you describe the [% terms.bug %], in 
-    approximately 60 or fewer characters?<br>
-     A good summary should <b>quickly and uniquely identify [% terms.abug %]
-    report</b>. It should explain the problem, not your suggested solution.<br>
+    <p><b>摘要：</b> 该如何形容这个[% terms.bug %]，大约 
+   60个字，还是更少？<br>
+   一个很好的摘要应当能<b>快速、准确、唯一地表示出该[% terms.abug %]
+    </b>。它应该解释清楚的发生的问题，而不是建议的解决方案。 <br>
     <ul>
-     <li>Good: "<tt>Cancelling a File Copy dialog crashes 
-     File Manager</tt>"</li>
-     <li>Bad: "<tt>Software crashes</tt>"</li>
-     <li>Bad: "<tt>Browser should work with my web site</tt>"</li>
+     <li>好：“<tt>取消文件复制对话的时候文件管理器
+    崩溃。</tt>”</li>
+     <li>不好：“<tt>软件崩溃</tt>”</li>
+     <li>不好：“<tt>浏览器应该能打开我的站点</tt>”</li>
     </ul>
     
-    <b>Description:</b>
-    The details of your problem report, including:</p>
+    <b>描述： </b>
+ 　　您报告的问题的详情，其中包括：</p>
 
     <blockquote>
-      <p><b>Overview:</b> More detailed restatement of
-      summary.</p>
+      <p><b>概况：</b> 更详细的重述
+      总结。</p>
 
       <blockquote>
 <pre>
-Drag-selecting any page crashes Mac builds in the NSGetFactory function.
+从NSGetFactory功能提供的错误信息复制出来，使得Mac崩溃的任何页面的信息
 </pre>
       </blockquote>
 
-      <p><b>Steps to Reproduce:</b> Minimized, easy-to-follow steps that
-      will trigger the [% terms.bug %]. Include any special setup steps.</p>
+      <p><b>重现问题的步骤：</b>
+     触发[% terms.bug %]的最为简洁的，易于遵循的步骤。包括任何特殊的前置安装步骤。</p>
 
       <blockquote>
 <pre>
-1) View any web page. (I used the default sample page, 
-resource:/res/samples/test0.html)
+1) 打开随便一个网页。 （我使用了默认的示例页面，
+resource:/res/samples/test0.html）
 
-2) Drag-select the page. (Specifically, while holding down 
-the mouse button, drag the mouse pointer downwards from any 
-point in the browser's content region to the bottom of the 
-browser's content region.)
+2) 拖放选择页。（具体来说，按住鼠标键的同时 
+，移动鼠标指针
+从浏览器的内容区域上部向下，
+到内容区域的底部。）
 </pre>
       </blockquote>
 
-      <p><b>Actual Results:</b> What the application did after performing
-      the above steps.</p>
+      <p><b>实际结果：</b> 作了以上事情以后，应用程序有什么反应。
+      应用程序有什么反应。</p>
 
       <blockquote>
 <pre>
-The application crashed.
+应用崩溃。 
 </pre>
       </blockquote>
 
-      <p><b>Expected Results:</b> What the application should have done,
-      were the [% terms.bug %] not present.</p>
+      <p><b>预期结果：</b>没有该[% terms.bug %] 的时候，
+      应用程序应该有什么样的动作。</p>
 
       <blockquote>
 <pre>
-The window should scroll downwards. Scrolled content should be selected. 
-(Or, at least, the application should not crash.)
+窗口应该向下滚动。滚动的内容应被选中
+（或者，至少，应用不应该崩溃。 ） 
 </pre>
       </blockquote>
 
-      <p><b>Build Date &amp; Platform:</b> Date and platform of the build
-      in which you first encountered the [% terms.bug %].</p>
+      <p><b>构建（Build）日期和平台：</b> 
+     您第一次遇到该[% terms.bug %]时的软件构建日期和平台。</p>
 
       <blockquote>
 <pre>
@@ -148,33 +148,33 @@ Build 2006-08-10 on Mac OS 10.4.3
 </pre>
       </blockquote>
 
-      <p><b>Additional Builds and Platforms:</b> Whether or not 
-      the [% terms.bug %] takes place on other platforms (or browsers, 
-      if applicable).</p>
+      <p><b>其它版本和平台：</b>该
+      [% terms.bug %]是否在其它平台或浏览器
+      中发生。</p>
 
       <blockquote>
 <pre>
-Doesn't Occur On Build 2006-08-10 on Windows XP Home (Service Pack 2)
+在Build 2006-08-10 Windows XP Home (Service Pack 2)中不会出现。
 </pre>
       </blockquote>
 
-      <p><b>Additional Information:</b> Any other useful information.
-      <br><br>For crashing [% terms.bugs %]:</p>
+      <p><b>附加信息：</b>任何其他有用的信息。 
+      <br><br>针对崩溃型的[% terms.bugs %]:</p>
 
       <ul>
-        <li><b>Windows:</b> Note the type of the crash, and the module that the
-        application crashed in (e.g. access violation in apprunner.exe).</li>
+        <li><b>Windows:</b> 注意崩溃的类型，
+        和发生崩溃的模块(例如： access violation in apprunner.exe).</li>
 
-        <li><b>Mac OS X:</b> Attach the "Crash Reporter" log that appears
-        upon crash.
-        Only include the section directly below the crashing thread, usually 
-        titled "Thread 0 Crashed". Please do not paste the entire log!</li>
+        <li><b>Mac OS X:</b> 附上崩溃发生时候的"崩溃报告（Crash Reporter）"日志
+        。
+        只需要包含crashing thread下面的一块内容，通常
+        标题是“Thread 0 Crashed”。请不要包含整个日志！</li>
       </ul>
     </blockquote>
 
-  <p>Double-check your report for errors and omissions, then press "Commit".
-  Your [% terms.bug %] report will now be in 
-  the [% terms.Bugzilla %] database.<br>
+  <p>复查输入中任何可能的错误，然后按“提交(Commit)”。
+  你的[% terms.bug %]报告便会进入 
+  [% terms.Bugzilla %]的数据库。<br>
   </p>
 </blockquote>
 

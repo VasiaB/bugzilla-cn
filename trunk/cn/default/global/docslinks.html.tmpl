@@ -11,7 +11,6 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Marc Schumann <wurblzap@gmail.com>
-  # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -46,7 +45,7 @@
 [% BLOCK docslinkslist %]
   [% FOREACH docslink = docstype.keys %]
     <li>
-      <a href="[% Param('docs_urlbase') %]
+      <a href="[% docs_urlbase FILTER html %]
                [% docslink FILTER none %]">[% docstype.$docslink FILTER html %]</a>
     </li>
   [% END %]

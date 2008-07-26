@@ -22,7 +22,8 @@
 [% PROCESS global/variables.none.tmpl %]
 
 [% title = BLOCK %]
-  删除[%+ "$terms.Bug " _ a.bug_id FILTER bug_link(a.bug_id) FILTER none %]的附件[% a.id FILTER html %]
+  删除
+  [%+ "$terms.Bug " _ a.bug_id FILTER bug_link(a.bug_id) FILTER none %]的附件[% a.id FILTER html %]
 [% END %]
 
 [% PROCESS global/header.html.tmpl

@@ -26,6 +26,16 @@
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
+[% bug = bugs.0 %]
+[% bodyclasses = ['bz_bug',
+                 "bz_status_$bug.bug_status",
+                 "bz_component_$bug.component",
+                 "bz_bug_$bug.bug_id"
+                 ]
+%]
+[% FOREACH group = bug.groups_in %]
+  [% bodyclasses.push("bz_group_$group.name") %]
+[% END %]
 
 [% PROCESS global/header.html.tmpl
   title = "更改已提交"
