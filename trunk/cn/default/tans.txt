@@ -38,3 +38,7 @@ resolution 处理方法
 reporter 提交者
 commet 评论
 resolution 解决途径
+
+xxxx_created  创建了xx
+    _updated  更新了
+    _deleted  删除了

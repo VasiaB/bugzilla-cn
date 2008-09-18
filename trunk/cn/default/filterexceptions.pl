@@ -1,4 +1,4 @@
-﻿*- Mode: perl; indent-tabs-mode: nil -*-
+# -*- Mode: perl; indent-tabs-mode: nil -*-
 #
 # The contents of this file are subject to the Mozilla Public
 # License Version 1.1 (the "License"); you may not use this file
@@ -18,7 +18,6 @@
 # Rights Reserved.
 #
 # Contributor(s): Gervase Markham <gerv@gerv.net>
-# Localization: jiangyanfeng <jiangyanfeng@gmail.com>
 
 # Important! The following classes of directives are excluded in the test,
 # and so do not need to be added here. Doing so will cause warnings.
@@ -63,8 +62,7 @@
   '"value${chartnum}-${rownum}-${colnum}"', 
   '"type${chartnum}-${rownum}-${colnum}"', 
   'field.name', 
-  'field.description', 
-  'type.name', 
+  'type.name',
   'type.description', 
   '"${chartnum}-${rownum}-${newor}"', 
   '"${chartnum}-${newand}-0"', 
@@ -149,13 +147,6 @@
   'cumulate',
 ],
 
-'reports/duplicates.rdf.tmpl' => [
-  'template_version', 
-  'bug.id', 
-  'bug.count', 
-  'bug.delta', 
-],
-
 'reports/chart.html.tmpl' => [
   'width', 
   'height', 
@@ -184,10 +175,6 @@
 
 'reports/edit-series.html.tmpl' => [
   'default.series_id', 
-],
-
-'list/change-columns.html.tmpl' => [
-  'column', 
 ],
 
 'list/edit-multiple.html.tmpl' => [
@@ -314,7 +301,6 @@
   '" colspan=\"$colspan\"" IF colspan',
   '" size=\"$size\"" IF size',
   '" maxlength=\"$maxlength\"" IF maxlength',
-  '" onfocus=\"$onfocus\"" IF onfocus',
   'flag.status',
   '" spellcheck=\"$spellcheck\"" IF spellcheck',
 ],
@@ -327,7 +313,6 @@
 ],
 
 'bug/show-multiple.html.tmpl' => [
-  'bug.bug_id', 
   'attachment.id', 
   'flag.status',
 ],
@@ -472,19 +457,14 @@
 ],
 
 'admin/products/groupcontrol/edit.html.tmpl' => [
-  'group.bugcount', 
-  'group.id', 
-  'const.CONTROLMAPNA', 
-  'const.CONTROLMAPSHOWN', 
-  'const.CONTROLMAPDEFAULT', 
-  'const.CONTROLMAPMANDATORY', 
+  'group.id',
+  'constants.CONTROLMAPNA', 
+  'constants.CONTROLMAPSHOWN',
+  'constants.CONTROLMAPDEFAULT',
+  'constants.CONTROLMAPMANDATORY',
 ],
 
 'admin/products/list.html.tmpl' => [
-  'classification_url_part', 
-],
-
-'admin/products/confirm-delete.html.tmpl' => [
   'classification_url_part', 
 ],
 

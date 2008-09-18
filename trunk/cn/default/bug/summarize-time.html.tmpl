@@ -11,10 +11,9 @@
   # The Original Code is the Bugzilla Bug Tracking System.
   #
   # Contributor(s): Christian Reis <kiko@async.com.br>
+  #                 Frédéric Buclin <LpSolit@gmail.com>
   # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
-
-[% USE date %]
 
 [% PROCESS "global/field-descs.none.tmpl" %]
 
@@ -44,22 +43,22 @@
 
   [% FOREACH workdata = part_list %]
     [%# parts contains date ranges (from, to). %]
-            [% part = parts.shift %]
-            <div align="right">
-              <h4 style="padding-right: 2em; margin: 0;">
-            [% IF part.0 or part.1 %]
-               [% part.0 OR "Up" FILTER html %] to [% part.1 OR "now" FILTER html %]
-            [% ELSE %]
+    [% part = parts.shift %]
+    <div align="right">
+      <h4 style="padding-right: 2em; margin: 0;">
+        [% IF part.0 or part.1 %]
+          [% part.0 OR "Up" FILTER html %] to [% part.1 OR "now" FILTER html %]
+        [% ELSE %]
                全部总结 (未指定时间段)
-            [% END %]
-              </h4>
-            </div>
-            [% IF group_by == "number" %]
-                [% INCLUDE number_report %]
-            [% ELSE %]
-                [% INCLUDE owner_report %]
-            [% END %]
         [% END %]
+      </h4>
+    </div>
+    [% IF group_by == "number" %]
+      [% INCLUDE number_report %]
+    [% ELSE %]
+      [% INCLUDE owner_report %]
+    [% END %]
+  [% END %]
 
         [% IF monthly %]
             <h4 style="margin: 0">总共处理时间 [% global.grand_total FILTER format("%.2f") %] 小时</h4>
@@ -277,7 +276,7 @@
   &nbsp;
   <input type="checkbox" name="inactive" [% 'checked="checked"' IF
       inactive %] id="inactive">
-  <label for="inactive" accesskey="i">同时显示不活动的[%+ terms.bugs %](<u>i</u>)
+  <label for="inactive" accesskey="i">同时显示不活动的(<u>i</u>)
   [%+ terms.bugs %]</label>
 </td>
 </tr></table>

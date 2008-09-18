@@ -32,14 +32,6 @@
   style_urls = ['skins/standard/admin.css']
 %]
 
-[% IF classification %]
-  [% classification_url_part = BLOCK %]&amp;classification=
-    [%- classification.name FILTER url_quote %]
-  [%- END %]
-[% ELSE %]
-  [% classification_url_part = "" %]
-[% END %]
-
 <table border="1" cellpadding="4" cellspacing="0">
   <tr bgcolor="#6666FF">
     <th valign="top" align="left">字段</th>
@@ -114,8 +106,7 @@
   <tr>
     <td>
       [% IF product.components.size > 0 %]
-        <a href="editcomponents.cgi?product=[% product.name FILTER url_quote %]
-           [%- classification_url_part %]"
+        <a href="editcomponents.cgi?product=[% product.name FILTER url_quote %]"
            title="编辑产品 '[% product.name FILTER html %]' 的模块">
           模块:
         </a>
@@ -150,7 +141,6 @@
     <td>
       [% IF product.versions.size > 0 %]
         <a href="editversions.cgi?product=[%- product.name FILTER url_quote %]
-           [%- classification_url_part %]">
           版本:
         </a>
       [% ELSE %]
@@ -174,7 +164,6 @@
       <td valign="top">
         [% IF product.milestones.size > 0 %]
           <a href="editmilestones.cgi?product=[%- product.name FILTER url_quote %]
-             [%- classification_url_part -%]">
             目标里程碑:
           </a>
         [% ELSE %]
@@ -198,9 +187,7 @@
     <td>
       [% IF product.bug_count %]
         <a href="buglist.cgi?product=[%- product.name FILTER url_quote %]
-           [%- classification_url_part %]"
-           title="列出产品'
-           [%- product.name FILTER html %]'的所有[% terms.bugs %]">
+           title="列出产品'[% product.name FILTER html %]'的所有 [% terms.bugs %] ">
           [% product.bug_count FILTER html %]
         </a>
       [% ELSE %]
@@ -265,8 +252,6 @@
     <input type="hidden" name="action" value="delete">
     <input type="hidden" name="product" value="[% product.name FILTER html %]">
     <input type="hidden" name="token" value="[% token FILTER html %]">
-    <input type="hidden" name="classification"
-           value="[% classification.name FILTER html %]">
   </form>
 
 [% END %]

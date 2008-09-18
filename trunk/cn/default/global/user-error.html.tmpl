@@ -1648,3 +1648,16 @@
 [% END %]            
 
 [% PROCESS global/footer.html.tmpl %]
+[% BLOCK object_name %]
+  [% IF class == "Bugzilla::User" %]
+    user
+  [% ELSIF class == "Bugzilla::Component" %]
+    component
+  [% ELSIF class == "Bugzilla::Version" %]
+    version
+  [% ELSIF class == "Bugzilla::Milestone" %]
+    milestone
+  [% ELSIF class == "Bugzilla::Status" %]
+    status
+  [% END %]
+[% END %]

@@ -148,7 +148,7 @@ function doOnSelectProduct(selectmode) {
     </td>
     <td>
       [% IF button_name %]
-        <input type="submit" id="[% button_name.replace (' ' , '_') FILTER html %]"
+        <input type="submit" id="[% button_name FILTER css_class_quote %]_top"
                value="[% button_name FILTER html %]">
       [% END %]
     </td>
@@ -327,10 +327,10 @@ function doOnSelectProduct(selectmode) {
         <label for="deadlinefrom" accesskey="l">最后期限(<u>l</u>)</label>：
       </th>
       <td>
-        从&nbsp;
-        <input name="deadlinefrom" id="deadlinefrom" size="10" maxlength="10">&nbsp;
-        到&nbsp;
-        <input name="deadlineto" size="10" maxlength="10">
+        从 <input name="deadlinefrom" id="deadlinefrom" size="10" maxlength="10"
+                    value="[% default.deadlinefrom.0 FILTER html %]">
+        到 <input name="deadlineto" size="10" maxlength="10"
+                  value="[% default.deadlineto.0 FILTER html %]">
       </td>
       <td>
         <small>(YYYY-MM-DD)</small>

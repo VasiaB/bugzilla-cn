@@ -129,7 +129,7 @@
           <b>[% get_status("VERIFIED") FILTER html %]</b>
         </dt>
         <dd>
-          £¨QA£© has looked at the [% terms.bug %] and the resolution and 
+          QA has looked at the [% terms.bug %] and the resolution and 
           agrees that the appropriate resolution has been taken. [% terms.Bugs %] remain
           in this state until the product they were reported
           against actually ships, at which point they become
@@ -206,6 +206,17 @@
   </tr>
 </table>
 
+<h2><a name="importance">Importance</h2>
+The importance of [% terms.abug %] is described as the combination of
+its <a href="#priority">priority</a> and <a href="#bug_severity">severity</a>,
+as described below.
+
+<h2><a name="priority">Priority</a></h2>
+This field describes the importance and order in which [% terms.abug %]
+should be fixed. This field is utilized by the
+programmers/engineers to prioritize their work to be done. The
+available priorities range from <b>P1</b> (most important) to
+<b>P5</b> (least important).
 <h2><a name="bug_severity">Severity</a></h2>
 This field describes the impact of [% terms.abug %]. 
 
@@ -254,14 +265,6 @@ This field describes the impact of [% terms.abug %].
 
     <td>Request for enhancement</td>
 </table>
-
-<h2><a name="priority">Priority</a></h2>
-This field describes the importance and order in which [% terms.abug %]
-should be fixed. This field is utilized by the
-programmers/engineers to prioritize their work to be done. The
-available priorities range from <b>P1</b> (most important) to 
-<b>P5</b> (least important). 
-
 
 <h2><a name="rep_platform">Platform</a></h2>
 This is the hardware platform against which the [% terms.bug %] was

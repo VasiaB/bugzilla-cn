@@ -33,6 +33,11 @@
   title = title
   style_urls = ['skins/standard/admin.css']
 %]
+[% group_control = {${constants.CONTROLMAPNA}        => 'NA',
+                    ${constants.CONTROLMAPSHOWN}     => 'Shown',
+                    ${constants.CONTROLMAPDEFAULT}   => 'Default',
+                    ${constants.CONTROLMAPMANDATORY} => 'Mandatory'}
+ %]
 
 <form method="post" action="editproducts.cgi">
   <table border="0" cellpadding="4" cellspacing="0">
@@ -97,18 +102,17 @@
     <tr>
       <th align="right" valign="top">
         <a href="editproducts.cgi?action=editgroupcontrols&product=
-          [%- product.name FILTER url_quote %]&classification=
-          [%- classification.name FILTER url_quote %]">
+          [%- product.name FILTER url_quote %]">
           编辑组访问控制：
         </a>
       </th>
       <td>
-        [% IF group_controls.size %]
-          [% FOREACH g = group_controls.values %]
+        [% IF product.group_controls.size %]
+          [% FOREACH g = product.group_controls.values.sort("name") %]
             <b>[% g.group.name FILTER html %]:</b>&nbsp;
             [% IF g.group.isactive %]
-              [% g.membercontrol FILTER html %]/
-              [% g.othercontrol FILTER html %]
+              [% group_control.${g.membercontrol} FILTER html %]/
+              [% group_control.${g.othercontrol} FILTER html %]
               [% IF g.entry %], ENTRY[% END %]
               [% IF g.canedit %], CANEDIT[% END %]
               [% IF g.editcomponents %], editcomponents[% END %]
@@ -135,8 +139,6 @@
         value="[% product.name FILTER html %]">
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="token" value="[% token FILTER html %]">
-  <input type="hidden" name="classification"
-         value="[% classification.name FILTER html %]">
   <input type="submit" name="submit" value="保存修改">
 </form>
   

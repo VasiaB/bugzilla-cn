@@ -16,6 +16,7 @@
   # Rights Reserved.
   #
   # Contributor(s): Gervase Markham <gerv@gerv.net>
+  #                 Elliotte Martin <elliotte_martin@yahoo.com>
   # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
@@ -102,7 +103,9 @@
                    ${constants.FIELD_TYPE_SINGLE_SELECT} => "下拉列表" ,
                    ${constants.FIELD_TYPE_MULTI_SELECT}  => "Multiple-Selection Box",
                    ${constants.FIELD_TYPE_TEXTAREA}      => "Large Text Box",
-                   ${constants.FIELD_TYPE_DATETIME}      => "日期/时间" } %]
+                   ${constants.FIELD_TYPE_DATETIME}      => "日期/时间",
+                   ${constants.FIELD_TYPE_BUG_ID}        => "Bug编号",
+                } %]
 
 [% status_descs = { "UNCONFIRMED" => "未确认",
                     "NEW"         => "新建",
