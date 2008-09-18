@@ -38,7 +38,7 @@
   <p>
     <font color="red">
       您的标语 '<tt>[% added_quip FILTER html %]</tt>' 已添加。
-      [% IF Param("quip_list_entry_control") == "moderated" AND !user.groups.admin %]
+      [% IF Param("quip_list_entry_control") == "moderated" AND !user.in_group('admin') %]
         经管理员批准后就可以出现了。
       [% END %]
     </font>

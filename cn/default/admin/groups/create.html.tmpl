@@ -46,12 +46,13 @@
   </tr>
   <tr>
     <th>图标链接：</th>
-    <td colspan="3"><input type="text" size="80" maxlength="255" id="icon_url" name="icon_url"></td>
+    <td colspan="3"><input type="text" size="70" maxlength="255" id="icon_url" name="icon_url"></td>
   </tr></table><hr>
 
-  <input type="checkbox" name="insertnew" value="1"
+  <input type="checkbox" id="insertnew" name="insertnew" value="1"
     [% IF Param("makeproductgroups") %] checked[% END %]>
-    插入新组到所有已存在的产品<p>
+  <label for="insertnew">插入新组到所有已存在的产品。</label>
+    <p>
   <input type="submit" id="create" value="添加">
   <input type="hidden" name="action" value="new">
   <input type="hidden" name="token" value="[% token FILTER html %]">

@@ -18,6 +18,7 @@
   # Contributor(s): Myk Melez <myk@mozilla.org>
   #                 Max Kanat-Alexander <mkanat@bugzilla.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  #                 Guy Pyrzak <guy.pyrzak@gmail.com>
   # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
@@ -255,12 +256,6 @@
 
 </table>
 
-[% IF use_keywords %]
-  [% PROCESS "bug/keyword-chooser.html.tmpl"
-    sel_keywords = keywords.split(', ')
-  %]
-[% END %]
-
 <b><label for="comment">附加评论：</label></b><br>
 [% INCLUDE global/textarea.html.tmpl
   name    = 'comment'
@@ -289,7 +284,7 @@
       <td align="center">
         <input type="radio" name="bit-[% group.id %]" value="0">
       </td>
-      [% IF group.isactive %]
+      [% IF group.is_active %]
         <td align="center">
           <input type="radio" name="bit-[% group.id %]" value="1">
         </td>

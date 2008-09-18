@@ -71,7 +71,7 @@
       [% IF otheruser.groups.size %]
         <ul>
           [% FOREACH group = otheruser.groups.keys %]
-            <li>[% group FILTER html %]</li>
+            <li>[% group.name FILTER html %]</li>
           [% END %]
         </ul>
       [% ELSE %]

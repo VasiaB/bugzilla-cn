@@ -37,11 +37,6 @@
   header = header
   subheader = subheader
   doc_section = "attachments.html"
-  style = "
-    table.attachment_info th { text-align: right; vertical-align: top; }
-    table.attachment_info td { text-align: left; vertical-align: top; }
-    #noview { text-align: left; vertical-align: middle; }
-  "
 %]
 
 <script type="text/javascript">
@@ -256,9 +251,11 @@
           <br>
         </small>
 
-        [% IF flag_types.size > 0 %]
+        [% IF attachment.flag_types.size > 0 %]
           [% PROCESS "flag/list.html.tmpl" bug_id = attachment.bug_id
-                                           attach_id = attachment.id %]<br>
+                                           attach_id = attachment.id
+                                           flag_types = attachment.flag_types
+          %]<br>
         [% END %]
 
         <div id="smallCommentFrame">

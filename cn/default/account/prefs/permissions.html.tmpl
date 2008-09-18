@@ -65,7 +65,7 @@
         您的帐号没有设置权限。
       [% END %]
 
-      [% IF user.groups.editusers %]
+      [% IF user.in_group('editusers') %]
         <br>
         您有 editusers 权限。您可以开放或关闭其它用户的所有权限。
       [% ELSIF set_bits.size %]
@@ -81,7 +81,7 @@
           </table>
       [% END %]
 
-      [% IF user.groups.bz_sudoers %]
+      [% IF user.in_group('bz_sudoers') %]
         <br>
         您是 <b>bz_sudoers</b> 组的成员，所以您可以
         <a href="relogin.cgi?action=prepare-sudo">以其它用户身份操作</a>。

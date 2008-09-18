@@ -38,6 +38,7 @@
 [% title = "订阅设置" %]
 [% PROCESS global/header.html.tmpl
   title = title
+  style_urls = ['skins/standard/admin.css']
   doc_section = "whining.html"
 %]
 
@@ -66,11 +67,7 @@
 </p>
 
 <p>
-  [% IF Param("timezone") %]
-    所有时间以服务器时间为准 ([% Param("timezone") FILTER upper %]).
-  [% ELSE %]
-    所有时间以服务器时间为准
-  [% END %]
+  所有时间以服务器时间为准 ([% local_timezone FILTER html %]).
 </p>
 
 <form method="post" action="editwhines.cgi">
@@ -83,13 +80,12 @@
 
 [% FOREACH event = events %]
 
-<table cellspacing="2" cellpadding="2" width="100%"
-       style="border: 1px solid;">
+<table cellspacing="2" cellpadding="2" style="border: 1px solid;">
   <tr>
-    <th align="left" bgcolor="#FFFFFF" colspan="2">
+    <th align="left">
       事件： 
     </th>
-    <td align="right">
+    <td align="right" colspan="2">
       <input type="submit" value="删除事件"
              name="remove_event_[% event.key %]"
              id="remove_event_[% event.key %]">
@@ -100,7 +96,7 @@
     <td valign="top" align="right">
       Email 主题行：
     </td>
-    <td>
+    <td colspan="2">
       <input type="text" name="event_[% event.key %]_subject"
              size="60" maxlength="128" value="
              [%- event.value.subject FILTER html %]">
@@ -111,7 +107,7 @@
     <td valign="top" align="right">
       订阅信息里包含的描述文字：
     </td>
-    <td>
+    <td colspan="2">
       [% INCLUDE global/textarea.html.tmpl
          name           = "event_${event.key}_body"
          minrows        = 3
@@ -129,7 +125,7 @@
       <td valign="top" align="right">
         计划：
       </td>
-      <td align="left" bgcolor="#FFEEEE">
+      <td class="unset" colspan="2">
         无可执行计划<br>
         <input type="submit" value="添加新计划"
                name="add_schedule_[% event.key %]"
@@ -143,18 +139,20 @@
       <td valign="top" align="right">
         计划：
       </td>
-      <td align="left" bgcolor="#EEFFEE">
+      <td class="set" colspan="2">
 
         <table>
           <tr>
             <th>
               执行间隔
             </th>
+            <th>
             [% IF mail_others %]
-              <th>
                 邮件发送到
+              [% END %]
               </th>
-            [% END %]
+            <th>
+            </th>
           </tr>
           [% FOREACH schedule = event.value.schedule %]
             <tr>
@@ -197,7 +195,7 @@
           [% END %]
 
         <tr>
-          <td>
+            <td colspan="3">
             <input type="submit" value="新增计划"
                    name="add_schedule_[% event.key %]"
                    id="add_schedule_[% event.key %]">
@@ -235,13 +233,15 @@
       <td valign="top" align="right">
         已存搜索：
       </td>
-      <td align="left">
+      <td align="left" colspan="2">
 
         <table>
           <tr>
             <th>排列键值</th>
             <th>搜索名称</th>
             <th>标题</th>
+            <th></th>
+            <th></th>
           </tr>
 
           [% FOREACH query = event.value.queries %]
@@ -268,10 +268,10 @@
               <td align="left">
                 <input type="hidden" value="[% query.onemailperbug FILTER html %]"
                        name="orig_query_onemailperbug_[% query.id %]">
-                <input type="checkbox" [% IF query.onemailperbug == 1 %]
-                       checked [% END %]name="query_onemailperbug_
-                       [% query.id %]">
-                每个[% terms.bug %]一条消息
+                <input type="checkbox" [% IF query.onemailperbug == 1 %] checked [% END %]
+                       id="query_onemailperbug_[% query.id %]"
+                       name="query_onemailperbug_[% query.id %]">
+                <label for="query_onemailperbug_[% query.id %]">每个 [% terms.bug %]一条消息</label>
               </td>
               <td align="right">
                 <input type="submit" value="Remove"
@@ -288,13 +288,12 @@
                      name="add_query_[% event.key %]"
                      id="add_query_[% event.key %]">
             </td>
+            <td align="right" colspan="2">
+              <input type="submit" value="更新/提交" name="commit" id="update">
+            </td>
           </tr>
-
         </table>
 
-      </td>
-      <td align="right" valign="bottom">
-        <input type="submit" value="更新/提交" name="commit" id="update">
       </td>
     </tr>
 

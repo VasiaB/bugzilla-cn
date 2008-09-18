@@ -33,7 +33,7 @@
   title = title
   style_urls = [ 'skins/standard/create_attachment.css',
                  'skins/standard/yui/calendar.css' ]
-  javascript_urls = [ "js/attachment.js", "js/util.js", "js/keyword-chooser.js",
+  javascript_urls = [ "js/attachment.js", "js/util.js",
                       "js/yui/yahoo-dom-event.js", "js/yui/calendar.js",
                       "js/field.js" ]
 %]
@@ -323,6 +323,7 @@ function handleWantsAttachment(wants_attachment) {
           [% display_flag_headers = 1 %]
           [% SET any_flags_requesteeble = 1 IF flag_type.is_requestable && flag_type.is_requesteeble %]
         [% END %]
+
         [% IF display_flag_headers %]
           [% PROCESS "flag/list.html.tmpl" flag_types = product.flag_types.bug
                                            any_flags_requesteeble = any_flags_requesteeble
@@ -340,7 +341,7 @@ function handleWantsAttachment(wants_attachment) {
          name => "assigned_to"
          value => assigned_to
          disabled => assigned_to_disabled
-         size => 32
+         size => 30
          emptyok => 1
        %]
       <noscript>(如不填写，则系统自动分配给所属模块的缺省责任人)</noscript>
@@ -355,7 +356,7 @@ function handleWantsAttachment(wants_attachment) {
          name => "qa_contact"
          value => qa_contact
          disabled => qa_contact_disabled
-         size => 32
+         size => 30
          emptyok => 1
        %]
         <noscript>(如不填写，则系统将分配给默认的QA联系人)</noscript>
@@ -370,7 +371,7 @@ function handleWantsAttachment(wants_attachment) {
          name => "cc"
          value => cc
          disabled => cc_disabled
-         size => 45
+         size => 30
          multiple => 5
        %]
     </td>
@@ -424,7 +425,7 @@ function handleWantsAttachment(wants_attachment) {
   <tr>
     <th>URL:</th>
     <td colspan="2">
-      <input name="bug_file_loc" size="60"
+      <input name="bug_file_loc" size="40"
              value="[% bug_file_loc FILTER html %]">
     </td>
   </tr>
@@ -432,9 +433,10 @@ function handleWantsAttachment(wants_attachment) {
 
 <tbody>
   [% USE Bugzilla %]
+
   [% FOREACH field = Bugzilla.active_custom_fields %]
     [% NEXT UNLESS field.enter_bug %]
-    [% SET value = ${field.name} IF ${field.name}.defined %]
+    [% SET value = ${field.name}.defined ? ${field.name} : "" %]
     <tr>
       [% PROCESS bug/field.html.tmpl editable=1 value_span=3 %]
     </tr>
@@ -442,8 +444,8 @@ function handleWantsAttachment(wants_attachment) {
 
   <tr>
     <th>摘要:</th>
-    <td colspan="2">
-      <input name="short_desc" size="60" value="[% short_desc FILTER html %]"
+    <td colspan="3">
+      <input name="short_desc" size="70" value="[% short_desc FILTER html %]"
              maxlength="255" spellcheck="true">
     </td>
     <td>&nbsp;</td>
@@ -530,7 +532,8 @@ function handleWantsAttachment(wants_attachment) {
       <tr>
         <th><a href="describekeywords.cgi">关键字</a>:</th>
         <td colspan="3">
-          <input id="keywords" name="keywords" size="60" value="[% keywords FILTER html %]" onfocus="this.chooser.open();"> (optional)
+          <input id="keywords" name="keywords" size="40"
+                 value="[% keywords FILTER html %]"> (optional)
         </td>
       </tr>
     [% END %]
@@ -598,12 +601,6 @@ function handleWantsAttachment(wants_attachment) {
   </table>
   <input type="hidden" name="form_name" value="enter_bug">
 </form>
-
-[% IF use_keywords %]
-  [% PROCESS "bug/keyword-chooser.html.tmpl"
-    sel_keywords = keywords.split(', ')
-  %]
-[% END %]
 
 [%# Links or content with more information about the bug being created. %]
 [% Hook.process("end") %]
