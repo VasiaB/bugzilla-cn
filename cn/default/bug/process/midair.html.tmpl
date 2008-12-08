@@ -46,6 +46,7 @@
 
 <p>
   在你想改变这个[%+ "$terms.bug $bug_id" FILTER bug_link(bug_id) FILTER none %]
+  [%+ "$terms.bug $bug.id" FILTER bug_link(bug.id) FILTER none %]
   的时候已经有人修改了它。
   改变如下：
 </p>
@@ -66,7 +67,9 @@
 [% IF cgi.param("comment") %]
 <p>
   您的评论是：<br>
-  <blockquote><pre>[% cgi.param("comment") FILTER wrap_comment FILTER html %]</pre></blockquote>
+  <blockquote><pre class="bz_comment_text">
+    [% cgi.param("comment") FILTER wrap_comment FILTER html %]
+  </pre></blockquote>
 </p>
 [% END %]
 
@@ -88,7 +91,7 @@
   </li>
   <li>
     放弃我的修改，并
-    [%+ "查看 $terms.bug $bug_id" FILTER bug_link(bug_id) FILTER none %]
+    [%+ "查看 $terms.bug $bug.id" FILTER bug_link(bug.id) FILTER none %]
   </li>
 </ul>
 

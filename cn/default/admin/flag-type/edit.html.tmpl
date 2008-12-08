@@ -30,13 +30,13 @@
   [% typeLabelLowerSingular = BLOCK %][% terms.bug %][% END %]
 [% ELSE %]
   [% title = "为附件创建标记类型" %]
-  [% typeLabelLowerPlural = BLOCK %]attachments[% END %]
-  [% typeLabelLowerSingular = BLOCK %]attachment[% END %]
+  [% typeLabelLowerPlural = BLOCK %]附件[% END %]
+  [% typeLabelLowerSingular = BLOCK %]附件[% END %]
 [% END %]
 
 [% doc_section = "flags-overview.html#flags-create" %]
 [% IF last_action == "copy" %]
-  [% title = BLOCK %]Create Flag Type Based on [% type.name FILTER html %][% END %]
+  [% title = BLOCK %]在[% type.name FILTER html %]的基础上建立新的标记类型[% END %]
 [% ELSIF last_action == "edit" %]
   [% title = BLOCK %]编辑标记类型 [% type.name FILTER html %][% END %]
   [% doc_section = "flags-overview.html#flags-edit" %]
@@ -140,10 +140,8 @@
     <tr>
       <th>排序键：</th>
       <td>
-        在 1 和 32767 之间的数字by which this type will be sorted
-        when displayed to users in a list; ignore if you don't care
-        what order the types appear in or if you want them to appear
-        in alphabetical order<br>
+        在 1 和 32767 之间的数字，用于调整该分类在所有标记的分类中的显示顺序。如果不填写则按照默认的小写字母排序by which this type will be sorted
+        <br>
         <input type="text" name="sortkey" value="[% type.sortkey || 1 %]" size="5" maxlength="5">
       </td>
     </tr>

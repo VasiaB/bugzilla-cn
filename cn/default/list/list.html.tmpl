@@ -55,7 +55,11 @@
 
 <div class="bz_query_head" align="center">
   <span class="bz_query_timestamp">
-    <b>[% currenttime FILTER time('%a %b %e %Y %T %Z') FILTER html %]</b><br>
+    [% IF Param('timezone') %]
+      <b>[% time2str("%a %b %e %Y %T %Z", currenttime, Param('timezone')) %]</b><br>
+    [% ELSE %]
+      <b>[% time2str("%a %b %e %Y %T", currenttime) %]</b><br>
+    [% END %]
   </span>
 
   [% IF debug %]
@@ -65,9 +69,6 @@
       [% END %]
     </p>
     <p class="bz_query">[% query FILTER html %]</p>
-    [% IF query_explain.defined %]
-      <pre class="bz_query_explain">[% query_explain FILTER html %]</pre>
-    [% END %]
   [% END %]
 
   [% IF user.settings.display_quips.value == 'on' %]

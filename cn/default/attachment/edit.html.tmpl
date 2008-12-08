@@ -237,11 +237,11 @@
                    value="[% attachment.contenttype FILTER html %]"><br>
 
           <input type="checkbox" id="ispatch" name="ispatch" value="1"
-                 [% 'checked="checked"' IF attachment.ispatch %]>
+                 [%+ 'checked="checked"' IF attachment.ispatch %]>
           <label for="ispatch">补丁</label>
         [% END %]
           <input type="checkbox" id="isobsolete" name="isobsolete" value="1"
-                 [% 'checked="checked"' IF attachment.isobsolete %]>
+                 [%+ 'checked="checked"' IF attachment.isobsolete %]>
           <label for="isobsolete">废弃</label>
           [% IF (Param("insidergroup") && user.in_group(Param("insidergroup"))) %]
             <input type="checkbox" id="isprivate" name="isprivate" value="1"
@@ -251,11 +251,9 @@
           <br>
         </small>
 
-        [% IF attachment.flag_types.size > 0 %]
+        [% IF flag_types.size > 0 %]
           [% PROCESS "flag/list.html.tmpl" bug_id = attachment.bug_id
-                                           attach_id = attachment.id
-                                           flag_types = attachment.flag_types
-          %]<br>
+                                           attach_id = attachment.id %]<br>
         [% END %]
 
         <div id="smallCommentFrame">
@@ -281,7 +279,6 @@
               && attachment.datasize > 0 %]
           | <a href="attachment.cgi?id=[% attachment.id %]&amp;action=delete">删除</a>
         [% END %]
-        </small>
       </td>
 
       [% IF !attachment.datasize %]

@@ -23,8 +23,6 @@
   #
   # classification: Bugzilla::Classification object; The classification 
   #                                                  the product is in
-  #
-  # groups_controls: a hash of group controls related to the product.
   #%]
 
 [% title = BLOCK %]编辑产品 '[% product.name FILTER html %]'[% END %]
@@ -33,6 +31,7 @@
   title = title
   style_urls = ['skins/standard/admin.css']
 %]
+
 [% group_control = {${constants.CONTROLMAPNA}        => 'NA',
                     ${constants.CONTROLMAPSHOWN}     => 'Shown',
                     ${constants.CONTROLMAPDEFAULT}   => 'Default',
@@ -102,13 +101,14 @@
     <tr>
       <th align="right" valign="top">
         <a href="editproducts.cgi?action=editgroupcontrols&product=
-          [%- product.name FILTER url_quote %]">
+          [%- product.name FILTER url_quote %]&classification=
+          [%- classification.name FILTER url_quote %]">
           编辑组访问控制：
         </a>
       </th>
       <td>
         [% IF product.group_controls.size %]
-          [% FOREACH g = product.group_controls.values.sort("name") %]
+          [% FOREACH g = product.group_controls.values %]
             <b>[% g.group.name FILTER html %]:</b>&nbsp;
             [% IF g.group.isactive %]
               [% group_control.${g.membercontrol} FILTER html %]/
@@ -139,6 +139,8 @@
         value="[% product.name FILTER html %]">
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="token" value="[% token FILTER html %]">
+  <input type="hidden" name="classification"
+         value="[% classification.name FILTER html %]">
   <input type="submit" name="submit" value="保存修改">
 </form>
   

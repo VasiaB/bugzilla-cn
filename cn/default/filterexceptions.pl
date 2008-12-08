@@ -147,6 +147,13 @@
   'cumulate',
 ],
 
+'reports/duplicates.rdf.tmpl' => [
+  'template_version', 
+  'bug.id', 
+  'bug.count', 
+  'bug.delta', 
+],
+
 'reports/chart.html.tmpl' => [
   'width', 
   'height', 
@@ -175,6 +182,10 @@
 
 'reports/edit-series.html.tmpl' => [
   'default.series_id', 
+],
+
+'list/change-columns.html.tmpl' => [
+  'column', 
 ],
 
 'list/edit-multiple.html.tmpl' => [
@@ -457,14 +468,19 @@
 ],
 
 'admin/products/groupcontrol/edit.html.tmpl' => [
-  'group.id',
-  'constants.CONTROLMAPNA', 
-  'constants.CONTROLMAPSHOWN',
-  'constants.CONTROLMAPDEFAULT',
-  'constants.CONTROLMAPMANDATORY',
+  'group.bugcount', 
+  'group.id', 
+  'const.CONTROLMAPNA', 
+  'const.CONTROLMAPSHOWN', 
+  'const.CONTROLMAPDEFAULT', 
+  'const.CONTROLMAPMANDATORY', 
 ],
 
 'admin/products/list.html.tmpl' => [
+  'classification_url_part', 
+],
+
+'admin/products/confirm-delete.html.tmpl' => [
   'classification_url_part', 
 ],
 
@@ -502,12 +518,15 @@
 ],
 
 'admin/users/confirm-delete.html.tmpl' => [
+  'attachments',
   'reporter',
   'assignee_or_qa',
   'cc',
+  'component_cc',
   'flags.requestee',
   'flags.setter',
   'longdescs',
+  'quips',
   'votes',
   'series',
   'watch.watched',

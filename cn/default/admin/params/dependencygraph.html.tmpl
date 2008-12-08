@@ -19,31 +19,31 @@
   #                 Frédéric Buclin <LpSolit@gmail.com>
   #%]
 [%
-   title = "Dependency Graphs"
-   desc = "Optional setup for dependency graphing"
+   title = "依赖图"
+   desc = "设置生成依赖图的选项"
 %]
 
 [% param_descs = {
-  webdotbase => "It is possible to show graphs of dependent ${terms.bugs}. You may set
-                 this parameter to any of the following:
+  webdotbase => "${terms.Bugzilla}可以生成${terms.bugs}的依赖图表。
+                 可以有以下三种设置方式：
                  <ul>
                    <li>
-                     A complete file path to 'dot' (part of
-                     <a href=\"http://www.graphviz.org\">GraphViz</a>) will
-                     generate the graphs locally.
+                     输入'dot.exe'（<a href=\"http://www.graphviz.org\">GraphViz</a>程序的附带组件）的绝对路径
+                      可以在
+                     本地服务器生成图片。
                    </li>
                    <li>
-                     A URL prefix pointing to an installation of the
+                     指向
                      <a href=\"http://www.research.att.com/~north/cgi-bin/webdot.cgi\">webdot
-                     package</a> will generate the graphs remotely.
+                     package</a>的网址URL可以远程生成图片。
                    </li>
                    <li>
-                     A blank value will disable dependency graphing.
+                     留空，禁用此功能。
                    </li>
                  </ul>
-                 The default value is a publicly-accessible webdot server. If you change
-                 this value, make certain that the webdot server can read files from your
-                 webdot directory. On Apache you do this by editing the .htaccess file,
-                 for other systems the needed measures may vary. You can run checksetup.pl
-                 to recreate the .htaccess file if it has been lost."}
+                 默认值是一个可以供公共访问的webdot服务器地址。 变更此参数需要确定
+                 webdot server可以从你的服务器读取webdoc目录。
+                 Apache服务器可以编辑.htaccess来保证访问，
+                 其他类型服务器可能设置方式不同。通过运行checksetup.pl
+                 可以重新生成.htaccess文件"}
 %]

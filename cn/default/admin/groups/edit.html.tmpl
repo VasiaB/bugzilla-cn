@@ -68,8 +68,12 @@
     <tr>
       <th>描述：</th>
       <td>
+        [% IF group.is_bug_group %]
           <input type="text" name="desc" size="70" 
                  value="[% group.description FILTER html %]">
+        [% ELSE %]
+          [% group.description FILTER html %]
+        [% END %]
       </td>
     </tr>
 

@@ -170,6 +170,9 @@
         运行
       </th>
       <th>
+        编辑
+      </th>
+      <th>
         在页脚显示
       </th>
     </tr>
@@ -185,6 +188,10 @@
                    [% q.name FILTER url_quote %]&amp;sharer_id=
                    [% q.user.id FILTER url_quote %]">运行</a>
         </td>
+        <td>
+          <a href="query.cgi?[% q.edit_link FILTER html %]&amp;known_name=
+                   [% q.name FILTER url_quote %]">编辑</a>
+        </td>
         <td align="center">
           <input type="checkbox" 
                  name="link_in_footer_[% q.id FILTER html %]"
@@ -196,7 +203,7 @@
     [% END %]
     [% IF !found_shared_query %]
       <tr>
-        <td colspan="4" style="text-align: center">
+        <td colspan="6" style="text-align: center">
           &lt;无&gt;
         </td>
       </tr>

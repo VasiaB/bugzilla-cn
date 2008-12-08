@@ -70,7 +70,7 @@
             completely, if you want to change who can make series public. %]
         [% IF user.in_group('admin') %]      
           <input type="checkbox" name="public"
-                 [% "checked='checked'" IF default.public.0 %]>
+                 [%+ "checked='checked'" IF default.public.0 %]>
           <span style="font-weight: bold;">所有成员可见<br>
           (受制于组的权限)</span> 
         [% END %]
