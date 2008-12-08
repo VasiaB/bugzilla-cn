@@ -43,7 +43,7 @@ X-Bugzilla-Type: admin
 
 [% IF Param('createemailregexp') == '.*' && Param('emailsuffix') == '' %]
   <b>隐私说明：</b> [% terms.Bugzilla %] 是一个开放的 [% terms.bug %]
-  跟踪系统，大部分 [% terms.bugs %] 的内容（包含邮件地址），
+  跟踪系统，大部分 [%+ terms.bugs %] 的内容（包含邮件地址），
   对所有人都是公开的。<b>强烈建议</b>您使用备用帐号或免费的邮件服务
   (如 Gmail, Yahoo,  Hotmail, 等) 以避免接收到垃圾邮件。
 [% END %]

@@ -15,6 +15,7 @@
   # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
+[% USE date %]
 [% PROCESS "global/field-descs.none.tmpl" %]
 
 [% title = "处理时间总结" %]
@@ -167,7 +168,7 @@
         <b>[% subtotal FILTER format("%.2f") %]</b>
       </td>
     </tr>
-      [% global.total = global.total + subtotal %]
+    [% global.total = global.total + subtotal %]
 [% END %]
 
 [% BLOCK bug_header %]

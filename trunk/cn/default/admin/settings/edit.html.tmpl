@@ -53,7 +53,7 @@
         <th>启用</th>
       </tr>
 
-      [% FOREACH name = settings_keys %]
+      [% FOREACH name = settings.keys %]
           [% checkbox_name = name _ '-enabled' %]
           <tr>
             <td align="right">

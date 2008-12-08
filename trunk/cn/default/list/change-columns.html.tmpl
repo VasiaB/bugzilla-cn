@@ -16,7 +16,6 @@
   # Rights Reserved.
   #
   # Contributor(s): Dave Lawrence <dkl@redhat.com>
-  #                 Pascal Held <paheld@gmail.com>
   # Localiztion: jiangyanfeng <jiangyanfeng@gmail.com>
   #%]
 
@@ -24,8 +23,6 @@
 
 [% PROCESS global/header.html.tmpl
   title = "修改显示列"
-  javascript_urls = "js/change-columns.js"
-  onload = "initChangeColumns()"
 %]
 
 <p>
@@ -39,55 +36,16 @@
 [% field_descs.reporter_realname    = "报告者姓名" %]
 [% field_descs.qa_contact_realname  = "QA联系人姓名" %]
 
-<form name="changecolumns" action="colchange.cgi" onsubmit="change_submit();">
+<form action="colchange.cgi">
   <input type="hidden" name="rememberedquery" value="[% buffer FILTER html %]">
-    <table>
-      <tr>
-        <th><div id="avail_header" class="bz_default_hidden">可用的列</div></th>
-        <th></th>
-        <th>选中的列</th>
-        <th></th>
-      </tr>
-      <tr>
-        <td>
-          <select name="available_columns" id="available_columns" 
-                  size="15" multiple="multiple" onchange="updateView();"
-                  class="bz_default_hidden"> 
-          </select>
-        </td>
-        <td>
-          <input class="image_button" type="button" id="select_button" 
-                 name="select" onclick="move_select()">
-          <br><br>
-          <input class="image_button" type="button" id="deselect_button" 
-                 name="deselect" onclick="move_deselect()">
-        </td>
-        <td>
-          <select name="selected_columns" id="selected_columns" 
-                  size="15" multiple="multiple" onchange="updateView();">
-            [% FOREACH column = collist %]
-                <option value="[% column FILTER html %]" selected="selected">
-                [% (field_descs.${column} || column) FILTER html %]
-              </option>
-            [% END %]
-            [% FOREACH column = masterlist %]
-              [% IF lsearch(collist, column) == -1 %]
-                <option value="[% column FILTER html %]">
-                  [% (field_descs.${column} || column) FILTER html %]
-                </option>
-              [% END %]
-            [% END %]
-          </select>
-        </td>
-        <td>
-          <input class="image_button" type="button" id="up_button" 
-                 name="up" onclick="move_up()">
-          <br><br>
-          <input class="image_button" type="button" id="down_button" 
-                 name="down" onclick="move_down()">
-        </td>
-      </tr>
-    </table>
+  [% FOREACH column = masterlist %]
+    <input type="checkbox" id="[% column %]" name="column_[% column %]"
+      [%+ "checked='checked'" IF lsearch(collist, column) != -1 %]>
+    <label for="[% column %]">
+      [% (field_descs.${column} || column) FILTER html %]
+    </label>
+    <br>
+  [% END %]
 
   <p>
     <input id="nosplitheader" type="radio" name="splitheader" value="0"

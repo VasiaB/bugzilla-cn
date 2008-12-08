@@ -26,13 +26,30 @@ To: [% to %]
 Subject: [% terms.Bug %] [%+ bugid %] 您的部分或全部投票已移除
 X-Bugzilla-Type: voteremoved
 
-您的部分或全部投票已从 [% terms.bug %] [%+ bugid %] 移除。
+你在[% terms.bug %] [%+ bugid %]上的全部或部分投票已经移除。
 
-[% votesoldtext %]
+你在这个[% terms.bug %]上面原有[% votesold FILTER html %] [%+ IF votesold == 1 %]个投票[% ELSE %]个投票[% END
+%] ，但[% votesremoved FILTER html %] 个已经移除。
 
-[% votesnewtext %]
+[% IF votesnew %]
+你仍然有[% votesnew FILTER html %] [%+ IF votesnew == 1 %]个投票[% ELSE %]个投票[% END %] 在这个 [% terms.bug %].
+[% ELSE %]
+你在这个[% terms.bug %]上已经没有投票了。
+[% END %]
 
-Reason: [% reason %]
+原因：
+[% IF reason == "votes_bug_moved" %]
+  这个[% terms.bug %]移动到了另外一个产品上。
+
+[% ELSIF reason == "votes_too_many_per_bug" %]
+  这个产品的投票规则发生了变化；
+  你在单个[% terms.bug %]上投了太多票。
+
+[% ELSIF reason == "votes_too_many_per_user" %]
+  这个产品的投票规则发生了变化；你有过多的投票总数，所以全部投票被移除。
+  所以全部投票被移除。
+[% END %]
+
 
 
 [% urlbase %]show_bug.cgi?id=[% bugid %]

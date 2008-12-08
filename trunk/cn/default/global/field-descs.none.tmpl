@@ -33,13 +33,13 @@
                    "attachments.filename"    => "附件的文件名",
                    "attachments.mimetype"    => "附件的媒体类(mime type)",
                    "attachments.ispatch"     => "附件是补丁(path)",
-                   "attachments.isobsolete"  => "Attachment is obsolete",
-                   "attachments.isprivate"   => "Attachment is private",
-                   "attachments.isurl"       => "Attachment is a URL",
-                   "attachments.submitter"   => "Attachment creator",
+                   "attachments.isobsolete"  => "附件已经废弃",
+                   "attachments.isprivate"   => "附件是私有的",
+                   "attachments.isurl"       => "附件是超链接",
+                   "attachments.submitter"   => "附件创建者",
                    "blocked"              => "阻塞",
                    "bug_file_loc"         => "URL",
-                   "bug_group"               => "Group",
+                   "bug_group"               => "组（Group）",
                    "bug_id"               => "${terms.Bug} ID",
                    "bug_severity"         => "严重程度",
                    "bug_status"           => "状态",
@@ -47,7 +47,7 @@
                    "cc"                   => "抄送",
                    "classification"       => "类别",
                    "cclist_accessible"    => "抄送人可用",
-                   "commenter"               => "Commenter",
+                   "commenter"               => "备注作者",
                    "component_id"         => "模块ID",
                    "component"            => "模块",
                    "content"                 => "内容",
@@ -61,7 +61,7 @@
                    "flagtypes.name"          => "Flag",
                    "keywords"             => "关键字",
                    "longdesc"                => "备注",
-                   "longdescs.isprivate"     => "Comment is private",
+                   "longdescs.isprivate"     => "备注是私有的",
                    "newcc"                => "抄送",
                    "op_sys"               => "操作系统",
                    "opendate"             => "打开日期",
@@ -92,10 +92,12 @@
     database. If you want to override this for your language
     or your installation, just use a hook. %]
 
-[% USE Bugzilla %]
-[% FOREACH bz_field = Bugzilla.get_fields() %]
-  [% SET field_descs.${bz_field.name} = bz_field.description
-     IF !field_descs.${bz_field.name}.defined %]
+[% UNLESS Param('shutdownhtml') %]
+  [% USE Bugzilla %]
+  [% FOREACH bz_field = Bugzilla.get_fields() %]
+    [% SET field_descs.${bz_field.name} = bz_field.description
+       IF !field_descs.${bz_field.name}.defined %]
+  [% END %]
 [% END %]
 
 [% field_types = { ${constants.FIELD_TYPE_UNKNOWN}       => "未知类型",
@@ -117,6 +119,16 @@
 
 [% MACRO get_status(status) GET status_descs.$status || status %]
 
+[% resolution_descs = { "FIXED"      => "已修复",
+                        "INVALID"    => "无效",
+                        "WONTFIX"    => "暂时不改",
+                        "DUPLICATE"  => "重复",
+                        "WORKSFORME" => "无法重现",
+                        "MOVED"      => "移出",
+                        "---"        => "---",
+                        " "          => " " } %]
+
+[% MACRO get_resolution(res) GET resolution_descs.$res || res %]
 [% resolution_descs = { "FIXED"      => "已修复",
                         "INVALID"    => "无效",
                         "WONTFIX"    => "暂时不改",

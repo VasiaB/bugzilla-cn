@@ -75,11 +75,6 @@
       用户名。
     [% END %]
 
-  [% ELSIF error == "account_does_not_exist" %]
-    [% title = "帐号不存在" %]
-    <code>[% email FILTER html %]</code> 不是一个有效的 [% terms.Bugzilla %]
-    帐号。
-
   [% ELSIF error == "alias_has_comma_or_space" %]
     [% title = "别名含无效字符" %]
     在您输入的别名 <em>[% alias FILTER html %]</em> 中，
@@ -144,6 +139,8 @@
       计划
     [% ELSIF action == "use" %]
       使用
+    [% ELSIF action == "approve" %]
+      approve
     [% END %]
 
     [% IF object == "administrative_pages" %]
@@ -191,7 +188,8 @@
     [% ELSIF object == "timetracking_summaries" %]
       查看时间跟踪报告
     [% ELSIF object == "user" %]
-      指定的用户
+      用户[% IF userid %]ID: '[% userid FILTER html %]'
+      [% ELSE %]你指定的 [% END %]
     [% ELSIF object == "users" %]
       用户
     [% ELSIF object == "versions" %]
@@ -249,17 +247,6 @@
       在本次修改时写点<b>评论</b>.
     [% END %]
 
-
-  [% ELSIF error == "comment_required" %]
-    [% title = "必须输入评论" %]
-    您必须写点 <b>评论</b>
-    [% IF old.size && new %]
-      来说明此 [% terms.bug %] 状态由 [% old.join(", ") FILTER html %]
-     变成 [% new FILTER html %].
-    [% ELSE %]
-      来说明更改的原因。
-    [% END %]
-
   [% ELSIF error == "comment_too_long" %]
     [% title = "评论太长" %]
     评论不能超过 65,535 个字符。
@@ -281,8 +268,9 @@
     分类名 '[% name FILTER html %]' 不存在。
 
   [% ELSIF error == "classification_doesnt_exist_for_product" %]
-    [% title = "此产品分类不存在" %]
-    不存在针对 '[% product FILTER html %]' 产品的分类 '[% classification FILTER html %]'。
+    [% title = "Classification Does Not Exist For Product" %]
+    The classification '[% classification FILTER html %]' does not exist
+    for product '[% product FILTER html %]'.
 
   [% ELSIF error == "classification_invalid_sortkey" %]
     [% title = "分类排序键无效" %]
@@ -323,13 +311,24 @@
     [% title = "模块必须有缺省的责任人" %]
     模块'[% name FILTER html %]'必须有一个缺省的责任人。
 
-  [% ELSIF error == "component_not_valid" %]
-    [% title = "指定的模块不存在" %]
-    产品'[% product FILTER html %]'的模块'[% name FILTER html %]'不存在。
-
   [% ELSIF error == "customfield_nonexistent" %]
     [% title = "未知的自定义字段" %]
     没有名为 '[% name FILTER html %]' 的自定义字段。
+
+  [% ELSIF error == "customfield_not_obsolete" %]
+    [% title = "自定义字段没有废弃" %]
+    自定义字段 '[% name FILTER html %]' 没有废弃。
+    请在删除之前先废弃自定义字段。
+
+  [% ELSIF error == "customfield_has_activity" %]
+    [% title = "自定义字段是活动的" %]
+    自定义字段'[% name FILTER html %]' 不能被删除，因为
+    它已经记录了活动。
+
+  [% ELSIF error == "customfield_has_contents" %]
+    [% title = "自定义字段有了内容" %]
+    自定义字段'[% name FILTER html %]' 不能被删除，因为
+    至少有一个 [% terms.bug %] 中的该字段有值（不为空）。
 
   [% ELSIF error == "dependency_loop_multi" %]
     [% title = "检查到循环依赖关系" %]
@@ -346,7 +345,7 @@
 
   [% ELSIF error == "description_required" %]
     [% title = "必须有详细描述" %]
-    你必须输入[% terms.bug %]的详细描述。
+    你必须输入[% terms.abug %]的详细描述。
 
   [% ELSIF error == "dupe_not_allowed" %]
     [% title = "不能标记重复Bug" %]
@@ -392,87 +391,42 @@
     字段 '[% field.name FILTER html %]'     
     ([% field.description FILTER html %]) 已存在，请选择其它名称。
 
-  [% ELSIF error == "dupe_id_required" %]
-    [% title = "Duplicate $terms.Bug Id Required" %]
-    You must specify [% terms.abug %] id to mark this [% terms.bug %]
-    as a duplicate of.
-
-  [% ELSIF error == "freetext_too_long" %]
-    [% title = "Text Too Long" %]
-    The text you entered is too long ([% text.length FILTER html %] characters,
-    above the maximum length allowed of [% constants.MAX_FREETEXT_LENGTH FILTER none %]
-    characters):
-    <p><em>[% text FILTER html %]</em></p>
-
-  [% ELSIF error == "group_change_denied" %]
-    [% title = "Cannot Add/Remove That Group" %]
-    You tried to add or remove group id [% group_id FILTER html %]
-    from [% terms.bug %] [%+ bug.id FILTER html %], but you do not
-    have permissions to do so.
-
-  [% ELSIF error == "group_invalid_removal" %]
-    You tried to remove [% terms.bug %] [%+ bug.id FILTER html %]
-    from group id [% group_id FILTER html %], but [% terms.bugs %] in the 
-    '[% product.name FILTER html %]' product can not be removed from that
-    group.
-    
-  [% ELSIF error == "group_invalid_restriction" %]
-    You tried to restrict [% terms.bug %] [%+ bug.id FILTER html %] to
-    to group id [% group_id FILTER html %], but [% terms.bugs %] in the
-    '[% product.name FILTER html %]' product can not be restricted to
-    that group.
-
-  [% ELSIF error == "illegal_time" %]
-    [% title = "Illegal Time" %]
-    '<tt>[% time FILTER html %]</tt>' is not a legal time.
-    [% IF format %]
-      Please use the format '<tt>[% format FILTER html %]</tt>'.
-    [% END %]
-
-  [% ELSIF error == "product_admin_denied" %]
-    [% title = "Product Access Denied" %]
-    You are not allowed to edit properties of product '[% product FILTER html %]'.
-
-  [% ELSIF error == "resolution_cant_clear" %]
-    [% terms.Bug %] [%+ bug_id FILTER bug_link(bug_id) FILTER none %] is 
-    closed, so you cannot clear its resolution.
-
   [% ELSIF error == "field_invalid_name" %]
-    [% title = "Invalid Field Name" %]
-    '[% name FILTER html %]' is not a valid name for a field.
-    A name may contain only letters, numbers, and the underscore character.
+    [% title = "无效的字段名" %]
+    '[% name FILTER html %]' 是一个无效的字段名。
+    名称自能包含字母数字下划线
 
   [% ELSIF error == "field_invalid_sortkey" %]
-    [% title = "Invalid Sortkey for Field" %]
-    The sortkey [% sortkey FILTER html %] that you have provided for
-    this field is not a valid positive integer.
+    [% title = "无效的排序键" %]
+    你提供给这个字段的排序键 [% sortkey FILTER html %] 
+    不是一个正整数。
 
   [% ELSIF error == "field_missing_description" %]
-    [% title = "Missing Description for Field" %]
-    You must enter a description for this field.
+    [% title = "缺少字段描述" %]
+    需要为字段输入一些描述。
 
   [% ELSIF error == "field_missing_name" %]
-    [% title = "Missing Name for Field" %]
-    You must enter a name for this field.
+    [% title = "缺少了字段名" %]
+    必须输入字段名。
 
   [% ELSIF error == "fieldname_invalid" %]
-    [% title = "Specified Field Does Not Exist" %]
-    The field '[% field FILTER html %]' does not exist or 
-    cannot be edited with this interface.
+    [% title = "指定的字段不存在" %]
+    字段'[% field FILTER html %]'不存在，或者 
+    不能在这里编辑。
 
   [% ELSIF error == "fieldname_not_specified" %]
-    [% title = "Field Name Not Specified" %]
-    No field name specified when trying to edit field values.
+    [% title = "没有输入字段名" %]
+    编辑字段值的时候没有指定字段名。
 
   [% ELSIF error == "fieldvalue_already_exists" %]
-    [% title = "Field Value Already Exists" %]
-    The value '[% value FILTER html %]' already exists for the
-    '[%- field.description FILTER html %]' field.
+    [% title = "字段值已经存在" %]
+    值：'[% value FILTER html %]' 已经存在于
+    '[%- field.description FILTER html %]' 字段中。
 
   [% ELSIF error == "fieldvalue_doesnt_exist" %]
-    [% title = "Specified Field Value Does Not Exist" %]
-    The value '[% value FILTER html %]' does not exist for
-    the '[% field FILTER html %]' field.
+    [% title = "指定的字段值不存在" %]
+    字段：'[% field FILTER html %]' 中不存在
+    值：'[% value FILTER html %]'。
 
   [% ELSIF error == "fieldvalue_is_default" %]
     [% title = "Specified Field Value Is Default" %]
@@ -516,7 +470,7 @@
   [% ELSIF error == "fieldvalue_still_has_bugs" %]
     [% title = "You Cannot Delete This Field Value" %]
     You cannot delete the value '[% value FILTER html %]' from the 
-    '[% field FILTER html%]' field, because there are still
+    '[% field FILTER html %]' field, because there are still
     [%+ count FILTER html %] [%+ terms.bugs %] using it.
 
   [% ELSIF error == "fieldvalue_undefined" %]
@@ -618,7 +572,7 @@
     <code>[% name FILTER html %]
           [% IF status == "X" %][% old_status FILTER html %][% END %]</code>.
 
-    Only a sufficiently empowered user can make this change.
+    Only a user with the required permissions may make this change.
 
   [% ELSIF error == "format_not_found" %]
     [% title = "Format Not Found" %]
@@ -630,6 +584,13 @@
     The sort key must be an integer between 0 and 32767 inclusive.
     It cannot be <em>[% sortkey FILTER html %]</em>.
 
+  [% ELSIF error == "freetext_too_long" %]
+    [% title = "Text Too Long" %]
+    The text you entered is too long ([% text.length FILTER html %] characters,
+    above the maximum length allowed of [% constants.MAX_FREETEXT_LENGTH FILTER none %]
+    characters):
+    <p><em>[% text FILTER html %]</em></p>
+
   [% ELSIF error == "group_cannot_delete" %]
     [% title = "Cannot Delete Group" %]
     The <em>[% name FILTER html %]</em> group cannot be deleted because
@@ -637,6 +598,12 @@
     <a href="editgroups.cgi?action=del&amp;group=[% gid FILTER url_quote %]">records</a>
     in the database which refer to it. All references to this group must
     be removed before you can remove it.
+
+  [% ELSIF error == "group_change_denied" %]
+    [% title = "Cannot Add/Remove That Group" %]
+    You tried to add or remove group id [% group_id FILTER html %]
+    from [% terms.bug %] [%+ bug.id FILTER html %], but you do not
+    have permissions to do so.
 
   [% ELSIF error == "group_exists" %]
     [% title = "The group already exists" %]
@@ -655,6 +622,19 @@
     '[% groups.join("' and '") FILTER html %]' [% param FILTER html %].
     In order to delete this group, you first have to change the
     [%+ param FILTER html %] to make [% attr FILTER html %] point to another group.
+
+
+  [% ELSIF error == "group_invalid_removal" %]
+    You tried to remove [% terms.bug %] [%+ bug.id FILTER html %]
+    from group id [% group_id FILTER html %], but [% terms.bugs %] in the 
+    '[% product FILTER html %]' product can not be removed from that
+    group.
+    
+  [% ELSIF error == "group_invalid_restriction" %]
+    You tried to restrict [% terms.bug %] [%+ bug.id FILTER html %] to
+    to group id [% group_id FILTER html %], but [% terms.bugs %] in the
+    '[% product FILTER html %]' product can not be restricted to
+    that group.
 
   [% ELSIF error == "group_not_specified" %]
     [% title = "Group not specified" %]
@@ -691,18 +671,23 @@
 
   [% ELSIF error == "illegal_bug_status_transition" %]
     [% title = "Illegal $terms.Bug Status Change" %]
-    You are not allowed to change the [% terms.bug %] status from
-    [%+ old FILTER html %] to [% new FILTER html %].
+    [% IF old.defined %]
+      You are not allowed to change the [% terms.bug %] status from
+      [%+ old.name FILTER html %] to [% new.name FILTER html %].
+    [% ELSE %]
+      You are not allowed to file new [% terms.bugs %] with the
+      [%+ new.name FILTER html %] status. 
+    [% END %]
 
   [% ELSIF error == "illegal_change" %]
     [% title = "Not allowed" %]
-    You tried to change the 
+    You tried to change the
     <strong>[% field_descs.$field FILTER html %]</strong> field 
     [% IF oldvalue.defined %]
-      from <em>[% oldvalue FILTER html %]</em>
+      from <em>[% oldvalue.join(', ') FILTER html %]</em>
     [% END %]
     [% IF newvalue.defined %]
-      to <em>[% newvalue FILTER html %]</em>
+      to <em>[% newvalue.join(', ') FILTER html %]</em>
     [% END %]
     , but only
     [% IF privs < 3 %]
@@ -710,14 +695,14 @@
       [% IF privs < 2 %] or reporter [% END %]
       of the [% terms.bug %], or
     [% END %]
-    a sufficiently empowered user may change that field.
+    a user with the required permissions may change that field.
 
   [% ELSIF error == "illegal_change_deps" %]
     [% title = "Not allowed" %]
     You tried to change the 
     <strong>[% field_descs.$field FILTER html %]</strong> field 
-    but only a user empowered to edit 
-    both involved [% terms.bugs %] may change that field.
+    but only a user allowed to edit 
+    both related [% terms.bugs %] may change that field.
 
   [% ELSIF error == "illegal_changed_in_last_x_days" %]
     [% title = "Your Search Makes No Sense" %]
@@ -775,6 +760,13 @@
     [% docslinks = {'reporting.html' => 'Reporting'} %]
     You are not authorized to edit this series. To do this, you must either
     be its creator, or an administrator.
+
+  [% ELSIF error == "illegal_time" %]
+    [% title = "Illegal Time" %]
+    '<tt>[% time FILTER html %]</tt>' is not a legal time.
+    [% IF format %]
+      Please use the format '<tt>[% format FILTER html %]</tt>'.
+    [% END %]
         
   [% ELSIF error == "insufficient_data_points" %]
     [% docslinks = {'reporting.html' => 'Reporting'} %]
@@ -784,12 +776,14 @@
     [% title = "Invalid Attachment ID" %]
     The attachment id [% attach_id FILTER html %] is invalid.
 
-  [% ELSIF error == "invalid_bug_id_non_existent" %]
+  [% ELSIF error == "bug_id_does_not_exist" %]
     [% title = BLOCK %]Invalid [% terms.Bug %] ID[% END %]
     [% terms.Bug %] #[% bug_id FILTER html %] does not exist.
     
-  [% ELSIF error == "invalid_bug_id_or_alias" %]
-    [% title = BLOCK %]Invalid [% terms.Bug %] ID[% END %]
+  [% ELSIF error == "improper_bug_id_field_value" %]
+    [% title = BLOCK %]
+      [% IF bug_id %]Invalid [% ELSE %]Missing [% END %] [% terms.Bug %] ID
+    [% END %]
     [% IF bug_id %]
       '[% bug_id FILTER html %]' is not a valid [% terms.bug %] number
       [% IF Param("usebugaliases") %]
@@ -931,36 +925,27 @@
     [% title = "Default milestone not deletable" %]
     [% admindocslinks = {'products.html' => 'Administering products',
                          'milestones.html' => 'About Milestones'} %]
-    Sorry, but [% milestone.name FILTER html %] is the default milestone 
-    for product '[% product.name FILTER html %]', and so it can not be 
-    deleted.
+    Sorry, but [% milestone.name FILTER html %] is the default milestone
+    for the '[% milestone.product.name FILTER html %]' product, and so
+    it cannot be deleted.
 
   [% ELSIF error == "milestone_name_too_long" %]
     [% title = "Milestone Name Is Too Long" %]
     The name of a milestone is limited to 20 characters. 
     '[% name FILTER html %]' is too long ([% name.length %] characters).
 
-  [% ELSIF error == "milestone_not_specified" %]
-    [% title = "No Milestone Specified" %]
-    No milestone specified when trying to edit milestones.
-
-  [% ELSIF error == "milestone_not_valid" %]
-    [% title = "Specified Milestone Does Not Exist" %]
-    The milestone '[% milestone FILTER html %]' for product 
-    '[% product FILTER html %]' does not exist.
-
   [% ELSIF error == "milestone_required" %]
     [% title = "Milestone Required" %]
-    You must determine a target milestone for [% terms.bug %] 
-    [%+ bug_id FILTER html %]
+    You must select a target milestone for [% terms.bug %]
+    [%+ bug.id FILTER html %]
     if you are going to accept it.  Part of accepting 
     [%+ terms.abug %] is giving an estimate of when it will be fixed.
 
   [% ELSIF error == "milestone_sortkey_invalid" %]
     [% title = "Invalid Milestone Sortkey" %]
-    The sortkey '[% sortkey FILTER html %]' for milestone '
-    [% name FILTER html %]' is not in the range -32768 &le; sortkey
-    &le; 32767.
+    The sortkey '[% sortkey FILTER html %]' is not in the range
+    [%+ constants.MIN_SMALLINT FILTER html %] &le; sortkey &le;
+    [%+ constants.MAX_SMALLINT FILTER html %].
 
   [% ELSIF error == "misarranged_dates" %]
     [% title = "Misarranged Dates" %]
@@ -1082,34 +1067,33 @@
     You didn't define any axes to plot.
 
   [% ELSIF error == "no_bugs_chosen" %]
-    [% title = BLOCK %]No [% terms.Bugs %] Chosen[% END %]
-    You apparently didn't choose any [% terms.bugs %] to modify.
+    [% title = BLOCK %]No [% terms.Bugs %] Selected[% END %]
+    You apparently didn't choose any [% terms.bugs %]
+    [% IF action == "modify" %]
+      to modify.
+    [% ELSIF action == "view" %]
+      to view.
+    [% END %]
 
   [% ELSIF error == "no_bug_ids" %]
-    [% title = BLOCK %]No [% terms.Bugs %] Chosen[% END %]
+    [% title = BLOCK %]No [% terms.Bugs %] Selected[% END %]
     You didn't choose any [% terms.bugs %] to
     [% IF action == "add" %] add to [% ELSE %] remove from [% END %]
-    the saved search.
+    the [% tag FILTER html %] tag.
 
   [% ELSIF error == "no_bugs_in_list" %]
-    [% title = "Delete Saved Search?" %]
-    You are going to remove all [% terms.bugs %] from the '[% saved_search FILTER html %]'
-    saved search. This will delete this saved search completely. Click
+    [% title = "Delete Tag?" %]
+    This will remove all [% terms.bugs %] from the
+    [% tag FILTER html %] tag. This will delete the tag completely. Click
     <a href="buglist.cgi?cmdtype=dorem&amp;remaction=forget&amp;namedcmd=
-    [%- saved_search FILTER url_quote %]">here</a> if you really want to
-    remove it.
+    [%- tag FILTER url_quote %]">here</a> if you really want to delete it.
 
   [% ELSIF error == "no_bugs_to_remove" %]
-    [% title = "No Saved Search Selected" %]
-    You didn't select any saved search to remove [% terms.bugs %] from.
-
-  [% ELSIF error == "no_component_change_for_multiple_products" %]
-    [% title = "Action Not Permitted" %]
-    You cannot change the component for a list of [% terms.bugs %] covering more than
-    one product.
+    [% title = "No Tag Selected" %]
+    You didn't select a tag from which to remove [% terms.bugs %].
 
   [% ELSIF error == "no_dupe_stats" %]
-    [% title = "Cannot Find Duplicate Statistics" %]
+    [% title = "找不到重复统计" %]
     [% admindocslinks = {'extraconfig.html' => 'Setting up the collecstats.pl job'} %]
     没有今天([% today FILTER html %]) 或昨天的重复[% terms.bug %]统计。
 
@@ -1175,6 +1159,24 @@
     The value '[% num FILTER html %]' 
     in the <em>[% field_descs.$field FILTER html %]</em> field 
     is less than the minimum allowable value of '[% min_num FILTER html %]'.
+
+  [% ELSIF error == "object_name_not_specified" %]
+    [% type = BLOCK %][% PROCESS object_name %][% END %]
+    [% title = BLOCK %][% type FILTER ucfirst FILTER html %] Not 
+    Specified[% END %]
+    You must select/enter a [% type FILTER html %].
+
+  [% ELSIF error == "object_does_not_exist" %]
+    [% type = BLOCK %][% PROCESS object_name %][% END %]
+    [% title = BLOCK %]Invalid [% type FILTER ucfirst FILTER html %][% END %]
+    There is no [% type FILTER html %] named '[% name FILTER html %]'
+    [% IF product.defined %]
+      in the '[% product.name FILTER html %]' product
+    [% END %].
+    [% IF class == "Bugzilla::User" %]
+      Either you mis-typed the name or that user has not yet registered
+      for a [% terms.Bugzilla %] account.
+    [% END %]
 
   [% ELSIF error == "old_password_incorrect" %]
     [% title = "Incorrect Old Password" %]
@@ -1250,9 +1252,9 @@
     Cannot delete the product name for product '[% product FILTER html %]'.
 
   [% ELSIF error == "product_name_already_in_use" %]
-    [% title = "Product name already in use" %]
+    [% title = "产品名称已经在使用" %]
     [% admindocslinks = {'products.html' => 'Administering products'} %]
-    The product name '[% product FILTER html %]' is already in use.
+    产品名称'[% product FILTER html %]'已经存在。
   
   [% ELSIF error == "product_name_diff_in_case" %]
     [% title = "Product name differs only in case" %]
@@ -1275,7 +1277,7 @@
     create the milestone '[% defaultmilestone FILTER html %]'</a> before
     it can be made the default milestone for product '[% product FILTER html %]'.
 
-  [% ELSIF error == "product_access_denied" %]
+  [% ELSIF error == "product_admin_denied" %]
     [% title = "Product Access Denied" %]
     You are not allowed to edit properties of product '[% product FILTER html %]'.
 
@@ -1285,9 +1287,9 @@
     You must enter a name for the new product.
   
   [% ELSIF error == "product_disabled" %]
-    [% title = BLOCK %]Product closed for [% terms.Bugs %] Entry[% END %]
+    [% title = BLOCK %]Product closed for [% terms.Bug %] Entry[% END %]
     [% admindocslinks = {'products.html' => 'Administering products'} %]
-    Sorry, entering [% terms.bugs %] into the
+    Sorry, entering [% terms.abug %] into the
     product <em>[% product.name FILTER html %]</em> has been disabled.
 
   [% ELSIF error == "product_edit_denied" %]
@@ -1301,7 +1303,7 @@
     [% title = BLOCK %]Product has [% terms.Bugs %][% END %]
     [% admindocslinks = {'products.html' => 'Administering products'} %]
     There are [% nb FILTER html %] [%+ terms.bugs %] entered for this product!
-    You must reassign those [% terms.bugs %] to another product before you
+    You must move those [% terms.bugs %] to another product before you
     can delete this one.
 
   [% ELSIF error == "product_must_have_description" %]
@@ -1372,6 +1374,10 @@
   [% ELSIF error == "require_summary" %]
     [% title = "Summary Needed" %]
     You must enter a summary for this [% terms.bug %].
+
+  [% ELSIF error == "resolution_cant_clear" %]
+    [% terms.Bug %] [%+ bug_id FILTER bug_link(bug_id) FILTER none %] is 
+    closed, so you cannot clear its resolution.
 
   [% ELSIF error == "resolution_not_allowed" %]
     [% title = "Resolution Not Allowed" %]
@@ -1512,11 +1518,6 @@
     [% title = "No Version Specified" %]
     No version specified when trying to edit versions.
 
-  [% ELSIF error == "version_not_valid" %]
-    [% title = "Specified Version Does Not Exist" %]
-    The version '[% version FILTER html %]' for product 
-    '[% product FILTER html %]' does not exist.
-
   [% ELSIF error == "users_deletion_disabled" %]
     [% title = "Deletion not activated" %]
     [% admindocslinks = {'useradmin.html' => 'User administration'} %]
@@ -1611,10 +1612,8 @@
 
 <table cellpadding="20">
   <tr>
-    <td bgcolor="#ff0000">
-      <font size="+2">
-        [% error_message FILTER none %]
-      </font>
+    <td id="error_msg" class="throw_error">
+      [% error_message FILTER none %]
     </td>
   </tr>
 </table>
@@ -1648,6 +1647,7 @@
 [% END %]            
 
 [% PROCESS global/footer.html.tmpl %]
+
 [% BLOCK object_name %]
   [% IF class == "Bugzilla::User" %]
     user

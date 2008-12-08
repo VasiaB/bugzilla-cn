@@ -101,16 +101,33 @@
       现在您可以
     [% END %]
 [% ELSE %]
+  [% accept_deletion = 1 %]
 
-  <h2>请确认</h2>
-
-  [% display_warning = 0 %]
-
-  [% IF reporter || bugs_activity || flags.setter || longdescs || profiles_activity %]
+  [% IF attachments || reporter || bugs_activity || flags.setter || longdescs || profiles_activity %]
     <div class="criticalmessages">
       <p><b>强烈建议</b>不要作以下的删除，将会产生系统不一致的问题。</p>
 
       <ul>
+        [% IF attachments %]
+          <li>
+            [% otheruser.login FILTER html %]
+            <a href="buglist.cgi?field0-0-0=attachments.submitter&type0-0-0=equals&value0-0-0=
+               [%- otheruser.login FILTER url_quote %]">has submitted
+            [% IF attachments == 1 %]
+              one attachment
+            [% ELSE %]
+              [%+ attachments %] attachments
+            [% END %]</a>.
+            如果您删除此用户帐号，数据库记录将会不一致，从而导致
+            inconsistent, resulting in
+            [% IF attachments == 1 %]
+              这个附件
+            [% ELSE %]
+              这些附件
+            [% END %]
+            不再显示在[% terms.bugs %]。
+          </li>
+        [% END %]
         [% IF reporter %]
           <li>
             [% otheruser.login FILTER html %]
@@ -198,11 +215,11 @@
         [% END %]
       </ul>
     </div>
-    [% display_warning = 1 %]
+    [% accept_deletion = 0 %]
   [% END %]
 
-  [% IF assignee_or_qa || cc || email_setting || flags.requestee ||
-        namedqueries || profile_setting || series || votes || watch.watched ||
+  [% IF assignee_or_qa || cc || component_cc || email_setting || flags.requestee ||
+        namedqueries || profile_setting || quips || series || votes || watch.watched ||
         watch.watcher || whine_events || whine_schedules %]
     <div class="warningmessages">
       <p>以下的删除是<b>安全的</b>，不会产生系统不一致的问题。</p>
@@ -232,6 +249,17 @@
               [%+ cc %] [%+ terms.bugs %]
             [% END %]</a>抄送列表中。
             如果您删除此用户帐号，它将会从抄送列表中移去。
+          </li>
+        [% END %]
+        [% IF component_cc %]
+          <li>
+            [% otheruser.login FILTER html %] is on the default CC list of
+            [% IF component_cc == 1 %]
+              one component
+            [% ELSE %]
+              [%+ component_cc %] components
+            [% END %]</a>.
+            If you delete the user account, it will be removed from these CC lists.
           </li>
         [% END %]
         [% IF email_setting %]
@@ -312,6 +340,23 @@
             将会随着此用户帐号的删除而删除。
           </li>
         [% END %]
+        [% IF quips %]
+          <li>
+            [% otheruser.login FILTER html %] has submitted
+            [% IF quip == 1 %]
+              one quip
+            [% ELSE %]
+              [%+ quips %] quips
+            [% END %].
+            If you delete the user account,
+            [% IF votes == 1 %]
+              this quip
+            [% ELSE %]
+              these quips
+            [% END %]
+            will have no author anymore, but will remain available.
+          </li>
+        [% END %]
         [% IF votes %]
           <li>
             [% otheruser.login FILTER html %] 已经投票给了
@@ -366,7 +411,7 @@
                 [%+ whine_events %] 订阅。
               [% END %]
 
-            [% IF whine_events + whine_schedules == 1 %]
+            [% IF whine_events == 1 %]
               订阅
             [% ELSE %]
               订阅
@@ -388,15 +433,11 @@
         [% END %]
       </ul>
     </div>
-    [% display_warning = 1 %]
-  [% END %]
 
-  [% IF display_warning %]
+    [% IF accept_deletion %]
     <p class="areyoureallyreallysure">
       请留意删除此用户帐号的后果。
     </p>
-  [% END %]
-
   <p>您确实要删除此用户的帐号吗？</p>
 
   <form method="post" action="editusers.cgi">
@@ -410,6 +451,11 @@
   </form>
 
   <p>如果您此时不想删除此用户，您可以
+    [% ELSE %]
+      <p><b>You cannot delete this user account</b> due to unsafe actions reported above. You can
+    [% END %]
+
+  [% END %]
 [% END %]
 
   <a href="editusers.cgi?action=edit&amp;userid=[% otheruser.id %]

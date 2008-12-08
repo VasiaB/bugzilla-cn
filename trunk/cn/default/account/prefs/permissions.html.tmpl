@@ -65,7 +65,7 @@
         您的帐号没有设置权限。
       [% END %]
 
-      [% IF user.in_group('editusers') %]
+      [% IF user.groups.editusers %]
         <br>
         您有 editusers 权限。您可以开放或关闭其它用户的所有权限。
       [% ELSIF set_bits.size %]

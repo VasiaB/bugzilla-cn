@@ -49,10 +49,15 @@
 <input type="hidden" name="confirm_product_change" value="1">
     
 [%# Verify the version, component, and target milestone fields. %]
-  <h3>确认版本,模块[% "，目标里程碑" IF Param("usetargetmilestone") %]</h3>
+  <h3>确认版本,模块</h3>
+  [%- ", 目标里程碑" 
+      IF Param("usetargetmilestone")
+         && bug.check_can_change_field('target_milestone', 0, 1) %]</h3>
 
   <p>
-  [% IF Param("usetargetmilestone") %]
+[% IF Param("usetargetmilestone") 
+   && bug.check_can_change_field('target_milestone', 0, 1) 
+%]
     您正在把[% terms.bug %]移动到产品
   <b>[% product.name FILTER html %]</b>,
     但是，版本、模块、里程碑已经不再正确，请重新设置正确的版本、模块和里程碑：
@@ -91,7 +96,9 @@
                  default=default_component
                  size=10 %]
     </td>
-    [% IF Param("usetargetmilestone") %]
+    [% IF Param("usetargetmilestone") 
+          && bug.check_can_change_field('target_milestone', 0, 1) 
+    %]
       <td>
           <b>目标里程碑：</b><br>
         [% PROCESS "global/select-menu.html.tmpl"

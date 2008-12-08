@@ -27,12 +27,13 @@ To: [% emailaddress %]
 Subject: [% PROCESS subject %]
 X-Bugzilla-Type: admin
 
-变更请求被除 [% remoteaddress %] 取消。
+变更请求被 [% remoteaddress %] 取消。
 
 如果你没有作出这个请求，则可能是别人无意中使用了您的
 [% terms.Bugzilla %]帐号登录，或尝试破解您的帐号。
 
-请查看以下信息，并在适当时候向 [% maintainer %] 举报。
+请查看以下信息，并在适当时候向
+向[% Param('maintainer') %]举报。
 
       令牌(Token)：[% token %]
          令牌类型：[% tokentype %]

@@ -1,3 +1,356 @@
++ 对照翻译完
+= 直接拷贝
+空  没有翻译完全
+
++---default
+|   |   config.js.tmpl			+
+|   |   config.rdf.tmpl			+
+|   |   filterexceptions.pl		+
+|   |   index.html.tmpl			+
+|   |   patch.exe			+
+|   |   sidebar.xul.tmpl		+
+|   |   tans.txt			+
+|   |   utf8.txt			+
+|   |   welcome-admin.html.tmpl		+
+|   |   
+|   +---account					+
+|   |   |   cancel-token.txt.tmpl 		+
+|   |   |   create.html.tmpl			+
+|   |   |   created.html.tmpl			+
+|   |   |   profile-activity.html.tmpl		+
+|   |   |   
+|   |   +---auth
+|   |   |       login-small.html.tmpl		+
+|   |   |       login.html.tmpl			+
+|   |   |       
+|   |   +---email				
+|   |   |       change-new.txt.tmpl		+
+|   |   |       change-old.txt.tmpl		+
+|   |   |       confirm-new.html.tmpl		+
+|   |   |       confirm.html.tmpl		+
+|   |   |       request-new.txt.tmpl		+
+|   |   |       
+|   |   +---password
+|   |   |       forgotten-password.txt.tmpl		+
+|   |   |       set-forgotten-password.html.tmpl	+
+|   |   |       
+|   |   \---prefs
+|   |           account.html.tmpl		+
+|   |           email.html.tmpl			+
+|   |           permissions.html.tmpl		+
+|   |           prefs.html.tmpl			+
+|   |           saved-searches.html.tmpl	+
+|   |           settings.html.tmpl		+
+|   |           
+|   +---admin
+|   |   |   admin.html.tmpl		+
+|   |   |   confirm-action.html.tmpl
+|   |   |   sudo.html.tmpl		+
+|   |   |   table.html.tmpl		+
+|   |   |   
+|   |   +---classifications		+
+|   |   |       add.html.tmpl		+
+|   |   |       del.html.tmpl		+
+|   |   |       delete.html.tmpl	+
+|   |   |       edit.html.tmpl		+
+|   |   |       reclassify.html.tmpl	+
+|   |   |       select.html.tmpl	+
+|   |   |       
+|   |   +---components				+
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       footer.html.tmpl		+
+|   |   |       list.html.tmpl			+
+|   |   |       select-product.html.tmpl	+
+|   |   |       
+|   |   +---custom_fields
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       list.html.tmpl			+
+|   |   |       
+|   |   +---fieldvalues
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       footer.html.tmpl		+
+|   |   |       list.html.tmpl			+
+|   |   |       select-field.html.tmpl		+
+|   |   |       
+|   |   +---flag-type
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       edit.html.tmpl			
+|   |   |       list.html.tmpl			
+|   |   |       
+|   |   +---groups
+|   |   |       confirm-remove.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       delete.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       list.html.tmpl			+
+|   |   |       
+|   |   +---keywords
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       list.html.tmpl			+
+|   |   |       
+|   |   +---milestones
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       footer.html.tmpl		+
+|   |   |       list.html.tmpl			+
+|   |   |       select-product.html.tmpl	+
+|   |   |       
+|   |   +---params
+|   |   |       admin.html.tmpl			+
+|   |   |       attachment.html.tmpl		+
+|   |   |       auth.html.tmpl			+
+|   |   |       bugchange.html.tmpl		+
+|   |   |       bugfields.html.tmpl		+
+|   |   |       bugmove.html.tmpl
+|   |   |       common.html.tmpl		+
+|   |   |       core.html.tmpl
+|   |   |       dependencygraph.html.tmpl	+
+|   |   |       editparams.html.tmpl		+
+|   |   |       groupsecurity.html.tmpl
+|   |   |       index.html.tmpl			+
+|   |   |       ldap.html.tmpl			+
+|   |   |       mta.html.tmpl
+|   |   |       patchviewer.html.tmpl
+|   |   |       query.html.tmpl
+|   |   |       radius.html.tmpl
+|   |   |       shadowdb.html.tmpl
+|   |   |       usermatch.html.tmpl
+|   |   |       
+|   |   +---products
+|   |   |   |   confirm-delete.html.tmpl	+
+|   |   |   |   create.html.tmpl		+
+|   |   |   |   edit-common.html.tmpl		+
+|   |   |   |   edit.html.tmpl			+
+|   |   |   |   footer.html.tmpl		+
+|   |   |   |   list-classifications.html.tmpl	+
+|   |   |   |   list.html.tmpl			+
+|   |   |   |   updated.html.tmpl		+
+|   |   |   |   
+|   |   |   \---groupcontrol
+|   |   |           confirm-edit.html.tmpl
+|   |   |           edit.html.tmpl
+|   |   |           updated.html.tmpl
+|   |   |           
+|   |   +---sanitycheck
+|   |   |       list.html.tmpl			+
+|   |   |       messages.html.tmpl
+|   |   |       
+|   |   +---settings
+|   |   |       edit.html.tmpl			+
+|   |   |       
+|   |   +---users
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       list.html.tmpl			+
+|   |   |       listselectvars.html.tmpl	+
+|   |   |       responsibilities.html.tmpl	+
+|   |   |       search.html.tmpl		+
+|   |   |       userdata.html.tmpl		+
+|   |   |       
+|   |   +---versions
+|   |   |       confirm-delete.html.tmpl	+
+|   |   |       create.html.tmpl		+
+|   |   |       edit.html.tmpl			+
+|   |   |       footer.html.tmpl		+
+|   |   |       list.html.tmpl			+
+|   |   |       select-product.html.tmpl	+
+|   |   |       
+|   |   \---workflow
+|   |           comment.html.tmpl		+
+|   |           edit.html.tmpl			+
+|   |           
+|   +---attachment
+|   |       cancel-create-dupe.html.tmpl	+
+|   |       choose.html.tmpl			+
+|   |       confirm-delete.html.tmpl		+
+|   |       content-types.html.tmpl		+
+|   |       create.html.tmpl			+
+|   |       created.html.tmpl			+
+|   |       createformcontents.html.tmpl	+
+|   |       delete_reason.txt.tmpl		+
+|   |       diff-file.html.tmpl			+
+|   |       diff-footer.html.tmpl		+
+|   |       diff-header.html.tmpl
+|   |       edit.html.tmpl			+
+|   |       list.html.tmpl			+
+|   |       midair.html.tmpl			+
+|   |       show-multiple.html.tmpl		+
+|   |       updated.html.tmpl			+
+|   |       
+|   +---bug
+|   |   |   choose.html.tmpl			+
+|   |   |   comments.html.tmpl			+
+|   |   |   dependency-graph.html.tmpl		+
+|   |   |   dependency-tree.html.tmpl		
+|   |   |   edit.html.tmpl
+|   |   |   field.html.tmpl			+
+|   |   |   keyword-chooser.html.tmpl		废弃
+|   |   |   knob.html.tmpl			+
+|   |   |   navigate.html.tmpl			+
+|   |   |   show-multiple.html.tmpl		+
+|   |   |   show.html.tmpl			+
+|   |   |   show.xml.tmpl			+
+|   |   |   summarize-time.html.tmpl		+
+|   |   |   time.html.tmpl			+
+|   |   |   
+|   |   +---activity
+|   |   |       show.html.tmpl			+
+|   |   |       table.html.tmpl			+
+|   |   |       
+|   |   +---create
+|   |   |       comment-guided.txt.tmpl		+
+|   |   |       comment.txt.tmpl		+
+|   |   |       confirm-create-dupe.html.tmpl	+
+|   |   |       create-guided.html.tmpl
+|   |   |       create.html.tmpl		+
+|   |   |       created.html.tmpl		+
+|   |   |       make-template.html.tmpl		+
+|   |   |       user-message.html.tmpl		+
+|   |   |       
+|   |   +---process
+|   |   |       bugmail.html.tmpl		+
+|   |   |       confirm-duplicate.html.tmpl	+
+|   |   |       header.html.tmpl		+
+|   |   |       midair.html.tmpl		+
+|   |   |       results.html.tmpl		+
+|   |   |       verify-new-product.html.tmpl	+
+|   |   |       
+|   |   \---votes
+|   |           delete-all.html.tmpl		+
+|   |           list-for-bug.html.tmpl		+
+|   |           list-for-user.html.tmpl		+
+|   |           
+|   +---email
+|   |       newchangedmail.txt.tmpl		+
+|   |       sanitycheck.txt.tmpl		+
+|   |       sudo.txt.tmpl			+
+|   |       votes-removed.txt.tmpl		+
+|   |       whine.txt.tmpl			+
+|   |       
+|   +---flag
+|   |       list.html.tmpl			+
+|   |       
+|   +---global
+|   |       banner.html.tmpl			+
+|   |       choose-classification.html.tmpl	+
+|   |       choose-product.html.tmpl		+
+|   |       code-error.html.tmpl
+|   |       common-links.html.tmpl		+
+|   |       confirm-user-match.html.tmpl	+
+|   |       docslinks.html.tmpl			+
+|   |       field-descs.none.tmpl
+|   |       footer.html.tmpl			+
+|   |       header.html.tmpl			+
+|   |       help.html.tmpl			+
+|   |       hidden-fields.html.tmpl		+
+|   |       initialize.none.tmpl		+
+|   |       js-products.html.tmpl		+
+|   |       message.html.tmpl			+
+|   |       message.txt.tmpl			+
+|   |       messages.html.tmpl
+|   |       per-bug-queries.html.tmpl		+
+|   |       select-menu.html.tmpl		+
+|   |       setting-descs.none.tmpl		+
+|   |       site-navigation.html.tmpl		+
+|   |       tabs.html.tmpl			+
+|   |       textarea.html.tmpl			+
+|   |       useful-links.html.tmpl		+
+|   |       user-error.html.tmpl
+|   |       userselect.html.tmpl		+
+|   |       variables.none.tmpl			+
+|   |       
+|   +---list
+|   |       change-columns.html.tmpl	+
+|   |       edit-multiple.html.tmpl	+
+|   |       list-simple.html.tmpl	+
+|   |       list.atom.tmpl		+
+|   |       list.csv.tmpl		+
+|   |       list.html.tmpl		+
+|   |       list.ics.tmpl		+
+|   |       list.js.tmpl		+
+|   |       list.rdf.tmpl		+
+|   |       quips.html.tmpl		+
+|   |       server-push.html.tmpl	+
+|   |       table.html.tmpl		+
+|   |       
+|   +---pages
+|   |       bug-writing.html.tmpl	+
+|   |       fields.html.tmpl
+|   |       linked.html.tmpl		+
+|   |       linkify.html.tmpl		+
+|   |       quicksearch.html.tmpl
+|   |       quicksearchhack.html.tmpl
+|   |       release-notes.html.tmpl
+|   |       sudo.html.tmpl
+|   |       voting.html.tmpl		+
+|   |       
+|   +---reports
+|   |       chart.csv.tmpl		+
+|   |       chart.html.tmpl		+
+|   |       chart.png.tmpl		+
+|   |       components.html.tmpl	+
+|   |       create-chart.html.tmpl	+
+|   |       duplicates-simple.html.tmpl	+
+|   |       duplicates-table.html.tmpl	+
+|   |       duplicates.html.tmpl	+
+|   |       duplicates.rdf.tmpl		+
+|   |       edit-series.html.tmpl	+
+|   |       keywords.html.tmpl		+
+|   |       menu.html.tmpl		+
+|   |       old-charts.html.tmpl	+
+|   |       report-bar.png.tmpl		+
+|   |       report-line.png.tmpl	+
+|   |       report-pie.png.tmpl		+
+|   |       report-simple.html.tmpl	+
+|   |       report-table.csv.tmpl	+
+|   |       report-table.html.tmpl	+
+|   |       report.csv.tmpl		+
+|   |       report.html.tmpl		+
+|   |       series-common.html.tmpl	+
+|   |       series.html.tmpl		+
+|   |       
+|   +---request
+|   |       email.txt.tmpl		+
+|   |       queue.html.tmpl		+
+|   |       
+|   +---search
+|   |       boolean-charts.html.tmpl		+
+|   |       form.html.tmpl			+
+|   |       knob.html.tmpl			+
+|   |       search-advanced.html.tmpl		+
+|   |       search-create-series.html.tmpl	+
+|   |       search-help.html.tmpl		+
+|   |       search-plugin.xml.tmpl		+
+|   |       search-report-graph.html.tmpl	+
+|   |       search-report-select.html.tmpl	+
+|   |       search-report-table.html.tmpl	+
+|   |       search-specific.html.tmpl		+
+|   |       tabs.html.tmpl
+|   |       
+|   +---setup
+|   |       strings.txt.pl			不翻译，windows安装出现了乱码
+|   |       
+|   \---whine
+|           mail.html.tmpl		+
+|           mail.txt.tmpl		+
+|           multipart-mime.txt.tmpl	+
+|           schedule.html.tmpl		+
+|           
++---extension
+|       filterexceptions.pl
+
+
+
 未完全汉化文件：
 \bug\create\create-guided.html.tmpl
 \bug\create\confirm-create-dupe.html.tmpl

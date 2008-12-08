@@ -70,7 +70,7 @@
   <ul class="warningmessages">
     [% IF param_name.defined && Param(param_name) == value %]
       <li>'[% value FILTER html %]' 是字段 '[% field.description FILTER html %]'的默认值
-          [% IF user.in_group('tweakparams') %]
+          [% IF user.groups.tweakparams %]
             在删除此值前您必须先 <a href="editparams.cgi?section=bugfields#
             [%- param_name FILTER url_quote %]">改变字段默认值</a>
           [% END %]

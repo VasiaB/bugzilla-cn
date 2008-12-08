@@ -19,45 +19,45 @@
   #                 Frédéric Buclin <LpSolit@gmail.com>
   #%]
 [%
-   title = "$terms.Bug Fields"
-   desc = "Choose fields you want to display"
+   title = "${terms.Bug}字段"
+   desc = "设置需要显示的字段"
 %]
 
 [% param_descs = {
-  useclassification => "If this is on, $terms.Bugzilla will associate each product with a " _
-                       "specific classification. But you must have 'editclassification' " _
-                       "permissions enabled in order to edit classifications.",
+  useclassification => "启用后, $terms.Bugzilla 可以对产品进行分类" _
+                       "。但是你需要有'editclassification' " _
+                       "权限来编辑分类。",
 
-  showallproducts => "If this is on and useclassification is set, $terms.Bugzilla will add a " _
-                     "'All' link in the 'New $terms.Bug' page to list all available products.",
+  showallproducts => "如果与useclassification同时启用，${terms.Bugzilla}会在" _
+                     "'新$terms.Bug'页面添加一个'All' 链接用来显示所有存在的产品。",
 
-  usetargetmilestone => "Do you wish to use the Target Milestone field?",
+  usetargetmilestone => "开启目标里程碑?",
 
-  useqacontact => "Do you wish to use the QA Contact field?",
+  useqacontact => "开启QA联系人字段？",
 
-  usestatuswhiteboard => "Do you wish to use the Status Whiteboard field?",
+  usestatuswhiteboard => "开启状态白板字段",
 
-  usevotes => "Do you wish to allow users to vote for ${terms.bugs}? Note that in order " _
-              "for this to be effective, you will have to change the maximum " _
-              "votes allowed in a product to be non-zero in " _
-              "<a href=\"editproducts.cgi\">the product edit page</a>.",
+  usevotes => "允许用户对${terms.bugs}投票。启用该特性需要" _
+              "设置产品的最大允许投票数量为大于0的数字 " _
+              " " _
+              "<a href=\"editproducts.cgi\">编辑产品</a>.",
 
-  usebugaliases => "Do you wish to use $terms.bug aliases, which allow you to assign " _
-                   "$terms.bugs an easy-to-remember name by which you can refer to them?",
+  usebugaliases => "启用${terms.bug}别名支持，可以给" _
+                   "${terms.bugs}起一个好记的名字来访问它。",
 
-  defaultpriority => "This is the priority that newly entered $terms.bugs are set to.",
+  defaultpriority => "设置新${terms.bugs}的默认优先级。",
 
-  defaultseverity => "This is the severity that newly entered $terms.bugs are set to.",
+  defaultseverity => "设置填写新${terms.bugs}时的默认严重程度。",
 
-  defaultplatform => "This is the platform that is preselected on the $terms.bug " _
-                     "entry form.<br> " _
-                     "You can leave this empty: " _
-                     "$terms.Bugzilla will then use the platform that the browser " _
-                     "reports to be running on as the default.",
+  defaultplatform => "填写新${terms.bug}时的默认平台 " _
+                     "。<br> " _
+                     "如果留空 " _
+                     "${terms.Bugzilla}会根据浏览器运行环境自动选择 " _
+                     "。",
 
-  defaultopsys => "This is the operating system that is preselected on the $terms.bug " _
-                  "entry form.<br> " _
-                  "You can leave this empty: " _
-                  "$terms.Bugzilla will then use the operating system that the browser " _
-                  "reports to be running on as the default." }
+  defaultopsys => "提交新${terms.bug}时默认的操作系统。 " _
+                  "。<br> " _
+                  "如果留空 " _
+                  "${terms.Bugzilla}会根据浏览器运行环境自动选择" _
+                     "。 " }
 %]

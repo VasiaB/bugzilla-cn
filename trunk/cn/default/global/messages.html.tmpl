@@ -136,6 +136,36 @@
     [% title = "向搜索页面增加字段.." %]
     [% link  = "如果页面未自动刷新，请点击此处。" %]
 
+  [% ELSIF message_tag == "buglist_updated_named_query" %]
+    您的名为 <code><a 
+     href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=[% queryname FILTER url_quote %]"
+    >[% queryname FILTER html %]</a></code> 的搜索已更新。
+
+  [% ELSIF message_tag == "buglist_new_default_query" %]
+    您现在有新的默认搜索了，您可以将任何独立的搜索结果存为书签。
+
+  [% ELSIF message_tag == "buglist_new_named_query" %]
+    您现在有名为<code><a
+     href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=[% queryname FILTER url_quote %]"
+    >[% queryname FILTER html %]</a></code>的搜索。
+
+  [% ELSIF message_tag == "buglist_query_gone" %]
+    [% title = "搜索已清除" %]
+    [% link  = "返回搜索页面" %]
+    名为<b>[% namedcmd FILTER html %]</b>的搜索已清除。
+
+  [% ELSIF message_tag == "buglist_sorted_by_relevance" %]
+    列表中的[% terms.Bugs %]已根据关联性排序，最有关联性的[% terms.bugs %]排在最上面。
+    [% IF bugs.size == constants.FULLTEXT_BUGLIST_LIMIT %]
+      仅显示[% constants.FULLTEXT_BUGLIST_LIMIT FILTER html %]
+      个最有关联性的[% terms.bugs %]。
+    [% END %]
+
+  [% ELSIF message_tag == "change_columns" %]
+    [% title = "更改显示列" %]
+    以新的显示列重新显示搜索结果...
+    如果页面没有自动刷新，请<a href="[% redirect_url FILTER html %]">点击此处</a>
+
   [% ELSIF message_tag == "classification_created" %]
     [% title = "新分类已创建" %]
     分类 <em>[% classification.name FILTER html %]</em> 已创建.
@@ -212,43 +242,24 @@
       <em>[% comp.name FILTER html %]</em> 没有任何改变.
     [% END %]
 
-  [% ELSIF message_tag == "buglist_updated_named_query" %]
-    您的名为 <code><a 
-     href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=[% queryname FILTER url_quote %]"
-    >[% queryname FILTER html %]</a></code> 的搜索已更新。
-
-  [% ELSIF message_tag == "buglist_new_default_query" %]
-    您现在有新的默认搜索了，您可以将任何独立的搜索结果存为书签。
-
-  [% ELSIF message_tag == "buglist_new_named_query" %]
-    您现在有名为<code><a
-     href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=[% queryname FILTER url_quote %]"
-    >[% queryname FILTER html %]</a></code>的搜索。
-
-  [% ELSIF message_tag == "buglist_query_gone" %]
-    [% title = "搜索已清除" %]
-    [% link  = "返回搜索页面" %]
-    名为<b>[% namedcmd FILTER html %]</b>的搜索已清除。
-
-  [% ELSIF message_tag == "buglist_sorted_by_relevance" %]
-    列表中的[% terms.Bugs %]已根据关联性排序，最有关联性的[% terms.bugs %]排在最上面。
-    [% IF bugs.size == constants.FULLTEXT_BUGLIST_LIMIT %]
-      仅显示[% constants.FULLTEXT_BUGLIST_LIMIT FILTER html %]
-      个最有关联性的[% terms.bugs %]。
-    [% END %]
-
-  [% ELSIF message_tag == "change_columns" %]
-    [% title = "更改显示列" %]
-    以新的显示列重新显示搜索结果...
-    如果页面没有自动刷新，请<a href="[% redirect_url FILTER html %]">点击此处</a>
-
   [% ELSIF message_tag == "custom_field_created" %]
     [% title = "自定义字段已创建" %]
     已成功创建自定义字段 '[% field.name FILTER html %]'
 
+  [% ELSIF message_tag == "custom_field_deleted" %]
+    [% title = "Custom Field Deleted" %]
+    The custom field '[% field.name FILTER html %]' has been
+    successfully deleted.
+
   [% ELSIF message_tag == "custom_field_updated" %]
     [% title = "自定义字段已更新" %]
     已成功更新 '[% field.name FILTER html %]' 字段的属性
+  [% ELSIF message_tag == "default_settings_updated" %]
+    [% IF changes_saved %]
+      Changes to default preferences have been saved.
+    [% ELSE %]
+      No changes made.
+    [% END %]
 
   [% ELSIF message_tag == "emailold_change_canceled" %]
     [% title = "取消更改 Email 地址请求" %]
@@ -264,11 +275,81 @@
     已取消将email地址[%+ old_email FILTER html %]更改为
     [%+ new_email FILTER html %]的请求。
    您旧的帐号设备已被恢复。
+  [% ELSIF message_tag == "field_value_created" %]
+    [% title = "New Field Value Created" %]
+    The value <em>[% value FILTER html %]</em> has been added as a valid choice
+    for the <em>[% field.description FILTER html %]</em>
+    (<em>[% field.name FILTER html %]</em>) field.
+    [% IF field.name == "bug_status" %]
+      You should now visit the <a href="editworkflow.cgi">status workflow page</a>
+      to include your new [% terms.bug %] status.
+    [% END %]
+
+  [% ELSIF message_tag == "field_value_deleted" %]
+    [% title = "Field Value Deleted" %]
+    The value <em>[% value FILTER html %]</em> of the
+    <em>[% field.description FILTER html %]</em>
+    (<em>[% field.name FILTER html %]</em>) field has been deleted.
+
+  [% ELSIF message_tag == "field_value_updated" %]
+    [% title = "Field Value Updated" %]
+    [% IF updated_value || updated_sortkey %]
+      Changes to the <em>[% value FILTER html %]</em> value of the
+      <em>[% field.description FILTER html %]</em>
+      (<em>[% field.name FILTER html %]</em>) field have been changed:
+      <ul>
+        [% IF updated_value %]
+          <li>Field value updated to <em>[% value FILTER html %]</em></li>
+          [% IF default_value_updated %]
+            (note that this value is the default for this field. All
+            references to the default value will now point to this new value)
+          [% END %]
+        [% END %]
+        [% IF updated_sortkey %]
+          <li>Field value sortkey updated to <em>[% sortkey FILTER html %]</em></li>
+        [% END %]
+      </ul>
+    [% ELSE %]
+      No changes made to the field value <em>[% value FILTER html %]</em>.
+    [% END %]
+
+  [% ELSIF message_tag == "flag_cleared" %]
+    Some flags didn't apply in the new product/component
+    and have been cleared.
 
   [% ELSIF message_tag == "flag_creation_failed" %]
     [% title = "标记创建失败" %]
     创建标记时发生错误：
     [%+ flag_creation_error FILTER none %]
+
+  [% ELSIF message_tag == "get_field_desc" %]
+    [% field_descs.$field_name FILTER html %]
+
+  [% ELSIF message_tag == "get_resolution" %]
+    [% get_resolution(resolution) FILTER html %]
+
+  [% ELSIF message_tag == "get_status" %]
+    [% get_status(status) FILTER html %]
+
+  [% ELSIF message_tag == "group_created" %]
+    [% title = "New Group Created" %]
+    The group <em>[% group.name FILTER html %]</em> has been created.
+
+  [% ELSIF message_tag == "group_deleted" %]
+    [% title = "Group Deleted" %]
+    The group <em>[% name FILTER html %]</em> has been deleted.
+
+  [% ELSIF message_tag == "group_membership_removed" %]
+    [% title = "Group Membership Removed" %]
+    [% IF users.size %]
+      Explicit membership to the <em>[% group FILTER html %]</em> group removed
+      [% IF regexp %] for users matching '[% regexp FILTER html %]'[% END %]:
+      [% FOREACH user = users %]
+        [%+ user.login FILTER html %]
+      [% END %]
+    [% ELSE %]
+      No users are being affected by your action.
+    [% END %]
 
   [% ELSIF message_tag == "group_updated" %]
     [% IF changes.keys.size %]
@@ -333,6 +414,41 @@
       您没有对 '[% group.name FILTER html %]' 作任何改变。
     [% END %]
 
+  [% ELSIF message_tag == "keyword_created" %]
+    [% title = "New Keyword Created" %]
+    The keyword <em>[% name FILTER html %]</em> has been created.
+
+  [% ELSIF message_tag == "keyword_deleted" %]
+    [% title = "Keyword Deleted" %]
+    The <em>[% keyword.name FILTER html %]</em> keyword has been deleted.
+    <b>After you have finished editing keywords, you need to
+    <a href="sanitycheck.cgi?rebuildkeywordcache=1">rebuild the keyword
+    cache</a></b> (on a very large installation of [% terms.Bugzilla %],
+    this can take several minutes).
+
+  [% ELSIF message_tag == "keyword_updated" %]
+    [% title = "Keyword Updated" %]
+    [% IF changes.keys.size %]
+      Changes to the <em>[% keyword.name FILTER html %]</em> keyword have
+      been saved:
+      <ul>
+        [% IF changes.name.defined %]
+          <li>
+            Keyword renamed to <em>[% keyword.name FILTER html %]</em>.
+            <b>After you have finished editing keywords, you need to
+            <a href="sanitycheck.cgi?rebuildkeywordcache=1">rebuild
+            the keyword cache</a></b> (on a very large installation
+            of [% terms.Bugzilla %], this can take several minutes).
+          </li>
+        [% END %]
+        [% IF changes.description.defined %]
+          <li>Description updated to <em>[% keyword.description FILTER html %]</em></li>
+        [% END %]
+      </ul>
+    [% ELSE %]
+      No changes made.
+    [% END %]
+
   [% ELSIF message_tag == "logged_out" %]
     [% title = "已注销" %]
     [% url = "index.cgi?GoAheadAndLogIn=1" %]
@@ -344,6 +460,35 @@
   [% ELSIF message_tag == "login_changed" %]
     [% title = "$terms.Bugzilla 登录已改变" %]
     您的 [% terms.Bugzilla %] 登陆已改变。
+
+  [% ELSIF message_tag == "milestone_created" %]
+    [% title = "Milestone Created" %]
+    The milestone <em>[% milestone.name FILTER html %]</em> has been created.
+
+  [% ELSIF message_tag == "milestone_deleted" %]
+    [% title = "Milestone Deleted" %]
+    The milestone <em>[% milestone.name FILTER html %]</em> has been deleted.
+    [% IF milestone.bug_count %]
+      [%+ terms.Bugs %] targetted to this milestone have been retargetted to
+      the default milestone <em>[% product.default_milestone FILTER html %]</em>.
+    [% END %]
+
+  [% ELSIF message_tag == "milestone_updated" %]
+    [% title = "Milestone Updated" %]
+    [% IF changes.size %]
+      Changes to the milestone <em>[% milestone.name FILTER html %]</em>
+      have been saved:
+      <ul>
+        [% IF changes.value.defined %]
+          <li>Milestone name updated to <em>[% milestone.name FILTER html %]</em></li>
+        [% END %]
+        [% IF changes.sortkey.defined %]
+          <li>Sortkey updated to <em>[% milestone.sortkey FILTER html %]</em>
+        [% END %]
+      </ul>
+    [% ELSE %]
+      No changes made to milestone <em>[% milestone.name FILTER html %]</em>.
+    [% END %]
 
   [% ELSIF message_tag == "parameters_updated" %]
     [% title = "参数已更新" %]
@@ -412,9 +557,6 @@
   [% ELSIF message_tag == "install_admin_get_password" %]
     输入管理员帐号的密码：
 
-  [% ELSIF message_tag == "install_admin_get_password2" %]
-    重新输入上述密码：
-
   [% ELSIF message_tag == "install_admin_created" %]
     [% user.login FILTER html %] 已设设置为管理员。
 
@@ -431,6 +573,9 @@
   [% ELSIF message_tag == "install_column_rename" %]
     重命名列 '[% old FILTER html %]' 为 '[% new FILTER html %]'...
 
+  [% ELSIF message_tag == "install_confirm_password" %]
+    Please retype the password to verify:
+
   [% ELSIF message_tag == "install_default_classification" %]
     创建默认分类 '[% name FILTER html %]'...
 
@@ -441,7 +586,10 @@
     修复文件权限 ...
 
   [% ELSIF message_tag == "install_fk_add" %]
-    添加外键： [% table FILTER html %].[% column FILTER html %] -&gt; [% fk.TABLE FILTER html %].[% fk.COLUMN FILTER html %]...
+    Adding foreign key: [% table FILTER html %].[% column FILTER html %] -&gt; [% fk.TABLE FILTER html %].[% fk.COLUMN FILTER html %]...
+
+  [% ELSIF message_tag == "install_fk_drop" %]
+    Dropping foreign key: [% table FILTER html %].[% column FILTER html %] -&gt; [% fk.TABLE FILTER html %].[% fk.COLUMN FILTER html %]...
 
   [% ELSIF message_tag == "install_group_create" %]
     创建组 [% name FILTER html %]...
@@ -460,6 +608,12 @@
     '参数设置' 页面 (在管理员帐号的下面) 
     以确保按您的要求设备好各项参数 － 包括设置 “urlbase“ 选项
     为正确网址。
+
+  [% ELSIF message_tag == "install_reset_password" %]
+    Enter a new password for [% user.login FILTER html %]:
+
+  [% ELSIF message_tag == "install_reset_password_done" %]
+    New password set.
 
   [% ELSIF message_tag == "install_webservergroup_empty" %]
     ****************************************************************************
@@ -487,6 +641,20 @@
     请注意这在Windows下运行不会带来任何安全性。
     检查您的 [% terms.Bugzilla %] 目录文件的权限，避免不必要的写权限。
 
+  [% ELSIF message_tag == "product_created" %]
+    [% title = "Product Created" %]
+    此产品 <em>[% product.name FILTER html %]</em> 已经创建. 在向此产品录入[% terms.bugs %]前您必须
+    <a href="editcomponents.cgi?action=add&product=[% product.name FILTER url_quote %]">
+    至少添加一个模块</a>.
+
+  [% ELSIF message_tag == "product_deleted" %]
+    [% title = "Product Deleted" %]
+    此产品 <em>[% product.name FILTER html %]</em> 和其所有版本,
+    模块,里程碑,组控制都被删除了.
+    [% IF product.bug_count %]
+      此产品中的所有[% terms.bugs %]及其引用都被删除了.
+    [% END %]
+
   [% ELSIF message_tag == "product_invalid" %]
     [% title = "$terms.Bugzilla 模块描述" %]
     产品 <em>[% product FILTER html %]</em> 不存在
@@ -500,6 +668,12 @@
     [%# We use this way to call sanitycheck-specific messages so that
       # we can still use get_text(). %]
     [% PROCESS "admin/sanitycheck/messages.html.tmpl" %]
+
+  [% ELSIF message_tag == "series_all_open" %]
+    All Open
+
+  [% ELSIF message_tag == "series_all_closed" %]
+    All Closed
 
   [% ELSIF message_tag == "sudo_started" %]
     [% title = "Sudo 会话已开始" %]
@@ -544,27 +718,6 @@
     您输入的用户名匹配多个用户，
     所以 [% match_field FILTER html %] 字段将为空。
 
-  [% ELSIF message_tag == "workflow_updated" %]
-    工作流程已更新。
-
-  [% ELSIF message_tag == "product_created" %]
-    [% title = "Product Created" %]
-    此产品 <em>[% product.name FILTER html %]</em> 已经创建. 在向此产品录入[% terms.bugs %]前您必须
-    <a href="editcomponents.cgi?action=add&product=[% product.name FILTER url_quote %]">
-    至少添加一个模块</a>.
-
-  [% ELSIF message_tag == "product_deleted" %]
-    [% title = "Product Deleted" %]
-    此产品 <em>[% product.name FILTER html %]</em> 和其所有版本,
-    模块,里程碑,组控制都被删除了.
-    [% IF product.bug_count %]
-      此产品中的所有[% terms.bugs %]及其引用都被删除了.
-    [% END %]
-
-  [% ELSIF message_tag == "product_invalid" %]
-    [% title = "$terms.Bugzilla Component Descriptions" %]
-    产品 <em>[% product FILTER html %]</em> 不存在或您没有权限删除.
-    以下是您可以选择的产品列表.
 
   [% ELSIF message_tag == "version_created" %]
     [% title = "Version Created" %]
@@ -579,6 +732,9 @@
   [% ELSIF message_tag == "version_updated" %]
     [% title = "Version Updated" %]
     版本号重命名为 <em>[% version.name FILTER html %]</em>.
+
+  [% ELSIF message_tag == "workflow_updated" %]
+    工作流程已更新。
 
   [% ELSE %]
     [%# Give sensible error if error functions are used incorrectly.
