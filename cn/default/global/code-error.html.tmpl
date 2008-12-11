@@ -17,6 +17,7 @@
   #
   # Contributor(s): Gervase Markham <gerv@gerv.net>
   # Localization: jiangyanfeng <jiangyanfeng@gmail.com>
+  #               CNBorn <CNBorn@gmail.com>
   #%]
 
 [%# INTERFACE:
@@ -51,7 +52,7 @@
     [% title = "Email 地址无效" %]
     系统接收到的 Email 地址(<b>[% addr FILTER html %]</b>)
     没有通过 Email 地址合法性检查。
-    当创建或更新您的帐号时，when trying to create or update your account.
+    当创建或更新您的帐号时，
     [% IF default %]
       一个合法的 Email 地址必须有一个“@”符号，
       并在“@”后至少有一个“.”符号。
@@ -99,7 +100,7 @@
     不能打开图表数据文件 <tt>[% filename FILTER html %]</tt>.
   
   [% ELSIF error == "chart_lines_not_installed" %]
-    [% admindocslinks = {'installation.html#install-perlmodules' => 'Installing Perl modules necessary for Charting'} %]
+    [% admindocslinks = {'installation.html#install-perlmodules' => '安装图表功能必需的Perl模块'} %]
     未安装Perl模块 Chart::Lines，不能显示图表。
     运行 checksetup.pl 显示安装指导。
 
@@ -130,299 +131,296 @@
     [% END %]
 
   [% ELSIF error == "extension_invalid" %]
-    An error occurred processing hook [% name FILTER html %] in
-    extension [% extension FILTER html %]: [% errstr FILTER html %]
+    在扩展 [% extension FILTER html %]: [% errstr FILTER html %]
+    中处理系统挂钩 [% name FILTER html %] 时出现错误
 
   [% ELSIF error == "extern_id_conflict" %]
-    The external ID '[% extern_id FILTER html %]' already exists
-    in the database for '[% username FILTER html %]', but your
-    account source says that '[% extern_user FILTER html %]' has that ID.
+    外部 ID '[% extern_id FILTER html %]' 已在数据库中存在
+    指定给用户 '[% username FILTER html %]', 但
+    '[% extern_user FILTER html %]' 用户已拥有此ID.
 
   [% ELSIF error == "field_type_mismatch" %]
-    Cannot seem to handle <code>[% field FILTER html %]</code>
-    and <code>[% type FILTER html %]</code> together.
+    无法在字段 <code>[% field FILTER html %]</code>
+    中使用 <code>[% type FILTER html %]</code> 类型数据
 
   [% ELSIF error == "field_not_custom" %]
     '[% field.description FILTER html %]' ([% field.name FILTER html %])
-    is not a custom field.
+    不是一个自定义字段。
 
   [% ELSIF error == "gd_not_installed" %]
-    [% admindocslinks = {'installation.html#install-perlmodules' => 'Installing Perl modules necessary for Charting'} %]
-    Charts will not work without the GD Perl module being installed.
-    Run checksetup.pl for installation instructions.
+    [% admindocslinks = {'installation.html#install-perlmodules' => '安装图表功能必需的Perl模块'} %]
+    如未安装 GD Perl模块, 图表功能将不能正常使用
+    请运行 checksetup.pl 获取安装指南
 
   [% ELSIF error == "illegal_content_type_method" %]
-    Your form submission got corrupted somehow.  The <em>content
-    method</em> field, which specifies how the content type gets determined,
-    should have been either <em>autodetect</em>, <em>list</em>,
-    or <em>manual</em>, but was instead
+    表单提交由于种种原因造成损坏。但用于检测内容类型的<em>content
+    method</em> 字段的值, 
+    应该是 <em>autodetect</em>, <em>list</em>,
+    或 <em>manual</em>, 但实际值却是
     <em>[% contenttypemethod FILTER html %]</em>.
 
   [% ELSIF error == "illegal_field" %]
-    A legal [% field FILTER html %] was not set.
+    [% field FILTER html %] 设置无效
 
   [% ELSIF error == "inactive_group" %]
-    Attempted to add [% terms.bug %] to the '[% name FILTER html %]'
-    group, which is not used for [% terms.bugs %].
+    尝试将 [% terms.bug %] 添加到 '[% name FILTER html %]'
+    组中, 但该组不可用于 [% terms.bugs %]。
 
   [% ELSIF error == "invalid_attach_id_to_obsolete" %]
-     The attachment number of one of the attachments you wanted to obsolete,
-     [% attach_id FILTER html %], is invalid.
+     您选择废弃的附件，附件号码
+     [% attach_id FILTER html %] 无效
           
   [% ELSIF error == "invalid_column_name_cookie" %]
-    [% title = "Invalid Column Name" %]
-     The custom sort order specified in your cookie contains an invalid
-     column name <em>[% fragment FILTER html %]</em>. 
-     The cookie has been cleared.
+    [% title = "栏名称无效" %]
+     表单中提交的自定义排序顺序中
+     <em>[% fragment FILTER html %]</em> 栏名称无效
+     cookie已被清空。
          
   [% ELSIF error == "invalid_column_name_form" %]
-    [% title = "Invalid Column Name" %]
-     The custom sort order specified in your form submission contains an
-     invalid column name <em>[% fragment FILTER html %]</em>.
+    [% title = "栏名称无效" %]
+     表单中提交的自定义排序顺序中
+     <em>[% fragment FILTER html %]</em> 栏名称无效
 
   [% ELSIF error == "invalid_customfield_type" %]
-    [% title = "Invalid Field Type" %]
-    The type <em>[% type FILTER html %]</em> is not a valid field type.
+    [% title = "无效字段类型" %]
+    <em>[% type FILTER html %]</em> 不是一个有效的字段类型
 
   [% ELSIF error == "invalid_dimensions" %]
-    [% title = "Invalid Dimensions" %]
-    The width or height specified is not a positive integer.
+    [% title = "尺寸无效" %]
+    指定的宽度或者高度不是一个正整数
 
   [% ELSIF error == "invalid_flag_association" %]
-    [% title = "Invalid Flag Association" %]
-    Some flags do not belong to
+    [% title = "无效的标记关联" %]
+    一些标记不属于
     [% IF attach_id %]
-      attachment [% attach_id FILTER html %].
+      附件: [% attach_id FILTER html %].
     [% ELSE %]
-      [%+ terms.bug %] [%+ bug_id FILTER html %].
+      [%+ terms.bug %]: [%+ bug_id FILTER html %].
     [% END %]
 
   [% ELSIF error == "invalid_series_id" %]
-    [% title = "Invalid Series" %]
-    The series_id [% series_id FILTER html %] is not valid. It may be that
-    this series has been deleted.
+    [% title = "无效序列(Series)" %]
+    series_id [% series_id FILTER html %] 无效，
+    此序列(Series)可能已经被删除。
 
   [% ELSIF error == "invalid_webservergroup" %]
-    There is no such group: [% group FILTER html %]. Check your $webservergroup
-    setting in [% constants.bz_locations.localconfig FILTER html %].
+    没有此群组: [% group FILTER html %]. 请检查
+    [% constants.bz_locations.localconfig FILTER html %] 中的
+    $webservergroup 选项 
 
   [% ELSIF error == "mismatched_bug_ids_on_obsolete" %]
-    Attachment [% attach_id FILTER html %] ([% description FILTER html %]) 
-    is attached to [% terms.bug %] [%+ attach_bug_id FILTER html %], 
-    but you tried to flag it as obsolete while creating a new attachment to 
-    [% terms.bug %] [%+ my_bug_id FILTER html %].
+    附件 [% attach_id FILTER html %] ([% description FILTER html %]) 
+    与 [% terms.bug %] [%+ attach_bug_id FILTER html %] 相关联, 
+    在 [% terms.bug %] [%+ my_bug_id FILTER html %] 创建新附件
+    会尝试将其标记为已废弃 
 
   [% ELSIF error == "flags_not_available" %]
-    [% title = "Flag Editing not Allowed" %]
+    [% title = "不允许编辑标记" %]
     [% IF type == "b" %]
-      Flags cannot be set or changed when
-      changing several [% terms.bugs %] at once.
+      同时改变一些 [% terms.bugs %] 时无法设置或改变标记
     [% ELSE %]
-      References to existing flags when creating
-      a new attachment are invalid.
+      创建新附件时对原有标记的指向无效
     [% END %] 
 
   [% ELSIF error == "flag_requestee_disabled" %]
-    [% title = "Flag not Requestable from Specific Person" %]
-    You can't ask a specific person for
+    [% title = "对于特定用户该标记不可请求" %]
+    无法要求指定人员
     <em>[% type.name FILTER html %]</em>.
   
   [% ELSIF error == "flag_status_invalid" %]
-    The flag status <em>[% status FILTER html %]</em>
+    标记状态 <em>[% status FILTER html %]</em>
     [% IF id %]
-      for flag ID #[% id FILTER html %]
+      ID #[% id FILTER html %]
     [% END %]
-    is invalid.
+    无效
 
   [% ELSIF error == "flag_type_inactive" %]
-    [% title = "Inactive Flag Type" %]
-    The flag type [% type FILTER html %] is inactive and cannot be used
-    to create new flags.
+    [% title = "非活动的标记类型" %]
+    标记类型 [% type FILTER html %] 未非活动, 
+    无法创建新标记
 
   [% ELSIF error == "flag_type_nonexistent" %]
-    There is no flag type with the ID <em>[% id FILTER html %]</em>.
+    无对应此ID <em>[% id FILTER html %]</em>的标志类型
 
   [% ELSIF error == "flag_type_target_type_invalid" %]
-    The target type was neither <em>[% terms.bug %]</em> nor <em>attachment</em>
-    but rather <em>[% target_type FILTER html %]</em>.
+    目标类型非所需的 <em>[% terms.bug %]</em> 或 <em>附件</em>,
+    类型为<em>[% target_type FILTER html %]</em>.
   
   [% ELSIF error == "invalid_field_name" %]
-    Can't use [% field FILTER html %] as a field name.
+    无法使用 [% field FILTER html %] 作为字段名称
 
   [% ELSIF error == "invalid_keyword_id" %]
-    The keyword ID <em>[% id FILTER html %]</em> couldn't be
-    found.
+    无法找到关键字 ID <em>[% id FILTER html %]</em>     
 
   [% ELSIF error == "invalid_user" %]
-    [% title = "Invalid User" %]
-    There is no user account
+    [% title = "用户无效" %]
+    通过
     [% IF user_id %]
-      with ID <em>[% user_id FILTER html %]</em>.
+      ID: <em>[% user_id FILTER html %]</em>.
     [% ELSIF user_login %]
-      with login name <em>[% user_login FILTER html %]</em>.
+      登录名: <em>[% user_login FILTER html %]</em>.
     [% ELSE %]
-      given.
+      无法找到相关的用户
     [% END %]
 
   [% ELSIF error == "ldap_bind_failed" %]
-    Failed to bind to the LDAP server. The error message was: 
+    无法绑定 LDAP 服务器, 错误信息如下: 
     <code>[% errstr FILTER html %]</code>
 
   [% ELSIF error == "ldap_cannot_retreive_attr" %]
-    The specified LDAP attribute [% attr FILTER html %] was not found.
+    指定的 LDAP 属性 [% attr FILTER html %] 未找到
 
   [% ELSIF error == "ldap_connect_failed" %]
-    Could not connect to the LDAP server(s) <code>[% server FILTER html %]</code>.
+    无法连接到 LDAP 服务器 <code>[% server FILTER html %]</code>.
 
   [% ELSIF error == "ldap_start_tls_failed" %]
-    Could not start TLS with LDAP server: <code>[% error FILTER html %]</code>.
+    无法启动 LDAP 服务器上的TLS协议: <code>[% error FILTER html %]</code>.
 
   [% ELSIF error == "ldap_search_error" %]
-    An error occurred while trying to search LDAP for 
-    &quot;[% username FILTER html %]&quot;: 
+    在LDAP中搜索 
+    &quot;[% username FILTER html %]&quot; 时出现错误:
    <code>[% errstr FILTER html %]</code>
 
   [% ELSIF error == "ldap_server_not_defined" %]
-    The LDAP server for authentication has not been defined.
+    用户认证用 LDAP server 未定义
 
   [% ELSIF error == "mail_send_error" %]
-    There was an error sending mail from '[% mail.header('From') FILTER html %]'
+    邮件发送出现错误 from '[% mail.header('From') FILTER html %]'
     to '[% mail.header('To') FILTER html %]':
     [% msg FILTER html %]
 
   [% ELSIF error == "missing_bug_id" %]
-    No [% terms.bug %] ID was given.
+    未指定 [% terms.bug %] ID
     
   [% ELSIF error == "missing_series_id" %]
-    Having inserted a series into the database, no series_id was returned for
-    it. Series: [% series.category FILTER html %] / 
+    插入一个序列到数据库的同时, 没有返回 series_id
+    。序列: [% series.category FILTER html %] / 
     [%+ series.subcategory FILTER html %] / 
     [%+ series.name FILTER html %].
     
   [% ELSIF error == "need_quipid" %]
-    A valid quipid is needed.
+    需要一个有效的 quipid 
 
   [% ELSIF error == "no_manual_moved" %]
-    You cannot set the resolution of [% terms.abug %] to MOVED without
-    moving the [% terms.bug %].
+    如果您不移动 [% terms.bug %]
+    无法将解决图形 [% terms.abug %] 修改为 MOVED
 
   [% ELSIF error == "param_must_be_numeric" %]
-    [% title = "Invalid Parameter" %]
-    Invalid parameter passed to [% function FILTER html %].
-    It must be numeric.
+    [% title = "参数无效" %]
+    传至 [% function FILTER html %] 的参数无效
+    参数值类型需为数值
 
   [% ELSIF error == "param_required" %]
-    [% title = "Missing Parameter" %]
-    The function <code>[% function FILTER html %]</code> requires
-    a <code>[% param FILTER html %]</code> argument, and that
-    argument was not set.
+    [% title = "缺少参数" %]
+    参数未设置,
+    函数需要 <code>[% function FILTER html %]</code> 
+    <code>[% param FILTER html %]</code> 参数
 
   [% ELSIF error == "protection_violation" %]
-    The function <code>[% function FILTER html %]</code> was called
+    调用函数 <code>[% function FILTER html %]</code> 
 
     [% IF argument %]
-        with the argument <code>[% argument FILTER html %]</code>
+        时使用了参数 <code>[% argument FILTER html %]</code>
     [% END %]
 
-    from
+    调用者：
    
     [% IF caller %]
-        <code>[%+ caller FILTER html %]</code>, which is
+        <code>[%+ caller FILTER html %]</code>
     [% END %]
 
-    outside the package. This function may only be called from
-    a subclass of <code>[% superclass FILTER html %]</code>.
+    位于包以外。该函数仅能被
+    <code>[% superclass FILTER html %]</code>的一个子类调用.
 
   [% ELSIF error == "radius_preparation_error" %]
-    An error occurred while preparing for a RADIUS authentication request:
+    在准备 RADIUS 认证请求时出现错误:
     <code>[% errstr FILTER html %]</code>.
 
   [% ELSIF error == "unknown_comparison_type" %]
-    Specified comparison type is not supported.
+    无法支持指定的比较类型
 
   [% ELSIF error == "request_queue_group_invalid" %]
-    The group field <em>[% group FILTER html %]</em> is invalid.
+    群组字段 <em>[% group FILTER html %]</em> 无效
 
   [% ELSIF error == "report_axis_invalid" %]
-    <em>[% val FILTER html %]</em> is not a valid value for 
-    [%+ IF    fld == "x" %]the horizontal axis
-    [%+ ELSIF fld == "y" %]the vertical axis
-    [%+ ELSIF fld == "z" %]the multiple tables/images
-    [%+ ELSE %]a report axis[% END %] field.
+    报表
+    [%+ IF    fld == "x" %]横轴
+    [%+ ELSIF fld == "y" %]纵轴
+    [%+ ELSIF fld == "z" %]多表格/图像
+    [%+ ELSE %]一个报表轴[% END %] 字段
+    的数值 <em>[% val FILTER html %]</em> 无效
 
   [% ELSIF error == "setting_info_invalid" %]
-    To create a new setting, you must supply a setting name, a list of 
-    value/sortindex pairs, and the devault value.
+    要创建一个新选项，您需要提供选项名称,  
+    一组对应的 数值/排序索引 数列, 以及默认参数值
 
   [% ELSIF error == "setting_name_invalid" %]
-    The setting name <em>[% name FILTER html %]</em> is not a valid
-    option. Setting names must begin with a letter, and contain only
-    letters, digits, or the symbols '_', '-', '.', or ':'.
+    选项名称: <em>[% name FILTER html %]</em> 不是一个有效的选项
+    选项名称需以字母开头，名称中只可包含字母、数字或'_', '-', '.', 或 ':'符号
 
   [% ELSIF error == "setting_subclass_invalid" %]
-    There is no such Setting subclass as
+    无此选项子类:
     <code>[% subclass FILTER html %]</code>.
 
   [% ELSIF error == "setting_value_invalid" %]
-    The value "<code>[% value FILTER html %]</code>" is not in the list of
-    legal values for the <em>[% name FILTER html %]</em> setting.
+    选项值 "<code>[% value FILTER html %]</code>" 在
+    <em>[% name FILTER html %]</em> 的合法选项值列表中不存在.
 
   [% ELSIF error == "soap_not_installed" %]
     [% admindocslinks = {'installation.html#install-perlmodules' => 'Installing Perl modules'} %]
-    The XMLRPC interface will not work without the SOAP::Lite Perl module being
-    installed.
-    Run checksetup.pl for installation instructions.
+    没有安装 SOAP::Lite Perl模块，无法使用 XMLRPC 接口
+    请运行 checksetup.pl 查看安装指南
 
   [% ELSIF error == "token_generation_error" %]
-    Something is seriously wrong with the token generation system.
+    标识生成系统出现严重错误.
 
   [% ELSIF error == "template_error" %]
     [% template_error_msg FILTER html %]
 
   [% ELSIF error == "template_invalid" %]
-    Template with invalid file name found in hook call: [% name FILTER html %].
+    系统挂钩调用的模板使用了无效的文件名: [% name FILTER html %].
 
   [% ELSIF error == "unable_to_retrieve_password" %]
-     I was unable to retrieve your old password from the database.
+     无法从数据库中获得先前的密码
 
   [% ELSIF error == "undefined_field" %]
-    Form field [% field FILTER html %] was not defined.
+    表格 [% field FILTER html %] 字段没有定义
     
   [% ELSIF error == "unknown_action" %]
     [% IF action %]
-       Unknown action [% action FILTER html %]!
+       [% action FILTER html %] 未知动作!
     [% ELSE %]
-       I could not figure out what you wanted to do.
+       无法识别所要进行的操作
     [% END %]
 
   [% ELSIF error == "usage_mode_invalid" %]
-    '[% invalid_usage_mode FILTER html %]' is not a valid usage mode.
+    '[% invalid_usage_mode FILTER html %]' 不是一个有效的使用模式
 
   [% ELSIF error == "must_be_patch" %]
-    [% title = "Attachment Must Be Patch" %]
-    Attachment #[% attach_id FILTER html %] must be a patch.
+    [% title = "附件要求为补丁文件" %]
+    附件 #[% attach_id FILTER html %] 必须是一个补丁文件(Patch).
 
   [% ELSIF error == "not_in_transaction" %]
-    Attempted to end transaction without starting one first.
+    在未开始流程前场是结束流程.
 
   [% ELSIF error == "comma_operator_deprecated" %]
-    [% title = "SQL query generator internal error" %]
-    There is an internal error in the SQL query generation code,
-    creating queries with implicit JOIN.
+    [% title = "SQL 查询生成器内部错误" %]
+    在SQL query generation code中出现内部错误,
+    查询中包含隐性 JOIN 命令
 
   [% ELSIF error == "invalid_post_bug_submit_action" %]
-    Invalid setting for post_bug_submit_action
+    post_bug_submit_action 设置无效
 
   [% ELSE %]
     [%# Try to find hooked error messages %]
     [% error_message = Hook.process("errors") %]
     [% IF NOT error_message %]
-      [% title = "Internal error" %]
-      An internal error has occurred, but [% terms.Bugzilla %] doesn't know
-      what <code>[% error FILTER html %]</code> means.
+      [% title = "内部错误" %]
+      出现一个内部错误, 但 [% terms.Bugzilla %] 无法识别
+      如下错误代码： <code>[% error FILTER html %]</code>
 
-      If you are a [% terms.Bugzilla %] end-user seeing this message, please save
-      this page and send it to [% Param('maintainer') %].
+      如果您是 [% terms.Bugzilla %] 的最终用户, 请保存此页面
+      并将其发送至 [% Param('maintainer') %]
     [% ELSE %]
       [% error_message FILTER none %]
     [% END %]
@@ -451,9 +449,8 @@
 
 <tt>
   <p>
-    [% terms.Bugzilla %] has suffered an internal error. Please save this page and send
-    it to [% Param("maintainer") %] with details of what you were doing at
-    the time this message appeared.
+    [% terms.Bugzilla %] 出现一个内部错误，请保存此页面并将其发送至
+    [% Param("maintainer") %]，并附上您所进行的操作的详细说明。
   </p>
   <script type="text/javascript"> <!--
     document.write("<p>URL: " + 
