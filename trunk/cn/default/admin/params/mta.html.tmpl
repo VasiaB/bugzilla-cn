@@ -17,59 +17,58 @@
   #
   # Contributor(s): Dave Miller <justdave@bugzilla.org>
   #                 Fr茅d茅ric Buclin <LpSolit@gmail.com>
+  #   Localization: CNBorn <CNBorn@gmail.com>
   #%]
 [%
-   title = "Email"
-   desc = "How will outgoing mail be delivered?"
+   title = "电子邮件"
+   desc = "邮件如何发出?"
 %]
 
 [% param_descs = {
-  mail_delivery_method => "Defines how email is sent, or if it is sent at all.<br>
+  mail_delivery_method => "定义是否发送邮件以及邮件发送的方式。<br>
                            <ul>
                              <li>
-                               'Sendmail', 'SMTP' and 'Qmail' are all MTAs.
-                               You need to install a third-party sendmail replacement if
-                               you want to use sendmail on Windows.
+                               'Sendmail', 'SMTP' 和 'Qmail' 均为MTA发信方式.
+                               如需在Windows下使用sendmail，您需要安装第三方的
+                               sendmail替代软件。
                              </li>
                              <li>
-                               'Test' is useful for debugging: all email is stored
-                               in 'data/mailer.testfile' instead of being sent.
+                               'Test' 选项适用于系统调试: 所有邮件均不发出，
+                               存储在 'data/mailer.testfile' 文件中。
                              </li>
                              <li>
-                               'none' will completely disable email. $terms.Bugzilla continues
-                               to act as though it is sending mail, but nothing is sent or
-                               stored.
+                               'none' 选项将禁止email功能。$terms.Bugzilla 可正常工作，
+                               但所有邮件既不发出，也不会被存储。
                              </li>
                            </ul>",
 
-  mailfrom => "The email address of the $terms.Bugzilla mail daemon.  Some email systems " _
-              "require this to be a valid email address.",
+  mailfrom => "$terms.Bugzilla 邮件进程的电子邮件地址。某些邮件系统" _
+              "要求此地址须为一个真实有效的邮件地址。",
 
-  sendmailnow => "Sites using anything older than version 8.12 of 'sendmail' " _
-                 "can achieve a significant performance increase in the " _
-                 "UI -- at the cost of delaying the sending of mail -- by " _
-                 "disabling this parameter. Sites using 'sendmail' 8.12 or " _
-                 "higher should leave this on, as they will see no benefit from " _
-                 "turning it off. Sites using an MTA other than 'sendmail' " _
-                 "<b>must</b> leave it on, or no $terms.bug mail will be sent.",
+  sendmailnow => "如此站点使用 8.12以前版本的 'sendmail' " _
+                 "则通过关闭此项可通过稍后进行邮件发送，" _
+                 "来提高界面的响应速度。" _
+                 "如您使用 'sendmail' 8.12 或更高版本， " _
+                 "关闭此选项并不会得到性能提升。" _
+                 "对于使用MTA而非'sendmail' 进行发信的系统，此选项" _
+                 "<b>必须设置为</b>开, 否则$terms.bug 邮件不会被发出。",
 
-  smtpserver => "The SMTP server address (if using SMTP for mail delivery).",
+  smtpserver => "SMTP 服务器地址 (如使用 SMTP 方式进行邮件发送)",
 
-  smtp_username => "The username to pass to the SMTP server for SMTP authentication. " _
-                   "Leave this field empty if your SMTP server doesn't require authentication.",
+  smtp_username => "SMTP服务器发信验证时所需的用户名" _
+                   "如服务器端不需要进行验证，请将此项留空",
 
-  smtp_password => "The password to pass to the SMTP server for SMTP authentication. " _
-                   "This field has no effect if the smtp_username parameter is left empty.",
-  smtp_debug => "If enabled, this will print detailed information to your" _
-                " web server's error log about the communication between" _
-                " $terms.Bugzilla and your SMTP server. You can use this to" _
-                " troubleshoot email problems.",
+  smtp_password => "SMTP服务器发信验证时所需的密码" _
+                   "如smtp_username 参数留空则此项不起作用。",
+  smtp_debug => "如果开启此选项，您Web服务器的出错信息中会包括" _
+                " $terms.Bugzilla 系统及 SMTP 服务器间通讯的信息。" _
+                " 您可利用此功能监视电子邮件系统可能出现的问题。",
 
-  whinedays => "The number of days that we'll let a $terms.bug sit untouched in a NEW " _
-               "state before our cronjob will whine at the owner.<br> " _
-               "Set to 0 to disable whining.",
+  whinedays => "系统对新建 $terms.bug 开始提醒前的天数，" _
+               "而后系统定时程序会定时开始通知 $terms.bug 所有者<br> " _
+               "设置为 0 以禁止此功能",
 
-  globalwatchers => "A comma-separated list of users who should receive a " _
-                    "copy of every notification mail the system sends." }
+  globalwatchers => "接收所有系统通知邮件的用户列表，" _
+                    "以逗号分隔。" }
 
 %]
