@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary 在安装bugzilla-cn时最经常被问到的问题
 #labels Phase-Deploy
 
 = Introduction =
