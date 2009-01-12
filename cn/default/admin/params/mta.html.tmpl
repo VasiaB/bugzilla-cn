@@ -16,59 +16,59 @@
   # Rights Reserved.
   #
   # Contributor(s): Dave Miller <justdave@bugzilla.org>
-  #                 Frédéric Buclin <LpSolit@gmail.com>
+  #                 Fr茅d茅ric Buclin <LpSolit@gmail.com>
   #   Localization: CNBorn <CNBorn@gmail.com>
   #%]
 [%
-   title = "�����ʼ�"
-   desc = "�ʼ���η���?"
+   title = "电子邮件"
+   desc = "邮件如何发出?"
 %]
 
 [% param_descs = {
-  mail_delivery_method => "�����Ƿ����ʼ��Լ��ʼ����͵ķ�ʽ��<br>
+  mail_delivery_method => "定义是否发送邮件以及邮件发送的方式。<br>
                            <ul>
                              <li>
-                               'Sendmail', 'SMTP' �� 'Qmail' ��ΪMTA���ŷ�ʽ.
-                               ������Windows��ʹ��sendmail������Ҫ��װ��������
-                               sendmail���������
+                               'Sendmail', 'SMTP' 和 'Qmail' 均为MTA发信方式.
+                               如需在Windows下使用sendmail，您需要安装第三方的
+                               sendmail替代软件。
                              </li>
                              <li>
-                               'Test' ѡ��������ϵͳ����: �����ʼ�����������
-                               �洢�� 'data/mailer.testfile' �ļ��С�
+                               'Test' 选项适用于系统调试: 所有邮件均不发出，
+                               存储在 'data/mailer.testfile' 文件中。
                              </li>
                              <li>
-                               'none' ѡ���ֹemail���ܡ�$terms.Bugzilla ������������
-                               �������ʼ��Ȳ�������Ҳ���ᱻ�洢��
+                               'none' 选项将禁止email功能。$terms.Bugzilla 可正常工作，
+                               但所有邮件既不发出，也不会被存储。
                              </li>
                            </ul>",
 
-  mailfrom => "$terms.Bugzilla �ʼ����̵ĵ����ʼ���ַ��ĳЩ�ʼ�ϵͳ" _
-              "Ҫ��˵�ַ��Ϊһ����ʵ��Ч���ʼ���ַ��",
+  mailfrom => "$terms.Bugzilla 邮件进程的电子邮件地址。某些邮件系统" _
+              "要求此地址须为一个真实有效的邮件地址。",
 
-  sendmailnow => "���վ��ʹ�� 8.12��ǰ�汾�� 'sendmail' " _
-                 "��ͨ���رմ����ͨ���Ժ�����ʼ����ͣ�" _
-                 "����߽������Ӧ�ٶȡ�" _
-                 "����ʹ�� 'sendmail' 8.12 ����߰汾�� " _
-                 "�رմ�ѡ�����õ�����������" _
-                 "����ʹ��MTA����'sendmail' ���з��ŵ�ϵͳ����ѡ��" _
-                 "<b>��������Ϊ</b>��, ����$terms.bug �ʼ����ᱻ������",
+  sendmailnow => "如此站点使用 8.12以前版本的 'sendmail' " _
+                 "则通过关闭此项可通过稍后进行邮件发送，" _
+                 "来提高界面的响应速度。" _
+                 "如您使用 'sendmail' 8.12 或更高版本， " _
+                 "关闭此选项并不会得到性能提升。" _
+                 "对于使用MTA而非'sendmail' 进行发信的系统，此选项" _
+                 "<b>必须设置为</b>开, 否则$terms.bug 邮件不会被发出。",
 
-  smtpserver => "SMTP ��������ַ (��ʹ�� SMTP ��ʽ�����ʼ�����)",
+  smtpserver => "SMTP 服务器地址 (如使用 SMTP 方式进行邮件发送)",
 
-  smtp_username => "SMTP������������֤ʱ������û���" _
-                   "��������˲���Ҫ������֤���뽫��������",
+  smtp_username => "SMTP服务器发信验证时所需的用户名" _
+                   "如服务器端不需要进行验证，请将此项留空",
 
-  smtp_password => "SMTP������������֤ʱ���������" _
-                   "��smtp_username �����������������á�",
-  smtp_debug => "���������ѡ���Web�������ĳ�����Ϣ�л����" _
-                " $terms.Bugzilla ϵͳ�� SMTP ��������ͨѶ����Ϣ��" _
-                " �������ô˹��ܼ��ӵ����ʼ�ϵͳ���ܳ��ֵ����⡣",
+  smtp_password => "SMTP服务器发信验证时所需的密码" _
+                   "如smtp_username 参数留空则此项不起作用。",
+  smtp_debug => "如果开启此选项，您Web服务器的出错信息中会包括" _
+                " $terms.Bugzilla 系统及 SMTP 服务器间通讯的信息。" _
+                " 您可利用此功能监视电子邮件系统可能出现的问题。",
 
-  whinedays => "ϵͳ���½� $terms.bug ��ʼ����ǰ��������" _
-               "����ϵͳ��ʱ����ᶨʱ��ʼ֪ͨ $terms.bug ������<br> " _
-               "����Ϊ 0 �Խ�ֹ�˹���",
+  whinedays => "系统对新建 $terms.bug 开始提醒前的天数，" _
+               "而后系统定时程序会定时开始通知 $terms.bug 所有者<br> " _
+               "设置为 0 以禁止此功能",
 
-  globalwatchers => "��������ϵͳ֪ͨ�ʼ����û��б���" _
-                    "�Զ��ŷָ���" }
+  globalwatchers => "接收所有系统通知邮件的用户列表，" _
+                    "以逗号分隔。" }
 
 %]
