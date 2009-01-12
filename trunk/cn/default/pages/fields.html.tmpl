@@ -17,15 +17,16 @@
   #
   # Contributor(s): Terry Weissman <terry@mozilla.org>
   #                 Gervase Markham <gerv@gerv.net>
+  #   Localization: CNBorn <CNBorn@gmail.com>
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
 [% PROCESS "global/field-descs.none.tmpl" %]
-[% INCLUDE global/header.html.tmpl title = "A $terms.Bug's Life Cycle" %]
+[% INCLUDE global/header.html.tmpl title = "一个 $terms.Bug 的处理流程" %]
 
 <p>
-<b>״̬��status��</b>��<b>�����resolution��</b>�ֶ���������͸���
-[% terms.abug %]���������ڣ�lifecycle����  
+<b>状态（status）</b>和<b>解决（resolution）</b>字段用来定义和跟踪
+[% terms.abug %]的处理流程。  
 </p>
 
 <a name="status"></a>
@@ -34,20 +35,20 @@
 <table border="1" cellpadding="4">
   <tr align="center" valign="top">
     <td width="50%">
-      <h1>״̬��STATUS��</h1>
+      <h1>状态（STATUS）</h1>
     </td>
 
     <td>
-      <h1>�����RESOLUTION��</h1>
+      <h1>解决（RESOLUTION）</h1>
     </td>
   </tr>
 
   <tr valign="top">
-    <td><b>״̬��status��</b>�ֶα�ʾ���� 
-    [% terms.bug %] ���ڵ�״����ֻ�к��ʵ�״̬�ű�������</td>
+    <td><b>状态（status）</b>字段标示出了 
+    [% terms.bug %] 现在的状况。只有合适的状态才被允许。</td>
 
-    <td>The <b>�����ʽ��resolution��</b>�ֶ�ָʾ�����
-    [%+ terms.bug %]�����˵ı仯��</td>
+    <td>The <b>解决方式（resolution）</b>字段指示了这个
+    [%+ terms.bug %]发生了的变化。</td>
   </tr>
 
   <tr valign="top">
@@ -57,44 +58,43 @@
           <b>[% get_status("UNCONFIRMED") FILTER html %]</b>
         </dt>
         <dd>
-          ���[% terms.bug %]�ոռ��뵽���ݿ��С�
-          ��û������֤���[% terms.bug %]�Ƿ������ ��
-          �С�ȷ�ϣ�canconfirm����Ȩ�޵��û���ȷ��
-          ��[% terms.bug %]��ͨ��������״̬Ϊ[% get_status("NEW") FILTER html %]�����ߣ�����ֱ�ӱ��޸���
-          ����״̬Ϊ[% get_status("RESOLVED") FILTER html %]��
+          这个[% terms.bug %]刚刚加入到数据库中。
+          还没有人验证这个[% terms.bug %]是否真的存在。
+          有“确认（canconfirm）“权限的用户可通过更改其状态为[% get_status("NEW") FILTER html %]
+		  来确认该[% terms.bug %]。或者通过更改状态为[% get_status("RESOLVED") FILTER html %]。直接修复该[% terms.bug %]。          
         </dd>
 
         <dt>
           <b>[% get_status("NEW") FILTER html %]</b>
         </dt>
         <dd>
-          This [% terms.bug %] has recently been added to the assignee's
-          list of [% terms.bugs %] and must be processed. [% terms.Bugs %] in
-          this state may be accepted, and become <b>[% get_status("ASSIGNED") FILTER html %]</b>, passed
-          on to someone else, and remain <b>[% get_status("NEW") FILTER html %]</b>, or resolved and marked
-          <b>[% get_status("RESOLVED") FILTER html %]</b>.
+          该 [% terms.bug %] 最近被添加到指定人的
+          [% terms.bugs %] 列表中，需要进行处理。在此状态的[% terms.Bugs %]
+          或许已被接受，可通过更改状态为 <b>[% get_status("ASSIGNED") FILTER html %]</b> 交由
+          他人进行处理。或保持 <b>[% get_status("NEW") FILTER html %]</b> 状态，或者更改状态为
+          <b>[% get_status("RESOLVED") FILTER html %]</b>来解决这个[% terms.bug %]
         </dd>
 
         <dt>
           <b>[% get_status("ASSIGNED") FILTER html %]</b>
         </dt>
         <dd>
-          This [% terms.bug %] is not yet resolved, but is assigned to the 
-          proper person. From here [% terms.bugs %] can be given to another 
-          person and become <b>[% get_status("NEW") FILTER html %]</b>, or
-          resolved and become <b>[% get_status("RESOLVED") FILTER html %]</b>.
+          该 [% terms.bug %] 仍未被解决，但已经被指定给相关责任人进行解决 
+          。从此过程开始该 [% terms.bugs %] 可交由其他人。 
+          状态可变更为 <b>[% get_status("NEW") FILTER html %]</b> 或者
+          <b>[% get_status("RESOLVED") FILTER html %]</b>.
         </dd>
 
         <dt>
           <b>[% get_status("REOPENED") FILTER html %]</b>
         </dt>
         <dd>
-          This [% terms.bug %] was once resolved, but the resolution was 
-          deemed incorrect. For example, a <b>[% get_resolution("WORKSFORME") FILTER html %]</b> [% terms.bug %] is
-          <b>[% get_status("REOPENED") FILTER html %]</b> when more information shows up and
-          the [% terms.bug %] is now reproducible. From here [% terms.bugs %] are
-          either marked <b>[% get_status("ASSIGNED") FILTER html %]</b> or
-          <b>[% get_status("RESOLVED") FILTER html %]</b>.
+          该 [% terms.bug %] 曾被解决过，但其解决方案被认为无效。 
+          举例来说，一个<b>[% get_resolution("WORKSFORME") FILTER html %]</b> [% terms.bug %] 被
+          <b>[% get_status("REOPENED") FILTER html %]</b> 时，更多信息表明此问题仍可
+          重现此 [% terms.bug %]。 从此状态起该 [% terms.bugs %] 只能被标识为
+          <b>[% get_status("ASSIGNED") FILTER html %]</b> 或者
+          <b>[% get_status("RESOLVED") FILTER html %]</b>。
         </dd>
       </dl>
     </td>
@@ -102,10 +102,9 @@
     <td>
       <dl>
         <dd>
-          No resolution yet. All [% terms.bugs %] which are in one of 
-          these "open" states have the resolution set to blank. All 
-          other [% terms.bugs %] will be marked with one of the following 
-          resolutions.
+          所有尚无解决方案的 [% terms.bugs %] 均保持为 
+          以上“开放”状态中的一种，同时解决方案为空。 
+          其余类别的[% terms.bugs %]状态为以下所示的类型之一。         
         </dd>
       </dl>
     </td>
@@ -118,21 +117,21 @@
           <b>[% get_status("RESOLVED") FILTER html %]</b>
         </dt>
         <dd>
-          A resolution has been taken, and it is awaiting verification by
-          ��QA��. From here [% terms.bugs %] are either re-opened and become 
-          <b>[% get_status("REOPENED") FILTER html %]</b>, are marked
-          <b>[% get_status("VERIFIED") FILTER html %]</b>, or are closed for
-          good and marked <b>[% get_status("CLOSED") FILTER html %]</b>.
+          已采取一种解决方案，同时该方案在等待QA的验证。
+          从此过程开始 [% terms.bugs %] 可以被设置为 
+          <b>[% get_status("REOPENED") FILTER html %]</b> 重新开启，或被设置为
+          <b>[% get_status("VERIFIED") FILTER html %]</b> 已验证，或
+          通过设置为 <b>[% get_status("CLOSED") FILTER html %]</b>来完结此 [% terms.bug %]
         </dd>
 
         <dt>
           <b>[% get_status("VERIFIED") FILTER html %]</b>
         </dt>
         <dd>
-          QA has looked at the [% terms.bug %] and the resolution and 
-          agrees that the appropriate resolution has been taken. [% terms.Bugs %] remain
-          in this state until the product they were reported
-          against actually ships, at which point they become
+          QA 已对针对该 [% terms.bug %] 的解决方案进行验证，并 
+          确定针对该问题实施了最佳的解决方案。 [% terms.Bugs %] 将
+		  保持此状态直到确保此问题在产品交付时不再出现。
+          在交付时该[% terms.bug %]的状态将设置为
           <b>[% get_status("CLOSED") FILTER html %]</b>.
         </dd>
 
@@ -140,9 +139,9 @@
           <b>[% get_status("CLOSED") FILTER html %]</b>
         </dt>
         <dd>
-          The [% terms.bug %] is considered dead, the resolution is correct. 
-          Any zombie [% terms.bugs %] who choose to walk the earth again must 
-          do so by becoming <b>[% get_status("REOPENED") FILTER html %]</b>.
+          该[% terms.bug %]的解决方案正确，被认定完结。 
+          一旦该[% terms.bugs %]有任何死灰复燃的迹象出现， 
+          需将状态设置为 <b>[% get_status("REOPENED") FILTER html %]</b>.
         </dd>
       </dl>
     </td>
@@ -153,53 +152,48 @@
           <b>[% get_resolution("FIXED") FILTER html %]</b>
         </dt>
         <dd>
-          A fix for this [% terms.bug %] is checked into the tree and 
-          tested.
+          对此[% terms.bug %]的修复已被添加到树中并经过测试。
         </dd>
 
         <dt>
           <b>[% get_resolution("INVALID") FILTER html %]</b>
         </dt>
         <dd>
-          The problem described is not [% terms.abug %].
+          所描述的情况不算是[% terms.abug %]。
         </dd>
 
         <dt>
           <b>[% get_resolution("WONTFIX") FILTER html %]</b>
         </dt>
         <dd>
-          The problem described is [% terms.abug %] which will never be 
-          fixed.
+          该 [% terms.bug %] 所描述的情况不可能得到修复。
         </dd>
 
         <dt>
          <b>[% get_resolution("DUPLICATE") FILTER html %]</b>
         </dt>
         <dd>
-          The problem is a duplicate of an existing [% terms.bug %].
-          Marking [% terms.abug %] duplicate requires the [% terms.bug %]#
-          of the duplicating [% terms.bug %] and will at least put
-          that [% terms.bug %] number in the description field.
+          所描述的[% terms.bug %]和已有的一个[% terms.bug %]相同。
+          要标记[% terms.abug %] 与其他 [% terms.bug %] 相同，需要该 [% terms.bug %]的编号          
+          并将其放入说明字段中。
         </dd>
 
         <dt>
           <b>[% get_resolution("WORKSFORME") FILTER html %]</b>
         </dt>
         <dd>
-          All attempts at reproducing this [% terms.bug %] were futile, 
-          and reading the code produces no clues as to why the described
-          behavior would occur. If more information appears later,
-          the [% terms.bug %] can be reopened.
+          所有尝试重现此 [% terms.bug %] 的手段均告无效， 
+          阅读代码也无法解释此问题如何发生。
+          如日后有更多信息，
+          此 [% terms.bug %] 可被重新开启。
         </dd>
 
         <dt>
           <b>[% get_resolution("MOVED") FILTER html %]</b>
         </dt>
         <dd>
-          The problem was specific to a related product 
-          whose [% terms.bugs %] are tracked in
-          another [% terms.bug %] database.
-          The [% terms.bug %] has been moved to that database.
+          该[% terms.bug %]所对应的产品属于其他[% terms.bug %] 数据库， 
+          该[% terms.bug %]已被转移到该数据库。
         </dd>
       </dl>
     </td>
