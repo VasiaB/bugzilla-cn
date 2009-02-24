@@ -17,29 +17,28 @@
   #
   # Contributor(s): Dave Miller <justdave@bugzilla.org>
   #                 Frédéric Buclin <LpSolit@gmail.com>
+  # Localization : Immer Ma <immer.ma@gmail.com>
   #%]
+
 [%
-   title = "User Matching"
-   desc = "Set up your user matching policies"
+   title = "用户匹配"
+   desc = "设置您的用户匹配策略"
 %]
 
 [% param_descs = {
-  usemenuforusers => "If this option is set, $terms.Bugzilla will offer you a list " _
-                     "to select from (instead of a text entry field) where a user " _
-                     "needs to be selected. This option should not be enabled on " _
-                     "sites where there are a large number of users.",
+  usemenuforusers => "如果设置了该项，当需要选择用户时，$terms.Bugzilla 会采用列表方式 " _
+                     "，而不是文本输入框方式供您选择。" _
+                     "如果您的站点用户很多，请不要选中该项配置。",
 
-  usermatchmode => "Allow match strings to be entered for user names when entering " _
-                   "and editing ${terms.bugs}.<p> " _
-                   "'off' disables matching,<br> " _
-                   "'wildcard' allows only wildcards,<br> " _
-                   "and 'search' allows both wildcards and substring (freetext) matches.",
+  usermatchmode => "在输入或编辑${terms.bugs}过程中，输入用户名时允许的匹配字符串。<br>" _
+                   "- 'off' ：禁止匹配；<br> " _
+                   "- 'wildcard' ：只允许通配符；<br> " _
+                   "- 'search' ：允许通配符和子字符串匹配。",
 
-  maxusermatches => "Search for no more than this many matches.<br> " _
-                    "If set to '1', no users will be displayed on ambiguous matches. " _
-                    "This is useful for user privacy purposes.<br> " _
-                    "A value of zero means no limit.",
+  maxusermatches => "搜索的最多匹配个数。<br> " _
+                    "- 设置为'1'，则对于模糊匹配不显示任何结果。" _
+                    "这样可用于保护用户隐私。<br> " _
+                    "- 设置为'0'，则表示没有限制。",
 
-  confirmuniqueusermatch => "Whether a confirmation screen should be displayed when only " _
-                            "one user matches a search entry." }
+  confirmuniqueusermatch => "当查询结果只有一个匹配用户时是否显示确认界面。" }
 %]

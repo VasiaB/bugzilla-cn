@@ -121,9 +121,9 @@
 |   |   |       mta.html.tmpl
 |   |   |       patchviewer.html.tmpl
 |   |   |       query.html.tmpl
-|   |   |       radius.html.tmpl
+|   |   |       radius.html.tmpl                +
 |   |   |       shadowdb.html.tmpl
-|   |   |       usermatch.html.tmpl
+|   |   |       usermatch.html.tmpl          +
 |   |   |       
 |   |   +---products
 |   |   |   |   confirm-delete.html.tmpl	+
