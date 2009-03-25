@@ -1,4 +1,4 @@
-[%# The contents of this file are subject to the Mozilla Public
+﻿[%# The contents of this file are subject to the Mozilla Public
   # License Version 1.1 (the "License"); you may not use this file
   # except in compliance with the License. You may obtain a copy of
   # the License at http://www.mozilla.org/MPL/
@@ -16,47 +16,39 @@
   # Rights Reserved.
   #
   # Contributor(s): Dave Miller <justdave@bugzilla.org>
-  #                 Frédéric Buclin <LpSolit@gmail.com>
+  #                 Fr茅d茅ric Buclin <LpSolit@gmail.com>
+  #   Localization: CNBorn <CNBorn@gmail.com>
   #%]
 [%
-   title = "Group Security"
-   desc = "Decide how you will use Security Groups"
+   title = "组安全设置"
+   desc = "设置组安全设置"
 %]
 
 [% param_descs = {
-  makeproductgroups => "If this is on, $terms.Bugzilla will associate $terms.abug group " _
-                       "with each product in the database, and use it for querying ${terms.bugs}.",
+  makeproductgroups => "如果此选项开启, $terms.Bugzilla 将 $terms.abug 群组 " _
+                       "和数据库中的每个产品相关联，日后可用于查询 ${terms.bugs}.",
 
-  useentrygroupdefault => "If this is on, $terms.Bugzilla will use product $terms.bug groups " _
-                          "by default to restrict who can enter ${terms.bugs}. If this is on, " _
-                          "users can see any product to which they have entry access in search menus. " _
-                          "If this is off, users can see any product to which they have not " _
-                          "been excluded by a mandatory restriction.",
+  useentrygroupdefault => "如果此选项开启, $terms.Bugzilla 将默认启用 $terms.bug 群组 " _
+                          "来限制用户提交 ${terms.bugs}. 如果此项保持开启, " _
+                          "用户只能在搜索界面里看到它们具有搜索权限的产品. " _
+                          "如果此选项关闭，用户则能看到所有产品，不受任何限制 ",
 
-  chartgroup => "The name of the group of users who can use the 'New Charts' " _
-                "feature. Administrators should ensure that the public categories " _
-                "and series definitions do not divulge confidential information " _
-                "before enabling this for an untrusted population. If left blank, " _
-                "no users will be able to use New Charts.",
+  chartgroup => "可使用“新建图表”功能的用户组 " _
+                "管理员需要确保公开的分类及系列信息不会泄露机密信息 " _
+                "以防止选择此项后信息落入不可信任的用户手中。" _
+                "如果此项保持为空，则没有用户可以使用新建图标功能。",
 
-  insidergroup => "The name of the group of users who can see/change private " _
-                  "comments and attachments.",
+  insidergroup => "可查看并改变私人评论及附件的组：",
 
-  timetrackinggroup => "The name of the group of users who can see/change time tracking " _
-                       "information.",
+  timetrackinggroup => "可查看并改变最后期限设置的组",
 
-  querysharegroup => "The name of the group of users who can share their " _
-                     "saved searches with others.",
+  querysharegroup => "可与其它用户共享其保存搜索的组",
 
-  usevisibilitygroups => "Do you wish to restrict visibility of users to members of " _
-                         "specific groups?",
+  usevisibilitygroups => "是否为每个组的成员列表提供显示/隐藏的选项？",
   
-  strict_isolation => "Don't allow users to be assigned to, " _
-                      "be qa-contacts on, " _
-                      "be added to CC list, " _
-                      "or make or remove dependencies " _
-                      "involving any bug that is in a product on which that " _
-                      "user is forbidden to edit.", 
-
+  strict_isolation => "不允许用户成为他无权编辑产品的 $terms.bug" _
+                      "的指定人、" _
+                      "QA联系人、CC" _
+                      "、或指定相关问题的依赖。",
  }
 %]
