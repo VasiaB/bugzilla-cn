@@ -200,89 +200,83 @@
   </tr>
 </table>
 
-<h2><a name="importance">Importance</h2>
-The importance of [% terms.abug %] is described as the combination of
-its <a href="#priority">priority</a> and <a href="#bug_severity">severity</a>,
-as described below.
+<h2><a name="importance">重要性</h2>
+[% terms.abug %] 的重要性是其
+<a href="#priority">优先级</a> 和 <a href="#bug_severity">严重程度</a>的结合。
 
-<h2><a name="priority">Priority</a></h2>
-This field describes the importance and order in which [% terms.abug %]
-should be fixed. This field is utilized by the
-programmers/engineers to prioritize their work to be done. The
-available priorities range from <b>P1</b> (most important) to
-<b>P5</b> (least important).
-<h2><a name="bug_severity">Severity</a></h2>
-This field describes the impact of [% terms.abug %]. 
+<h2><a name="priority">优先级</a></h2>
+该字段定义了处理 [% terms.abug %] 的重要程度和顺序
+should be fixed. 该字段可由程序员、工程师用来决定他们优先完成的工作。
+可选项从 <b>P1</b> (极为重要) 到
+<b>P5</b> (最不重要)。
+<h2><a name="bug_severity">严重程度</a></h2>
+该字段阐述了 [% terms.abug %] 所造成的影响。
 
 <table>
   <tr>
-    <th>Blocker</th>
+    <th>阻碍</th>
 
-    <td>Blocks development and/or testing work</td>
+    <td>阻碍了开发/测试工作</td>
   </tr>
 
   <tr>
-    <th>Critical</th>
+    <th>极为严重</th>
 
-    <td>crashes, loss of data, severe memory leak</td>
+    <td>程序崩溃、数据损失、严重内存泄露</td>
   </tr>
 
   <tr>
-    <th>Major</th>
+    <th>严重</th>
 
-    <td>major loss of function</td>
+    <td>影响功能</td>
   </tr>
 
   <tr>
-    <th>Normal</th>
+    <th>普通</th>
 
-    <td>regular issue, some loss of functionality under specific circumstances</td>
+    <td>普通问题, 在特定情况下会影响功能。</td>
   </tr>
 
 
   <tr>
-    <th>Minor</th>
+    <th>轻微</th>
 
-    <td>minor loss of function, or other problem where easy
-    workaround is present</td>
+    <td>轻微功能损失, 或轻易可以出现
+    </td>
   </tr>
 
   <tr>
-    <th>Trivial</th>
+    <th>不重要的</th>
 
-    <td>cosmetic problem like misspelled words or misaligned
-    text</td>
+    <td>不影响功能的问题如错别字或文字对齐有误</td>
   </tr>
 
   <tr>
-    <th>Enhancement</th>
+    <th>功能增强</th>
 
-    <td>Request for enhancement</td>
+    <td>功能增强请求</td>
 </table>
 
-<h2><a name="rep_platform">Platform</a></h2>
-This is the hardware platform against which the [% terms.bug %] was
-reported. Legal platforms include: 
+<h2><a name="rep_platform">平台</a></h2>
+该选项为 [% terms.bug %] 产生时使用的硬件平台，合理的硬件平台包括：
 
 <ul>
-  <li>All (happens on all platforms; cross-platform [% terms.bug %])</li>
+  <li>全部 (在所有平台上均出现; 跨平台 [% terms.bug %])</li>
 
   <li>Macintosh</li>
 
   <li>PC</li>
 </ul>
-<b>Note:</b> When searching, selecting the option "All" does not 
-select [% terms.bugs %]
-assigned against any platform. It merely selects [% terms.bugs %] that are
-marked as occurring on all platforms, i.e. are designated "All". 
+<b>注意:</b> 当搜索时，选择 "全部" 选项并不会 
+搜索到属于其它特定平台的 [% terms.bugs %]。
+而仅会选择平台设置为“全部”的 [% terms.bugs %]。
 
-<h2><a name="op_sys">Operating System</a></h2>
-This is the operating system against which the [% terms.bug %] was
-reported. Legal operating systems include: 
+<h2><a name="op_sys">操作系统</a></h2>
+该选项为 [% terms.bug %] 产生时所使用的操作系统，
+合理的操作系统包括: 
 
 <ul>
-  <li>All (happens on all operating systems; cross-platform
-  [% terms.bug %])</li>
+  <li>全部 (在所有平台上均出现; 跨平台 [% terms.bug %])</li>
 
   <li>Windows</li>
 
@@ -290,22 +284,20 @@ reported. Legal operating systems include:
 
   <li>Linux</li>
 </ul>
-Sometimes the operating system implies the platform, but not
-always. For example, Linux can run on PC and Macintosh and
-others. 
+有时操作系统即代表了平台选项。但也有例外的情况，如Linux可以在PC和Macintosh上都可以运行。
 
-<h2><a name="assigned_to">Assigned To</a></h2>
+<h2><a name="assigned_to">分配给</a></h2>
 
 <p>
-This is the person in charge of resolving the [% terms.bug %]. Every time
-this field changes, the status changes to <b>[% get_status("NEW") FILTER html %]</b> to make it
-easy to see which new [% terms.bugs %] have appeared on a person's list.</p>
+该选项指出了负责解决这个 [% terms.bug %] 的人员。当此选项改变时，
+, [% terms.bugs %] 状态就会改变为 <b>[% get_status("NEW") FILTER html %]</b> 以
+确保新的 [% terms.bugs %] 出现在人员的列表里。</p>
 
 <p>
-The default status for queries is set to [% get_status("NEW") FILTER html %],
-[%+ get_status("ASSIGNED") FILTER html %] and [% get_status("REOPENED") FILTER html %].
-When searching for [% terms.bugs %] that have been resolved or
-verified, remember to set the status field appropriately. 
+问题还在请求中的状态为 [% get_status("NEW") FILTER html %],
+[%+ get_status("ASSIGNED") FILTER html %] 以及 [% get_status("REOPENED") FILTER html %].
+当需要搜索已解决或已验证的 [% terms.bugs %] 时，
+请注意设置状态的条件。 
 </p>
 
 [% INCLUDE global/footer.html.tmpl %]
