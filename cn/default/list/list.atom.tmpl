@@ -20,7 +20,7 @@
   #                 Jason Remillard <jremillardshop@letterboxes.org>
   #                 Phil Ringnalda <bugzilla@philringnalda.com>
   #
-  # This is a template for generating an Atom representation of a buglist. 
+  # This is a template for generating an Atom representation of a buglist.
   #%]
 
 [% PROCESS global/variables.none.tmpl %]
@@ -53,13 +53,13 @@
       <name>[% bug.reporter_realname FILTER xml %]</name>
     </author>
     <updated>[% date.format(format=>"%Y-%m-%dT%H:%M:%SZ",time=>bug.changedtime,
-                gmt=>1) FILTER xml %]</updated> 
+                gmt=>1) FILTER xml %]</updated>
     <summary type="html">
       [%# Filter out the entire block, so that we don't need to escape the html code out %]
       [% FILTER xml %]
       <table>
       <tr>
-        <th>Field</th><th>Value</th>
+        <th>欄位</th><th>值</th>
       </tr><tr class="bz_feed_product">
         <td>[% columns.product.title FILTER html %]</td>
         <td>[% bug.product FILTER html %]</td>
