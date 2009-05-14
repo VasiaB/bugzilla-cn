@@ -56,9 +56,9 @@
 <div class="bz_query_head" align="center">
   <span class="bz_query_timestamp">
     [% IF Param('timezone') %]
-      <b>[% time2str("%a %b %e %Y %T %Z", currenttime, Param('timezone')) %]</b><br>
+      <b>[% time2str("%Y-%m-%d %H:%M:%S %Z", currenttime, Param('timezone')) %]</b><br>
     [% ELSE %]
-      <b>[% time2str("%a %b %e %Y %T", currenttime) %]</b><br>
+      <b>[% time2str("%Y-%m-%d %H:%M:%S", currenttime) %]</b><br>
     [% END %]
   </span>
 
@@ -72,7 +72,7 @@
   [% END %]
 
   [% IF user.settings.display_quips.value == 'on' %]
-    [% DEFAULT quip = "此处为放置随机标语的地方，但目前系统中无任何标语可用。" %]
+    [% DEFAULT quip = "此处为 $terms.Bugzilla 放置随机标语的地方，但目前系统中无任何标语可用。" %]
     <span class="bz_quip">
       <a href="quips.cgi"><i>[% quip FILTER html %]</i></a>
     </span>
@@ -215,8 +215,9 @@
       <td valign="middle" nowrap="nowrap" class="bz_query_forget">
         |
         <a href="buglist.cgi?cmdtype=dorem&amp;remaction=forget&amp;namedcmd=
-                [% searchname FILTER url_quote %]">清除已存搜索'
-                [% searchname FILTER html %]'</a>
+                [% searchname FILTER url_quote %]&amp;token=
+                [% issue_hash_token([search_id, searchname]) FILTER url_quote %]">
+          清除已存搜索 '[% searchname FILTER html %]'</a>
       </td>
     [% ELSE %]
       <td>&nbsp;</td>
